@@ -1,7 +1,7 @@
 package parteA.Menu;
 
 
-import Dominio.Utente;
+import main.java.shared.domain.Utente;
 import parteA.GestioneDati.ListaRistoranti;
 import parteA.GestioneDati.ListaUtenti;
 

@@ -1,4 +1,4 @@
-package Dominio;
+package main.java.shared.domain;
 
 import parteA.GestioneDati.ListaRistoranti;
 

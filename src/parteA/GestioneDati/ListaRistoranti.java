@@ -1,7 +1,7 @@
 package parteA.GestioneDati;
 
-import Dominio.Recensione;
-import Dominio.Ristorante;
+import main.java.shared.domain.Recensione;
+import main.java.shared.domain.Ristorante;
 
 import java.io.*;
 import java.util.ArrayList;

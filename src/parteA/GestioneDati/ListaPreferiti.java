@@ -1,8 +1,8 @@
 package parteA.GestioneDati;
 
-import Dominio.Preferito;
-import Dominio.Ristorante;
-import Dominio.Utente;
+import main.java.shared.domain.Preferito;
+import main.java.shared.domain.Ristorante;
+import main.java.shared.domain.Utente;
 
 import java.io.*;
 import java.util.ArrayList;

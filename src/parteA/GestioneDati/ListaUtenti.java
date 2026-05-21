@@ -1,6 +1,6 @@
 package parteA.GestioneDati;
 
-import Dominio.Utente;
+import main.java.shared.domain.Utente;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
