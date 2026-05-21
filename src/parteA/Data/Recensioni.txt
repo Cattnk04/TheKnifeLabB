@@ -1,32 +1,27 @@
-alessandro.greco@email.com*Dragon Palace*3*Buon cibo ma tempi di attesa troppo lunghi.*null
-ana.garcia@email.com*Palazzo del Gusto*5*Experiencia gastron�mica inolvidable en la Toscana.*null
-andrea.romano@email.com*El Patio*4*Tapas autentiche e sangria eccellente. Ambiente vivace e allegro.*null
-andrea.romano@email.com*Borgo Antico Elite*5*Tartufo e vini umbri eccellenti. Servizio impeccabile.*null
-beatrice.villa@email.com*Fusion Lounge*4*Cocktail creativi e fusion ben riuscito. Atmosfera molto cool.*null
-beatrice.villa@email.com*The Wellington*2*Servizio arrogante e cibo mediocre. Fish and chips troppo unto.*we're sorry!
-chiara.marino@email.com*Bistrot Parisien*5*Croissant come a Parigi! Colazione da sogno sulla Promenade.*null
-claudia.moretti@email.com*Le Gourmet*5*Esperienza gastronomica indimenticabile. Vale ogni euro.*null
-claudia.moretti@email.com*Mexican Fiesta*1*Cibo piccante oltre ogni limite e servizio caotico. Pessima esperienza.*null
-davide.leone@email.com*Mexican Fiesta*4*Tacos autentici e margarita ben fatti. Ambiente allegro.*¡Muchas gracias!
-elena.martini@email.com*Pizza Express*5*Pizza napoletana verace, impasto perfetto.*null
-elena.martini@email.com*Le Gourmet*1*Servizio snob e tempi di attesa infiniti. Non vale minimamente il prezzo.*null
-erik.johansson@email.com*Grotta Azzurra*4*Amazing seafood with a stunning view of Capri.*null
-francesca.serra@email.com*Fusion Lounge*2*Fusion confusion totale. Sapori che stonano e prezzi folli.*Ci scusiamo, stiamo rivedendo il nostro menu.
-francesca.serra@email.com*Gourmet Haven*5*Vista mozzafiato e piatti raffinati. Perfetto per occasioni speciali.	*null
-giulia.ferrari@email.com*Imperial Sushi*5*Il miglior sushi mai provato fuori dal Giappone. Servizio impeccabile.*	Thank you for your wonderful review!
-giulia.ferrari@email.com*Villa dei Limoni*4*Limoncello fatto in casa eccezionale. Vista sul golfo.*null
-hans.mueller@email.com*Enoteca Stellata*4*Ausgezeichnete Weinauswahl und hervorragendes Essen.*null
-john.smith@email.com*Villa Gourmet*5*Extraordinary Italian cuisine in a beautiful setting.*null
-laura.bianchi@email.com*La Vecchia Cantina*5*Atmosfera autentica nei Sassi di Matera. Orecchiette fatte in casa divine!*Siamo felici che abbiate apprezzato la nostra tradizione.
-laura.bianchi@email.com*Locanda dei Dogi*5*Cucina veneziana autentica in location da sogno.	*null
-luca.ricci@email.com*Dragon Palace*1*Cibo poco fresco e condizioni igieniche discutibili. Mai più.*We deeply apologize for your experience. We are addressing these issues immediately.
-luca.ricci@email.com*Little Italy*4*Carbonara eccezionale e servizio cordiale. Prezzi nella media.*null
-marco.verdi@email.com*Masseria del Sud*5*Atmosfera magica tra gli ulivi. Cucina pugliese doc.*Grazie per aver apprezzato la nostra terra!
-marco.verdi@email.com*Fusion Garden*3*Interessante mix di sapori ma porzioni un po' piccole per il prezzo.*null
-marie.dubois@email.com*La Pergola Sul Mare*5*Vue magnifique et cuisine méditerranéenne parfaite.*Grazie del feedback!
-mario.rossi@email.com*Sapori di Mare*4*Pesce freschissimo e vista mare splendida. Prezzi un po' alti ma vale la pena.*null
-mario.rossi@email.com*Rifugio d'Alta Quota*4*Vista mozzafiato sulle Dolomiti e cucina eccellente.*null
-michele.costa@email.com*El Patio*1*Paella immangiabile e sangria annacquata. Servizio lentissimo.*Lo sentimos mucho, tomaremos medidas para mejorar.
-michele.costa@email.com*International Club*3*Location elegante ma prezzi troppo elevati.*null
-paolo.galli@email.com*American Diner*4*Hamburger succulenti e milkshake come nei film.*Thank you, come back soon!
-paolo.galli@email.com*Sapori di Mare*1*Pesce non fresco, prezzi assurdi e servizio scadente. Da evitare.*null
+alessandro.greco@email.com*832*3*Buon cibo ma tempi di attesa troppo lunghi.*null
+ana.garcia@email.com*820*5*Experiencia gastronomica inolvidable en la Toscana.*null
+andrea.romano@email.com*828*4*Tapas autentiche e sangria eccellente. Ambiente vivace e allegro.*null
+beatrice.villa@email.com*826*4*Cocktail creativi e fusion ben riuscito. Atmosfera molto cool.*null
+beatrice.villa@email.com*833*2*Servizio arrogante e cibo mediocre. Fish and chips troppo unto.*we're sorry!
+chiara.marino@email.com*831*5*Croissant come a Parigi! Colazione da sogno sulla Promenade.*null
+claudia.moretti@email.com*840*5*Esperienza gastronomica indimenticabile. Vale ogni euro.*null
+claudia.moretti@email.com*835*1*Cibo piccante oltre ogni limite e servizio caotico. Pessima esperienza.*null
+davide.leone@email.com*835*4*Tacos autentici e margarita ben fatti. Ambiente allegro.*¡Muchas gracias!
+elena.martini@email.com*836*5*Pizza napoletana verace, impasto perfetto.*null
+elena.martini@email.com*840*1*Servizio snob e tempi di attesa infiniti. Non vale minimamente il prezzo.*null
+erik.johansson@email.com*821*4*Amazing seafood with a stunning view of Capri.*null
+giulia.ferrari@email.com*827*5*Il miglior sushi mai provato fuori dal Giappone. Servizio impeccabile.*	Thank you for your wonderful review!
+hans.mueller@email.com*819*4*Ausgezeichnete Weinauswahl und hervorragendes Essen.*null
+john.smith@email.com*817*5*Extraordinary Italian cuisine in a beautiful setting.*null
+laura.bianchi@email.com*825*5*Atmosfera autentica nei Sassi di Matera. Orecchiette fatte in casa divine!*Siamo felici che abbiate apprezzato la nostra tradizione.
+laura.bianchi@email.com*822*5*Cucina veneziana autentica in location da sogno.	*null
+luca.ricci@email.com*832*1*Cibo poco fresco e condizioni igieniche discutibili. Mai più.*We deeply apologize for your experience. We are addressing these issues immediately.
+luca.ricci@email.com*830*4*Carbonara eccezionale e servizio cordiale. Prezzi nella media.*null
+marco.verdi@email.com*823*5*Atmosfera magica tra gli ulivi. Cucina pugliese doc.*Grazie per aver apprezzato la nostra terra!
+marco.verdi@email.com*826*3*Interessante mix di sapori ma porzioni un po' piccole per il prezzo.*null
+marie.dubois@email.com*818*5*Vue magnifique et cuisine méditerranéenne parfaite.*Grazie del feedback!
+mario.rossi@email.com*824*4*Pesce freschissimo e vista mare splendida. Prezzi un po' alti ma vale la pena.*null
+michele.costa@email.com*828*1*Paella immangiabile e sangria annacquata. Servizio lentissimo.*Lo sentimos mucho, tomaremos medidas para mejorar.
+michele.costa@email.com*839*3*Location elegante ma prezzi troppo elevati.*null
+paolo.galli@email.com*837*4*Hamburger succulenti e milkshake come nei film.*Thank you, come back soon!
+paolo.galli@email.com*824*1*Pesce non fresco, prezzi assurdi e servizio scadente. Da evitare.*null

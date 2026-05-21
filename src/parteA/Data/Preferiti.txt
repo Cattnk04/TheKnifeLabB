@@ -1,35 +1,24 @@
-mario.rossi@email.com,Sapori di Mare
-mario.rossi@email.com,International Club
-laura.bianchi@email.com,La Vecchia Cantina
-laura.bianchi@email.com,Locanda dei Dogi
-marco.verdi@email.com,Fusion Garden
-marco.verdi@email.com,Masseria del Sud
-giulia.ferrari@email.com,Imperial Sushi
-giulia.ferrari@email.com,Villa dei Limoni
-andrea.romano@email.com,El Patio
-sofia.colombo@email.com,Nordic Flavors
-sofia.colombo@email.com,Fusion Lounge
-luca.ricci@email.com,Little Italy
-chiara.marino@email.com,Bistrot Parisien
-alessandro.greco@email.com,Dragon Palace
-valentina.conti@email.com,The Wellington
-roberto.mancini@email.com,Casa Portuguesa
-francesca.serra@email.com,Gourmet Haven
-elena.martini@email.com,Pizza Express
-john.smith@email.com,The Wellington
-john.smith@email.com,Imperial Sushi
-marie.dubois@email.com,Bistrot Parisien
-marie.dubois@email.com,Le Gourmet
-hans.mueller@email.com,Deutsches Haus
-ana.garcia@email.com,El Patio
-ana.garcia@email.com,Mexican Fiesta
-erik.johansson@email.com,Nordic Flavors
-yuki.tanaka@email.com,Imperial Sushi
-yuki.tanaka@email.com,Dragon Palace
-carlos.santos@email.com,Casa Portuguesa
-sophie.anderson@email.com,American Diner
-sophie.anderson@email.com,International Club
-wang.lei@email.com,Dragon Palace
-pedro.martinez@email.com,Mexican Fiesta
-pedro.martinez@email.com,El Patio
-gpellegrini@gmail.com,Little Italy
+mario.rossi@email.com,824
+mario.rossi@email.com,839
+laura.bianchi@email.com,825
+laura.bianchi@email.com,822
+marco.verdi@email.com,826
+marco.verdi@email.com,823
+giulia.ferrari@email.com,827
+andrea.romano@email.com,828
+sofia.colombo@email.com,829
+luca.ricci@email.com,830
+chiara.marino@email.com,831
+elena.martini@email.com,836
+john.smith@email.com,833
+john.smith@email.com,827
+marie.dubois@email.com,831
+marie.dubois@email.com,840
+hans.mueller@email.com,838
+ana.garcia@email.com,828
+ana.garcia@email.com,835
+erik.johansson@email.com,829
+yuki.tanaka@email.com,827
+pedro.martinez@email.com,835
+pedro.martinez@email.com,828
+gpellegrini@gmail.com,830
