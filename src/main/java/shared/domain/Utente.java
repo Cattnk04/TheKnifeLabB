@@ -1,5 +1,6 @@
 package main.java.shared.domain;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
@@ -12,7 +13,7 @@ import java.util.Scanner;
  * Classe per gestione della generazione dell'elemento Utente.
  */
 
-public class Utente {
+public class Utente implements Serializable{
     public static final String FILE_UTENTI = "Data/Utenti.txt";
     private static final Scanner scanner = new Scanner(System.in);
     private String nome;

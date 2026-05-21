@@ -1,0 +1,15 @@
+package main.java.shared.communication;
+
+public enum TipoRichieste {
+    LOGIN,
+    REGISTER,
+    LOGOUT,
+    GET_RISTORANTE,
+    CREA_RISTORANTE,
+    GET_RECENSIONI_RISTORANTE,
+    SCRIVI_RECENSIONE,
+    MODIFICA_RECENSIONE,
+    ELIMINA_RECENSIONE,
+    AGGIUNGI_PRFERITO,
+    RIMUOVI_PREFERITO,
+}

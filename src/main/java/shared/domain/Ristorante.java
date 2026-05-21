@@ -1,5 +1,6 @@
 package main.java.shared.domain;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Scanner;
  * Classe per gestione della generazione dell'elemento Ristorante.
  */
 
-public class Ristorante {
+public class Ristorante implements Serializable{
 
     private String nome;
     private String emailRistoratore;

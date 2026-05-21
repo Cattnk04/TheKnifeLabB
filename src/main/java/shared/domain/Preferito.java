@@ -2,6 +2,8 @@ package main.java.shared.domain;
 
 import parteA.GestioneDati.ListaRistoranti;
 
+import java.io.Serializable;
+
 /**
  * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
  * @version 1.0
@@ -9,7 +11,7 @@ import parteA.GestioneDati.ListaRistoranti;
  * Classe per gestione della generazione dell'elemento Preferito.
  */
 
-public class Preferito {
+public class Preferito implements Serializable {
 
     String emailUtente;
     String nomeRistorante;

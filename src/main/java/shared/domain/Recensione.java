@@ -2,6 +2,7 @@ package main.java.shared.domain;
 
 import parteA.GestioneDati.ListaRistoranti;
 
+import java.io.Serializable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ import java.util.Scanner;
  * Classe per gestione della generazione dell'elemento Recensione.
  */
 
-public class Recensione {
+public class Recensione implements Serializable{
 
     public static final String FILE_RECENSIONI = "Data/Recensioni.txt";
     String email;
