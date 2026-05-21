@@ -11,12 +11,12 @@ CREATE TABLE Utente(
 );
 
 CREATE TABLE TipiCucina(
-    IDTipoCucina INT PRIMARY KEY AUTO_INCREMENT,
+    IDTipoCucina SERIAL PRIMARY KEY,
     TipoCucina VARCHAR(30) UNIQUE NOT NULL
 );
 
 CREATE TABLE Ristorante(
-    IDRistorante INT PRIMARY KEY AUTO_INCREMENT,
+    IDRistorante SERIAL PRIMARY KEY,
     NomeRistorante VARCHAR(50) NOT NULL,
     Email VARCHAR(50) NOT NULL,
     Citta VARCHAR(50) NOT NULL,
@@ -28,9 +28,9 @@ CREATE TABLE Ristorante(
     PrenotazioneOnline BOOLEAN NOT NULL,
     IDTipoCucina INT NOT NULL,
     FOREIGN KEY (Email)
-        REFERENCES Utente(Email),
+        REFERENCES Utente(Email) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (IDTipoCucina)
-         REFERENCES TipiCucina(IDTipoCucina)
+         REFERENCES TipiCucina(IDTipoCucina) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE Preferiti(
@@ -38,9 +38,9 @@ CREATE TABLE Preferiti(
     Email VARCHAR(50),
     PRIMARY KEY (IDRistorante, Email)
     FOREIGN KEY (IDRistorante)
-        REFERENCES Ristorante(IDRistorante),
+        REFERENCES Ristorante(IDRistorante)  ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (Email)
-        REFERENCES Utente(Email)
+        REFERENCES Utente(Email) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Recensioni(
@@ -51,9 +51,9 @@ CREATE TABLE Recensioni(
     Risposta VARCHAR(750),
     PRIMARY KEY (Email, IDRistorante)
     FOREIGN KEY (Email)
-        REFERENCES Utente(Email)
+        REFERENCES Utente(Email) ON DELETE CASCADE ON UPDATE CASCADE
     FOREIGN KEY (IDRistorante)
-        REFERENCES Ristorante(IDRistorante)
+        REFERENCES Ristorante(IDRistorante) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 --CREAZIONE CONSTRAINT

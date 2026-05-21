@@ -11,7 +11,7 @@ Ristoratore
 Ristoranti:
 IDRistorante
 NomeRistorante
-Email (chiave esterna su Utente)
+Email (chiave esterna su Utente) ON DELETE CASCADE ON UPDATE CASCADE
 Citta
 Nazione
 Via
@@ -19,7 +19,7 @@ NumeroCivico
 FasciaPrezzo
 Delivery (flag)
 PrenotazioneOnline (flag)
-IDTipoCucina (chiave esterna su TipoCucina)
+IDTipoCucina (chiave esterna su TipoCucina) ON DELETE SET NULL ON UPDATE CASCADE
 
 
 TipiCucina:
@@ -30,13 +30,13 @@ TipoCucina
 Preferiti:
 (tutti i campi chiave primaria)
 IDRistorante (chiave esterna su Ristorante)
-Email (chiave esterna su Utente)
+Email (chiave esterna su Utente) ON DELETE CASCADE ON UPDATE CASCADE
 
 
 Recensione:
 (email e id primarie)
-Email (chiave esterna su Utente)
-IDRistorante (chiave esterna su Ristorante)
+Email (chiave esterna su Utente) ON DELETE CASCADE ON UPDATE CASCADE
+IDRistorante (chiave esterna su Ristorante) ON DELETE CASCADE ON UPDATE CASCADE
 Valutazione
 Recensione
 Risposta
