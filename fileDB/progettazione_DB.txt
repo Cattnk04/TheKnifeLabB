@@ -1,0 +1,45 @@
+Utenti:
+Email: varchar(50) (chiave primaria)
+HashPwd
+NomeUtente
+CognomeUtente
+Citta
+Nazione
+Ristoratore
+
+
+Ristoranti:
+IDRistorante
+NomeRistorante
+Email (chiave esterna su Utente)
+Citta
+Nazione
+Via
+NumeroCivico
+FasciaPrezzo
+Delivery (flag)
+PrenotazioneOnline (flag)
+IDTipoCucina (chiave esterna su TipoCucina)
+
+
+TipiCucina:
+IDTipoCucina (chiave primaria)
+TipoCucina
+
+
+Preferiti:
+(tutti i campi chiave primaria)
+IDRistorante (chiave esterna su Ristorante)
+Email (chiave esterna su Utente)
+
+
+Recensione:
+(email e id primarie)
+Email (chiave esterna su Utente)
+IDRistorante (chiave esterna su Ristorante)
+Valutazione
+Recensione
+Risposta
+
+
+

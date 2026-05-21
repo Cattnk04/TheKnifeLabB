@@ -1,0 +1,35 @@
+mario.rossi@email.com,Sapori di Mare
+mario.rossi@email.com,International Club
+laura.bianchi@email.com,La Vecchia Cantina
+laura.bianchi@email.com,Locanda dei Dogi
+marco.verdi@email.com,Fusion Garden
+marco.verdi@email.com,Masseria del Sud
+giulia.ferrari@email.com,Imperial Sushi
+giulia.ferrari@email.com,Villa dei Limoni
+andrea.romano@email.com,El Patio
+sofia.colombo@email.com,Nordic Flavors
+sofia.colombo@email.com,Fusion Lounge
+luca.ricci@email.com,Little Italy
+chiara.marino@email.com,Bistrot Parisien
+alessandro.greco@email.com,Dragon Palace
+valentina.conti@email.com,The Wellington
+roberto.mancini@email.com,Casa Portuguesa
+francesca.serra@email.com,Gourmet Haven
+elena.martini@email.com,Pizza Express
+john.smith@email.com,The Wellington
+john.smith@email.com,Imperial Sushi
+marie.dubois@email.com,Bistrot Parisien
+marie.dubois@email.com,Le Gourmet
+hans.mueller@email.com,Deutsches Haus
+ana.garcia@email.com,El Patio
+ana.garcia@email.com,Mexican Fiesta
+erik.johansson@email.com,Nordic Flavors
+yuki.tanaka@email.com,Imperial Sushi
+yuki.tanaka@email.com,Dragon Palace
+carlos.santos@email.com,Casa Portuguesa
+sophie.anderson@email.com,American Diner
+sophie.anderson@email.com,International Club
+wang.lei@email.com,Dragon Palace
+pedro.martinez@email.com,Mexican Fiesta
+pedro.martinez@email.com,El Patio
+gpellegrini@gmail.com,Little Italy

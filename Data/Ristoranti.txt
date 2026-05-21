@@ -1,0 +1,71 @@
+Sapori d'Elite,trattoria.sapori@rest.com,italia,milano,Via Monte Napoleone 15,45.0,true,true,francese
+Antica Osteria del Centro,osteria.antica@rest.com,italia,roma,Via del Corso 234,35.0,false,true,italiana
+Bella Vista,ristorante.bella@rest.com,italia,firenze,Piazza della Signoria 8,55.0,false,true,fusion
+Mare Blu,locanda.mare@rest.com,italia,napoli,Via Caracciolo 45,30.0,true,false,pesce
+Pizza & Delizie,pizzeria.napoli@rest.com,italia,palermo,Via Maqueda 67,20.0,true,true,pizzeria
+Il Cantuccio,taverna.siciliana@rest.com,italia,catania,Via Etnea 123,28.0,true,false,internazionale
+La Terrazza,osteria.toscana@rest.com,italia,siena,Piazza del Campo 9,40.0,false,true,gourmet
+Canal Grande,ristorante.venezia@rest.com,italia,venezia,Fondamenta Nuove 456,60.0,false,true,pesce
+Bottega del Gusto,trattoria.emilia@rest.com,italia,bologna,Via dell'Indipendenza 78,32.0,true,true,internazionale
+Porto Antico,cucina.ligure@rest.com,italia,genova,Via al Porto Antico 12,38.0,true,false,italiana
+Masseria Pugliese,osteria.pugliese@rest.com,italia,bari,Corso Vittorio Emanuele 89,25.0,true,true,tradizionale
+Vista Mare,ristorante.adriatico@rest.com,italia,pescara,Lungomare Matteotti 34,42.0,false,true,pesce
+Baita Montana,locanda.alpina@rest.com,italia,trento,Via delle Dolomiti 56,48.0,false,true,internazionale
+Giardino Romano,trattoria.roma@rest.com,italia,roma,Via Appia Antica 78,52.0,true,true,fusion
+La Piazzetta,cucina.piemonte@rest.com,italia,torino,Via Roma 234,36.0,true,false,gourmet
+Il Portico,osteria.umbra@rest.com,italia,perugia,Corso Vannucci 45,33.0,true,true,tradizionale
+Borgo Antico,ristorante.marche@rest.com,italia,ancona,Via del Porto 67,29.0,false,true,pesce
+Terrazza Calabra,locanda.calabra@rest.com,italia,reggio calabria,Lungomare Falcomatà 90,27.0,true,false,italiana
+Il Faro,trattoria.sarda@rest.com,italia,cagliari,Via Roma 123,44.0,true,true,pesce
+Cucina d'Autore,cucina.abruzzo@rest.com,italia,pescara,Corso Umberto 56,39.0,false,true,gourmet
+The Crown & Lion,london.cuisine@rest.com,inghilterra,londra,Baker Street 221B,55.0,true,true,inglese
+Le Petit Bistrot,paris.bistro@rest.com,francia,parigi,Rue de Rivoli 156,65.0,true,true,francese
+Berliner Küche,berlin.haus@rest.com,germania,berlino,Unter den Linden 78,48.0,false,true,tedesca
+La Mesa Bonita,madrid.tapas@rest.com,spagna,madrid,Calle Mayor 25,35.0,true,true,spagnola
+Nordic Haven,stockholm.nordic@rest.com,svezia,stoccolma,Drottninggatan 45,70.0,false,true,nordica
+Sakura House,tokyo.sushi@rest.com,giappone,tokyo,Shibuya 3-15-6,80.0,true,true,giapponese
+Manhattan Grill,nyc.kitchen@rest.com,usa,new york,5th Avenue 789,65.0,true,true,americana
+Golden Dragon,shanghai.dragon@rest.com,cina,shanghai,Nanjing Road 234,40.0,true,false,cinese
+Casa do Porto,lisboa.porto@rest.com,portogallo,lisbona,Rua Augusta 67,38.0,true,true,portoghese
+Cantina Mexicana,mexico.cantina@rest.com,messico,città del messico,Av. Insurgentes 123,30.0,true,false,messicana
+Royal Garden,london.cuisine@rest.com,inghilterra,manchester,King Street 45,95.0,true,true,inglese
+Bistrot Eiffel,paris.bistro@rest.com,francia,lione,Place Bellecour 78,85.0,false,true,haute cuisine
+Biergarten Haus,berlin.haus@rest.com,germania,monaco,Karlsplatz 12,75.0,true,true,tedesca
+El Toro Bravo,madrid.tapas@rest.com,spagna,barcellona,Las Ramblas 89,68.0,true,true,spagnola
+Arctic Light,stockholm.nordic@rest.com,svezia,malmö,Stortorget 34,120.0,false,true,nordica
+Zen Garden,tokyo.sushi@rest.com,giappone,osaka,Dotonbori 5-1,110.0,true,true,giapponese
+Broadway Kitchen,nyc.kitchen@rest.com,usa,los angeles,Rodeo Drive 456,140.0,true,true,americana
+Imperial Palace,shanghai.dragon@rest.com,cina,pechino,Wangfujing Street 78,90.0,true,true,cinese
+Fado House,lisboa.porto@rest.com,portogallo,porto,Ribeira 123,72.0,true,false,portoghese
+Hacienda Grande,mexico.cantina@rest.com,messico,cancun,Zona Hotelera 567,85.0,true,true,messicana
+Villa Gourmet,trattoria.sapori@rest.com,italia,verona,Piazza Erbe 45,110.0,false,true,gourmet
+La Pergola Sul Mare,locanda.mare@rest.com,italia,positano,Via Cristoforo Colombo 78,125.0,true,true,internazionale
+Enoteca Stellata,ristorante.bella@rest.com,italia,alba,Via Vittorio Emanuele 90,145.0,false,true,italiana
+Palazzo del Gusto,osteria.antica@rest.com,italia,san gimignano,Via del Castello 23,98.0,true,true,tradizionale
+Grotta Azzurra,pizzeria.napoli@rest.com,italia,capri,Via Krupp 12,135.0,true,true,pesce
+Locanda dei Dogi,ristorante.venezia@rest.com,italia,burano,Piazza Galuppi 56,115.0,false,true,internazionale
+Rifugio d'Alta Quota,locanda.alpina@rest.com,italia,cortina d'ampezzo,Corso Italia 89,160.0,true,true,fusion
+Masseria del Sud,osteria.pugliese@rest.com,italia,alberobello,Via dei Trulli 34,95.0,true,true,tradizionale
+Villa dei Limoni,cucina.abruzzo@rest.com,italia,sorrento,Via Marina Grande 67,130.0,true,true,gourmet
+Borgo Antico Elite,trattoria.roma@rest.com,italia,orvieto,Via Duomo 12,105.0,false,true,italiana
+Sapori di Mare,trattoria.sapori@rest.com,italia,rimini,Lungomare Tintori 7,85.0,true,true,pesce
+La Vecchia Cantina,osteria.antica@rest.com,italia,matera,Via Fiorentini 45,95.0,false,true,tradizionale
+Fusion Garden,ristorante.bella@rest.com,italia,como,Via Borgo Vico 168,120.0,true,true,fusion
+Imperial Sushi,tokyo.sushi@rest.com,giappone,kyoto,Gion District 23,140.0,false,true,giapponese
+El Patio,madrid.tapas@rest.com,spagna,valencia,Calle de las Barcas 12,75.0,true,true,spagnola
+Nordic Flavors,stockholm.nordic@rest.com,svezia,göteborg,Kungsportsavenyen 25,95.0,true,true,nordica
+Little Italy,trattoria.emilia@rest.com,italia,parma,Strada Repubblica 89,65.0,true,true,italiana
+Bistrot Parisien,paris.bistro@rest.com,francia,nizza,Promenade des Anglais 156,110.0,false,true,francese
+Dragon Palace,shanghai.dragon@rest.com,cina,guangzhou,Pearl River Road 78,85.0,true,false,cinese
+The Wellington,london.cuisine@rest.com,inghilterra,liverpool,Albert Dock 45,88.0,true,true,inglese
+Casa Portuguesa,lisboa.porto@rest.com,portogallo,coimbra,Rua Ferreira Borges 34,70.0,true,true,portoghese
+Gourmet Haven,cucina.abruzzo@rest.com,italia,portofino,Piazza Martiri dell'Olivetta 25,175.0,false,true,gourmet
+Mexican Fiesta,mexico.cantina@rest.com,messico,guadalajara,Avenida Chapultepec 89,65.0,true,true,messicana
+Pizza Express,pizzeria.napoli@rest.com,italia,bologna,Via dell'Indipendenza 156,45.0,true,true,pizzeria
+American Diner,nyc.kitchen@rest.com,usa,miami,Ocean Drive 789,95.0,true,true,americana
+Deutsches Haus,berlin.haus@rest.com,germania,amburgo,Reeperbahn 56,82.0,true,true,tedesca
+International Club,ristorante.venezia@rest.com,italia,milano,Corso Buenos Aires 78,145.0,false,true,internazionale
+Le Gourmet,paris.bistro@rest.com,francia,bordeaux,Rue Sainte-Catherine 90,160.0,false,true,haute cuisine
+Mare Nostrum,locanda.mare@rest.com,italia,catania,Via Etnea 234,92.0,true,true,pesce
+Fusion Lounge,trattoria.roma@rest.com,italia,firenze,Via de' Tornabuoni 45,135.0,true,true,fusion
+London Eye,london.cuisine@rest.com,Inghilterra,londra,48 Leicester Square,30.0,true,false,internazionale

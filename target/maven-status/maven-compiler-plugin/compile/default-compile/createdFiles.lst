@@ -1,0 +1,12 @@
+Dominio\Utente.class
+Main.class
+Menu\MenuRistoratore.class
+Menu\MenuUtenteLog.class
+Menu\Menu.class
+Dominio\Preferito.class
+Dominio\Ristorante.class
+GestioneDati\ListaUtenti.class
+Dominio\Recensione.class
+GestioneDati\ListaRecensioni.class
+GestioneDati\ListaRistoranti.class
+GestioneDati\ListaPreferiti.class
