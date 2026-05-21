@@ -1,9 +1,9 @@
-package Menu;
+package parteA.Menu;
 
 import Dominio.Utente;
-import GestioneDati.ListaPreferiti;
-import GestioneDati.ListaRecensioni;
-import GestioneDati.ListaRistoranti;
+import parteA.GestioneDati.ListaPreferiti;
+import parteA.GestioneDati.ListaRecensioni;
+import parteA.GestioneDati.ListaRistoranti;
 
 import java.util.*;
 
@@ -58,12 +58,12 @@ public class MenuUtenteLog {
      * Viene gestita anche l'eventuale eccezione InputMismatchException
      * per assicurare l'inserimento di un numero valido.
      */
-    //Menu utente
+    //parteA.Menu utente
     public void mostraMenuUtente(){
         int scelta = 0;
         do{
             try{ //il try catch è inutile in quanto c'è gia il caso di default
-                System.out.println("\n=== Menu Cliente ===");
+                System.out.println("\n=== parteA.Menu Cliente ===");
                 System.out.println("1. Cerca un ristorante");
                 System.out.println("2. Visualizza i tuoi preferiti");
                 System.out.println("3. Aggiungi ristorante ai preferiti");

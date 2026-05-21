@@ -1,4 +1,4 @@
-import Menu.Menu;
+import parteA.Menu.Menu;
 
 
 public class Main {

@@ -1,6 +1,6 @@
 package Dominio;
 
-import GestioneDati.ListaRistoranti;
+import parteA.GestioneDati.ListaRistoranti;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

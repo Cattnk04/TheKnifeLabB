@@ -1,4 +1,4 @@
-package GestioneDati;
+package parteA.GestioneDati;
 
 import Dominio.Utente;
 

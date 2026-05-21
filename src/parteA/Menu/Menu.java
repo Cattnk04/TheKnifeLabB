@@ -1,9 +1,9 @@
-package Menu;
+package parteA.Menu;
 
 
 import Dominio.Utente;
-import GestioneDati.ListaRistoranti;
-import GestioneDati.ListaUtenti;
+import parteA.GestioneDati.ListaRistoranti;
+import parteA.GestioneDati.ListaUtenti;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -12,7 +12,7 @@ import java.util.InputMismatchException;
  * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
  * @version 1.0
  *
- * La classe {@code Menu} rappresenta il menu principale dell'applicazione.
+ * La classe {@code parteA.Menu} rappresenta il menu principale dell'applicazione.
  * Gestisce la logica per utenti ospiti, registrazione, login e accesso ai sottomenu
  * per ristoratori o utenti registrati.
  *
@@ -33,7 +33,7 @@ public class Menu {
     private MenuUtenteLog menuUtenteLog;
 
     /**
-     * Costruttore della classe {@code Menu}.
+     * Costruttore della classe {@code parteA.Menu}.
      * <p>
      * Inizializza le liste degli utenti e dei ristoranti.
      * Presenta un menu interattivo per l'utente guest con le seguenti opzioni:

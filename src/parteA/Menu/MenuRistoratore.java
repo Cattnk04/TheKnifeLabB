@@ -1,10 +1,10 @@
-package Menu;
+package parteA.Menu;
 
 import Dominio.Recensione;
 import Dominio.Ristorante;
 import Dominio.Utente;
-import GestioneDati.ListaRecensioni;
-import GestioneDati.ListaRistoranti;
+import parteA.GestioneDati.ListaRecensioni;
+import parteA.GestioneDati.ListaRistoranti;
 
 import java.util.*;
 
@@ -58,7 +58,7 @@ public class MenuRistoratore {
         int scelta = 0;
         do {
             try {
-                System.out.println("\n=== Menu Ristoratore ===");
+                System.out.println("\n=== parteA.Menu Ristoratore ===");
                 System.out.println("1. Aggiungi ristorante");
                 System.out.println("2. Visualizza i miei ristoranti");
                 System.out.println("3. Visualizza riepilogo recensioni di tutti i ristoranti");
