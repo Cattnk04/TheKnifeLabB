@@ -11,16 +11,16 @@ import java.net.Socket;
 
 public class ClientHandler extends Thread{
     private Socket clientSocket;
-    private ObjectInputStream in;
     private ObjectOutputStream out;
+    private ObjectInputStream in;
     public ClientHandler(Socket clientSocket){
         this.clientSocket = clientSocket;
     }
     @Override
     public void run() {
         try{
-            in = new ObjectInputStream(clientSocket.getInputStream());
             out = new ObjectOutputStream(clientSocket.getOutputStream());
+            in = new ObjectInputStream(clientSocket.getInputStream());
             while(true){
                 Richiesta richiesta = (Richiesta) in.readObject();
                 Risposta risposta = gestisciRicheista(richiesta);
@@ -36,6 +36,6 @@ public class ClientHandler extends Thread{
                 break;
             /* DA FARE TUTTE LE FUNZIONI PER LE DIVERSE RICHIESTE*/
         }
-        return new Risposta();
+        return null;
     }
 }

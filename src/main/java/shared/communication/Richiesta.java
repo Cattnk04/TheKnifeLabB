@@ -12,4 +12,7 @@ public class Richiesta implements Serializable{
     public TipoRichieste getTipoRichiesta() {
         return tipoRichiesta;
     }
+    public Object getContenuto() {
+        return contenuto;
+    }
 }
