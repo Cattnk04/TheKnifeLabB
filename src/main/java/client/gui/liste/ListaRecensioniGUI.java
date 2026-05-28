@@ -3,7 +3,8 @@ package main.java.client.gui.liste;
 import javax.swing.*;
 
 public class ListaRecensioniGUI extends JPanel {
-    public ListaRecensioniGUI() {
-
+    JFrame frame;
+    public ListaRecensioniGUI(JFrame frame) {
+        this.frame = frame;
     }
 }
