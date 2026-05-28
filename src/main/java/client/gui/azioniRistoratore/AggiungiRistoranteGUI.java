@@ -25,7 +25,14 @@ public class AggiungiRistoranteGUI extends JPanel {
         JComboBox cbTipoCucina = new JComboBox();
         cbTipoCucina.setEditable(true);
         //AGGIUNGERE QUERY PER PRENDERE I TIPI DI CUCINA
-
+        this.add(nomeRistorante);
+        this.add(citta);
+        this.add(nazione);
+        this.add(via);
+        this.add(numeroCivico);
+        this.add(rbDelivery);
+        this.add(rbPrenotazioneOnline);
+        this.add(cbTipoCucina);
 
         JButton button = new JButton("Aggiungi Ristorante");
     }
