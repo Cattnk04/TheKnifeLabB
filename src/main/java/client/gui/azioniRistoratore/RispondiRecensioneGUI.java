@@ -2,7 +2,7 @@ package main.java.client.gui.azioniRistoratore;
 
 import javax.swing.*;
 
-public class RispondiRecensioneGUI extends JFrame {
+public class RispondiRecensioneGUI extends JPanel {
     public RispondiRecensioneGUI() {
 
     }

@@ -1,4 +1,6 @@
 package main.java.client.gui.menu;
 
-public class GuestGUI {
+import javax.swing.*;
+
+public class GuestGUI extends JPanel {
 }
