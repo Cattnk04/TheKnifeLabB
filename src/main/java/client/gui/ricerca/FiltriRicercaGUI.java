@@ -11,7 +11,6 @@ public class FiltriRicercaGUI extends JPanel {
     public FiltriRicercaGUI(JFrame frame) {
         this.frame = frame;
         JButton filtriRicerca = new JButton("cambia panel in Ristoratore GUI");
-        frame.setTitle("FiltriRicerca");
         filtriRicerca.addActionListener(e -> {
             azione();
         });
