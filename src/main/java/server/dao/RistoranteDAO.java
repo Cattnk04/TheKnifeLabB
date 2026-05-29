@@ -37,6 +37,44 @@ public class RistoranteDAO {
             return false;
         }
     }
+    //Aggiornamento di un campo generico
+    public boolean aggiornaCampo(int idRistorante, String campo, String valore) {
 
-    //Aggiungere metodi per la ricerca, aggiornamento e cancellazione dei ristoranti
+        String sql = "UPDATE ristorante SET " + campo + " = ? WHERE idristorante = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, valore);
+            statement.setInt(2, idRistorante);
+
+            return statement.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Errore durante l'aggiornamento: " + e.getMessage());
+            return false;
+        }
+    }
+
+    //Cancellazione
+    public boolean rimuoviRistorante(int idRistorante) {
+        String sql = """
+            DELETE FROM ristorante
+            WHERE idRistorante = ?
+        """;
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, idRistorante);
+
+            return statement.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Errore durante l'eliminazione del ristorante: " + e.getMessage());
+            return false;
+        }
+    }
+
+    //Aggiungere metodi per la ricerca
 }

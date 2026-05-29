@@ -3,7 +3,6 @@ package main.java.server.dao;
 import main.java.server.db.DatabaseConnection;
 import main.java.shared.domain.Preferito;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 
 public class PreferitiDAO {
@@ -26,4 +25,5 @@ public class PreferitiDAO {
             return false;
         }
     }
+    //Aggiungere metodi per la cancellazone, la ricerca e l'aggiornamento dei preferiti'
 }
