@@ -186,15 +186,15 @@ public class MenuRistoratore {
         boolean trovati = false;
 
         for (Ristorante r : listaRistoranti.getListaRistoranti()) {
-            if (r.getEmailRistoratore().equals(utenteCorrente.getEmail())) {
+            if (r.getEmail().equals(utenteCorrente.getEmail())) {
                 trovati = true;
                 System.out.println("\nNome: " + r.getNome());
                 System.out.println("Nazione: " + r.getNazione());
                 System.out.println("Città: " + r.getCitta());
-                System.out.println("Indirizzo: " + r.getIndirizzo());
+                System.out.println("Indirizzo: " + r.getVia());
                 System.out.println("Fascia di prezzo: " + r.getFasciaPrezzo());
-                System.out.println("Servizio delivery: " + (r.getServizioDelivery() ? "Sì" : "No"));
-                System.out.println("Prenotazione online: " + (r.getServizioPrenotazioneOnline() ? "Sì" : "No"));
+                System.out.println("Servizio delivery: " + (r.getDelivery() ? "Sì" : "No"));
+                System.out.println("Prenotazione online: " + (r.getPrenotazioneOnline() ? "Sì" : "No"));
                 System.out.println("Tipo di cucina: " + r.getTipoCucina());
                 System.out.println("----------------------------------------");
             }
@@ -222,7 +222,7 @@ public class MenuRistoratore {
 
         int cont = 1;
         for (Ristorante r : listaRistoranti.getListaRistoranti()) {
-            if (r.getEmailRistoratore().equals(utenteCorrente.getEmail())) {
+            if (r.getEmail().equals(utenteCorrente.getEmail())) {
                 System.out.println(cont + ": " + r.getNome());
                 ristorantiUtente.add(r);
                 cont++;
@@ -283,7 +283,7 @@ public class MenuRistoratore {
         // Mostra la lista dei ristoranti del proprietario
         System.out.println("I tuoi ristoranti:");
         for (Ristorante r : listaRistoranti.getListaRistoranti()) {
-            if (r.getEmailRistoratore().equals(utenteCorrente.getEmail())) {
+            if (r.getEmail().equals(utenteCorrente.getEmail())) {
                 System.out.printf("%d. %s\n", contatore++, r.getNome());
                 mieiRistoranti.add(r);
             }
@@ -369,7 +369,7 @@ public class MenuRistoratore {
 
         // Per ogni ristorante del proprietario
         for (Ristorante ristorante : listaRistoranti.getListaRistoranti()) {
-            if (ristorante.getEmailRistoratore().equals(utenteCorrente.getEmail())) {
+            if (ristorante.getEmail().equals(utenteCorrente.getEmail())) {
 
                 // Variabili per calcolare le statistiche
                 int numeroRecensioni = 0;
@@ -400,7 +400,7 @@ public class MenuRistoratore {
 
         // Se non ci sono ristoranti per il proprietario
         if (!listaRistoranti.getListaRistoranti().stream()
-                .anyMatch(r -> r.getEmailRistoratore().equals(utenteCorrente.getEmail()))) {
+                .anyMatch(r -> r.getEmail().equals(utenteCorrente.getEmail()))) {
             System.out.println("Non possiedi ancora nessun ristorante.");
         }
     }
@@ -416,6 +416,6 @@ public class MenuRistoratore {
     private boolean appartienePropietario(String nomeRistorante) {
         return listaRistoranti.getListaRistoranti().stream()
                 .anyMatch(r -> r.getNome().equals(nomeRistorante) &&
-                        r.getEmailRistoratore().equals(utenteCorrente.getEmail()));
+                        r.getEmail().equals(utenteCorrente.getEmail()));
     }
 }

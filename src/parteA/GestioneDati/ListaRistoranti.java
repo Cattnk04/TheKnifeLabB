@@ -234,11 +234,11 @@ public class ListaRistoranti {
         System.out.println("\n=== Dettagli del ristorante ===");
         System.out.println("Nome: " + ristorante.getNome());
         System.out.println("Città: " + ristorante.getCitta());
-        System.out.println("Indirizzo: " + ristorante.getIndirizzo());
+        System.out.println("Indirizzo: " + ristorante.getVia());
         System.out.println("Fascia di prezzo: " + ristorante.getFasciaPrezzo());
         System.out.println("Tipo di cucina: " + ristorante.getTipoCucina());
-        System.out.println("Servizio delivery: " + (ristorante.getServizioDelivery() ? "Sì" : "No"));
-        System.out.println("Prenotazione online: " + (ristorante.getServizioPrenotazioneOnline() ? "Sì" : "No"));
+        System.out.println("Servizio delivery: " + (ristorante.getDelivery() ? "Sì" : "No"));
+        System.out.println("Prenotazione online: " + (ristorante.getPrenotazioneOnline() ? "Sì" : "No"));
         System.out.println("----------------------------------------");
 
         boolean continua = true;
@@ -404,7 +404,7 @@ public class ListaRistoranti {
      * @param filtrati lista di ristoranti su cui applicare il filtro (verrà modificata)
      */
     private void filtraPerDelivery(List<Ristorante> filtrati){
-        filtrati.removeIf(r -> !r.getServizioDelivery());
+        filtrati.removeIf(r -> !r.getDelivery());
         System.out.println("Filtro per delivery medio inserito.");
     }
     /**
@@ -413,7 +413,7 @@ public class ListaRistoranti {
      * @param filtrati lista di ristoranti su cui applicare il filtro (verrà modificata)
      */
     private void filtraPerPrenotazioneOnline(List<Ristorante> filtrati){
-        filtrati.removeIf(r -> !r.getServizioPrenotazioneOnline());
+        filtrati.removeIf(r -> !r.getPrenotazioneOnline());
         System.out.println("Filtro per prenotazione online inserito.");
     }
     /**

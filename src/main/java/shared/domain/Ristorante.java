@@ -1,7 +1,7 @@
 package main.java.shared.domain;
 
 import java.io.Serializable;
-import java.util.Scanner;
+import java.util.SimpleTimeZone;
 
 /**
  * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
@@ -12,16 +12,19 @@ import java.util.Scanner;
 
 public class Ristorante implements Serializable{
 
-    private String nome;
-    private String emailRistoratore;
+    private int idRistorante;
+    private String nomeRistorante;
+    private String email;
     private String nazione;
     private String citta;
-    private String indirizzo;
-    private double fasciaPrezzo;
-    private boolean servizioDelivery;
-    private boolean servizioPrenotazioneOnline;
-    private String tipoCucina;
-    public static final String FILE_RISTORANTI = "Data/Ristoranti.txt";
+    private String via;
+    private int numeroCivico;
+    private int fasciaPrezzo;
+    private boolean delivery;
+    private boolean prenotazioneOnline;
+    private int idTipoCucina;
+
+    //public static final String FILE_RISTORANTI = "Data/Ristoranti.txt";
 
     /**
      * Costruttore della classe Ristorante che inizializza un nuovo ristorante
@@ -29,25 +32,27 @@ public class Ristorante implements Serializable{
      * per rimuovere eventuali spazi bianchi iniziali e finali.
      *
      * @param nome il nome del ristorante
-     * @param emailRistoratore l'email del ristoratore responsabile
+     * @param email l'email del ristoratore responsabile
      * @param nazione la nazione in cui si trova il ristorante
      * @param citta la città in cui si trova il ristorante
-     * @param indirizzo l'indirizzo completo del ristorante
+     * @param via l'indirizzo del ristorante
+     * @param numeroCivico il numero civico del ristorante
      * @param fasciaPrezzo la fascia di prezzo del ristorante (es. media, alta, ecc.)
-     * @param servizioDelivery true se il ristorante offre servizio di consegna a domicilio
-     * @param servizioPrenotazioneOnline true se il ristorante offre servizio di prenotazione online
-     * @param tipoCucina il tipo di cucina offerta dal ristorante (es. italiana, giapponese, ecc.)
+     * @param delivery true se il ristorante offre servizio di consegna a domicilio
+     * @param prenotazioneOnline true se il ristorante offre servizio di prenotazione online
+     * @param idTipoCucina il tipo di cucina offerta dal ristorante (es. italiana, giapponese, ecc.)
      */
-    public Ristorante(String nome, String emailRistoratore, String nazione, String citta, String indirizzo, double fasciaPrezzo, boolean servizioDelivery, boolean servizioPrenotazioneOnline, String tipoCucina){
-        this.nome = nome.trim();
-        this.emailRistoratore = emailRistoratore.trim();
+    public Ristorante(String nome, String email, String nazione, String citta, String via, int numeroCivico, int fasciaPrezzo, boolean delivery, boolean prenotazioneOnline, int idTipoCucina){
+        this.nomeRistorante = nome.trim();
+        this.email = email.trim();
         this.nazione = nazione.trim();
         this.citta = citta.trim();
-        this.indirizzo = indirizzo.trim();
+        this.via = via.trim();
+        this.numeroCivico = numeroCivico;
         this.fasciaPrezzo = fasciaPrezzo;
-        this.servizioDelivery = servizioDelivery;
-        this.servizioPrenotazioneOnline = servizioPrenotazioneOnline;
-        this.tipoCucina = tipoCucina.trim();
+        this.delivery = delivery;
+        this.prenotazioneOnline = prenotazioneOnline;
+        this.idTipoCucina = idTipoCucina;
     }
 
     /**
@@ -57,18 +62,28 @@ public class Ristorante implements Serializable{
      *
      * @param utenteRistoratore l'utente che rappresenta il ristoratore associato al ristorante
      */
+     /*
     public Ristorante(Utente utenteRistoratore){
-        this.emailRistoratore = utenteRistoratore.getEmail();
+        this.email = utenteRistoratore.getEmail();
         inserisciDatiRistorante();
-    }
+    }*/
 
     /**
      * Restituisce il nome del ristorante.
      *
      * @return il nome del ristorante
      */
-    public String getNome(){
-        return this.nome;
+    public String getNomeRistorante(){
+        return this.nomeRistorante;
+    }
+
+    /**
+     * Restituisce l'email del ristoratore associato al ristorante.
+     *
+     * @return l'email del ristoratore
+     */
+    public String getEmail() {
+        return email;
     }
 
     /**
@@ -90,20 +105,29 @@ public class Ristorante implements Serializable{
     }
 
     /**
-     * Restituisce l'indirizzo completo del ristorante.
+     * Restituisce la via del ristorante.
      *
      * @return l'indirizzo del ristorante
      */
-    public String getIndirizzo(){
-        return this.indirizzo;
+    public String getVia(){
+        return this.via;
+    }
+
+    /**
+     * Restituisce il numero civico del ristorante.
+     *
+     * @return l'indirizzo del ristorante
+     */
+    public int getNumeroCivico(){
+        return this.numeroCivico;
     }
 
     /**
      * Restituisce la fascia di prezzo del ristorante.
      *
-     * @return la fascia di prezzo (double)
+     * @return la fascia di prezzo (int)
      */
-    public double getFasciaPrezzo(){
+    public int getFasciaPrezzo(){
         return this.fasciaPrezzo;
     }
 
@@ -112,8 +136,8 @@ public class Ristorante implements Serializable{
      *
      * @return true se è attivo il servizio di delivery, false altrimenti
      */
-    public boolean getServizioDelivery(){
-        return this.servizioDelivery;
+    public boolean getDelivery(){
+        return this.delivery;
     }
 
     /**
@@ -121,8 +145,8 @@ public class Ristorante implements Serializable{
      *
      * @return true se è attivo il servizio di prenotazione online, false altrimenti
      */
-    public boolean getServizioPrenotazioneOnline(){
-        return this.servizioPrenotazioneOnline;
+    public boolean getPrenotazioneOnline(){
+        return this.prenotazioneOnline;
     }
 
     /**
@@ -130,17 +154,8 @@ public class Ristorante implements Serializable{
      *
      * @return il tipo di cucina (es. italiana, cinese, ecc.)
      */
-    public String getTipoCucina(){
-        return this.tipoCucina;
-    }
-
-    /**
-     * Restituisce l'email del ristoratore associato al ristorante.
-     *
-     * @return l'email del ristoratore
-     */
-    public Object getEmailRistoratore() {
-        return emailRistoratore;
+    public int getIdTipoCucina(){
+        return this.idTipoCucina;
     }
 
     /**
@@ -149,7 +164,7 @@ public class Ristorante implements Serializable{
      * @param nome il nuovo nome del ristorante
      */
     public void setNome(String nome){
-        this.nome = nome;
+        this.nomeRistorante = nome;
     }
 
     /**
@@ -171,12 +186,21 @@ public class Ristorante implements Serializable{
     }
 
     /**
-     * Imposta l'indirizzo del ristorante.
+     * Imposta la via del ristorante.
      *
-     * @param indirizzo il nuovo indirizzo del ristorante
+     * @param via la nuova via del ristorante
      */
-    public void setIndirizzo(String indirizzo){
-        this.indirizzo = indirizzo;
+    public void setVia(String via){
+        this.via = via;
+    }
+
+    /**
+     * Imposta il numerocivico del ristorante.
+     *
+     * @param numeroCivico il nuovo indirizzo del ristorante
+     */
+    public void setNumeroCivico (int numeroCivico){
+        this.numeroCivico = numeroCivico;
     }
 
     /**
@@ -184,35 +208,35 @@ public class Ristorante implements Serializable{
      *
      * @param fasciaPrezzo la nuova fascia di prezzo
      */
-    public void setFasciaPrezzo(double fasciaPrezzo){
+    public void setFasciaPrezzo(int fasciaPrezzo){
         this.fasciaPrezzo = fasciaPrezzo;
     }
 
     /**
      * Imposta se il servizio di delivery è attivo o meno.
      *
-     * @param servizioDelivery true per attivare il servizio, false per disattivarlo
+     * @param delivery true per attivare il servizio, false per disattivarlo
      */
-    public void setServizioDelivery(boolean servizioDelivery){
-        this.servizioDelivery = servizioDelivery;
+    public void setDelivery(boolean delivery){
+        this.delivery = delivery;
     }
 
     /**
      * Imposta se il servizio di prenotazione online è attivo o meno.
      *
-     * @param servizioPrenotazioneOnline true per attivare il servizio, false per disattivarlo
+     * @param prenotazioneOnline true per attivare il servizio, false per disattivarlo
      */
-    public void setServizioPrenotazioneOnline(boolean servizioPrenotazioneOnline){
-        this.servizioPrenotazioneOnline = servizioPrenotazioneOnline;
+    public void setPrenotazioneOnline(boolean prenotazioneOnline){
+        this.prenotazioneOnline = prenotazioneOnline;
     }
 
     /**
      * Imposta il tipo di cucina offerta dal ristorante.
      *
-     * @param tipoCucina il nuovo tipo di cucina
+     * @param idTipoCucina il nuovo tipo di cucina
      */
-    public void setTipoCucina(String tipoCucina){
-        this.tipoCucina = tipoCucina;
+    public void setTipoCucina(int idTipoCucina){
+        this.idTipoCucina = idTipoCucina;
     }
 
     /**
@@ -223,8 +247,18 @@ public class Ristorante implements Serializable{
      */
     //Metodo to string
     @Override
-    public String toString(){
-        return this.nome + ',' + this.emailRistoratore + ',' + this.nazione + ',' + this.citta + ',' + this.indirizzo + ',' + this.fasciaPrezzo + ','+ this.servizioDelivery + ',' + this.servizioPrenotazioneOnline + ',' + this.tipoCucina;
+    public String toString() {
+        return idRistorante + "," +
+                nomeRistorante + "," +
+                email + "," +
+                citta + "," +
+                nazione + "," +
+                via + "," +
+                numeroCivico + "," +
+                fasciaPrezzo + "," +
+                delivery + "," +
+                prenotazioneOnline + "," +
+                idTipoCucina;
     }
 
     /**
@@ -236,6 +270,7 @@ public class Ristorante implements Serializable{
      * Valida gli input per i servizi delivery e prenotazione online, accettando
      * solo 's' (sì) o 'n' (no), e continua a richiedere finché l'input non è corretto.
      */
+    /*
     //Metodo per creare un ristorante
     private void inserisciDatiRistorante(){
         Scanner scanner = new Scanner(System.in);
@@ -255,9 +290,9 @@ public class Ristorante implements Serializable{
             System.out.print("Il ristorante fornisce il servizio delivery? [s/n]");
             String risposta = scanner.nextLine().trim().toLowerCase(); // Salva l'input in una variabile
             if(risposta.equals("s")){
-                this.setServizioDelivery(true);
+                this.setDelivery(true);
             } else if (risposta.equals("n")){
-                this.setServizioDelivery(false);
+                this.setDelivery(false);
             } else {
                 System.out.println("Devi inserire 's' o 'n'");
                 valido = false;
@@ -268,9 +303,9 @@ public class Ristorante implements Serializable{
             System.out.println("Il ristorante accetta prenotazioni online? [s/n]");
             String risposta = scanner.nextLine().trim().toLowerCase();
             if(risposta.equals("s")){
-                this.setServizioPrenotazioneOnline(true);
+                this.setPrenotazioneOnline(true);
             } else if (risposta.equals("n")){
-                this.setServizioPrenotazioneOnline(false);
+                this.setPrenotazioneOnline(false);
             } else {
                 System.out.println("Devi inserire 's' o 'n'");
                 valido = false;
@@ -278,5 +313,6 @@ public class Ristorante implements Serializable{
         } while (!valido);
         System.out.println("Inserisci il tipo di cucina del ristorante: ");
         this.setTipoCucina(scanner.nextLine());
-    }
+    }*/
+
 }
