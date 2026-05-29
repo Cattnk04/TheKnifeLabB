@@ -15,9 +15,9 @@ import java.util.Scanner;
 
 public class Recensione implements Serializable{
 
-    public static final String FILE_RECENSIONI = "Data/Recensioni.txt";
+    //public static final String FILE_RECENSIONI = "Data/Recensioni.txt";
     String email;
-    String nomeRistorante;
+    int idRistorante;
     int valutazione;
     String recensione;
     public String risposta;
@@ -33,27 +33,28 @@ public class Recensione implements Serializable{
      * @param utente l'utente che lascia la recensione
      * @param ristoranti la lista di ristoranti da cui scegliere il ristorante da recensire
      */
+    /*
     public Recensione(Utente utente, ListaRistoranti ristoranti) {
         this.email = utente.getEmail();
-        this.nomeRistorante = ristoranti.cercaPerNome("Inserisci il nome del ristorante a cui vuoi lasciare una recensione: ").getNome();
+        this.idRistorante = ristoranti.cercaPerNome("Inserisci il nome del ristorante a cui vuoi lasciare una recensione: ").getNomeRistorante();
         this.valutazione = valutazione();
         this.recensione = recensione();
         this.risposta = null;
-    }
+    }*/
 
     /**
      * Costruttore della classe Recensione che crea un'istanza
      * utilizzando direttamente tutti i dati della recensione.
      *
      * @param email l'email dell'utente che ha lasciato la recensione
-     * @param nomeRistorante il nome del ristorante recensito
+     * @param idRistorante il nome del ristorante recensito
      * @param valutazione il punteggio dato al ristorante
      * @param recensione il testo della recensione
      * @param risposta la risposta alla recensione (può essere null)
      */
-    public Recensione(String email, String nomeRistorante, int valutazione, String recensione, String risposta) {
+    public Recensione(String email, int idRistorante, int valutazione, String recensione, String risposta) {
         this.email = email;
-        this.nomeRistorante = nomeRistorante;
+        this.idRistorante = idRistorante;
         this.valutazione = valutazione;
         this.recensione = recensione;
         this.risposta = risposta;
@@ -73,8 +74,8 @@ public class Recensione implements Serializable{
      *
      * @return il nome del ristorante
      */
-    public String getNomeRistorante(){
-        return nomeRistorante;
+    public int getIdRistorante(){
+        return idRistorante;
     }
 
     /**
@@ -173,7 +174,7 @@ public class Recensione implements Serializable{
     //Metodo to String
     @Override
     public String toString(){
-        return this.email + '*' + this.nomeRistorante + '*' + this.valutazione + '*' + this.recensione + '*' + this.risposta;
+        return this.email + '*' + this.idRistorante + '*' + this.valutazione + '*' + this.recensione + '*' + this.risposta;
     }
 
     /**

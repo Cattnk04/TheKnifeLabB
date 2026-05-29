@@ -37,4 +37,6 @@ public class RistoranteDAO {
             return false;
         }
     }
+
+    //Aggiungere metodi per la ricerca, aggiornamento e cancellazione dei ristoranti
 }

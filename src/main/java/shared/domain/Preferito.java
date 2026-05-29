@@ -13,21 +13,21 @@ import java.io.Serializable;
 
 public class Preferito implements Serializable {
 
-    String emailUtente;
-    String nomeRistorante;
-    public static final String FILE_PREFERITI = "Data/Preferiti.txt";
+    String email;
+    String idRistorante;
+    //public static final String FILE_PREFERITI = "Data/Preferiti.txt";
 
 
     /**
      * Costruttore della classe Preferito che crea un'istanza
      * utilizzando direttamente l'email dell'utente e il nome del ristorante.
      *
-     * @param emailUtente la email dell'utente che aggiunge il preferito
-     * @param nomeRistorante il nome del ristorante da aggiungere ai preferiti
+     * @param email la email dell'utente che aggiunge il preferito
+     * @param idRistorante il nome del ristorante da aggiungere ai preferiti
      */
-    public Preferito(String emailUtente, String nomeRistorante) {
-        this.emailUtente = emailUtente;
-        this.nomeRistorante = nomeRistorante;
+    public Preferito(String email, String idRistorante) {
+        this.email = email;
+        this.idRistorante = idRistorante;
     }
 
     /**
@@ -39,14 +39,15 @@ public class Preferito implements Serializable {
      * @param utente l'oggetto Utente che aggiunge il preferito
      * @param listaRistoranti la lista di ristoranti da cui cercare il preferito
      */
+    /*
     public Preferito(Utente utente, ListaRistoranti listaRistoranti) {
-        this.emailUtente = utente.getEmail();
+        this.email = utente.getEmail();
         Ristorante ristorante = listaRistoranti.cercaPerNome("\nInserisci il nome del ristorante che vuoi aggiungere alla tua lista dei preferiti: ");
         if(ristorante != null)
-            this.nomeRistorante = ristorante.getNome();
+            this.idRistorante = ristorante.getNomeRistorante();
         else
-            this.nomeRistorante = null;
-    }
+            this.idRistorante = null;
+    }*/
 
     //Metodi Get
     /**
@@ -54,16 +55,16 @@ public class Preferito implements Serializable {
      *
      * @return la email dell'utente
      */
-    public String getEmailUtente() {
-        return emailUtente;
+    public String getEmail() {
+        return email;
     }
     /**
      * Restituisce il nome del ristorante preferito.
      *
      * @return il nome del ristorante
      */
-    public String getNomeRistorante() {
-        return nomeRistorante;
+    public String getIdRistorante() {
+        return idRistorante;
     }
 
     /**
@@ -76,6 +77,6 @@ public class Preferito implements Serializable {
     //Metodo to string
     @Override
     public String toString(){
-        return this.emailUtente + "," + nomeRistorante;
+        return this.email+ "," + idRistorante;
     }
 }

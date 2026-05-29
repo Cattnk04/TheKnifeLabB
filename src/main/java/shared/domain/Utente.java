@@ -4,47 +4,46 @@ import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
 
 /**
  * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
- * @version 1.0
+ * @version 1.1
  *
  * Classe per gestione della generazione dell'elemento Utente.
  */
 
 public class Utente implements Serializable{
-    public static final String FILE_UTENTI = "Data/Utenti.txt";
-    private static final Scanner scanner = new Scanner(System.in);
-    private String nome;
-    private String cognome;
+    /* public static final String FILE_UTENTI = "Data/Utenti.txt";
+    private static final Scanner scanner = new Scanner(System.in);*/
     private String email;
+    private String nomeUtente;
+    private String cognomeUtente;
+    private String hashpwd;
     private String nazione;
     private String citta;
     private boolean ristoratore;
-    private String password;
 
     /**
      * Costruttore della classe Utente che inizializza un nuovo utente con le informazioni fornite.
      * I valori di tipo String vengono trimmati per rimuovere eventuali spazi bianchi iniziali e finali.
      *
      * @param email l'email dell'utente
-     * @param nome il nome dell'utente
-     * @param cognome il cognome dell'utente
-     * @param password la password dell'utente
+     * @param nomeUtente il nome dell'utente
+     * @param cognomeUtente il cognome dell'utente
+     * @param hashpwd  la password dell'utente
      * @param nazione la nazione di residenza dell'utente
      * @param citta la città di residenza dell'utente
      * @param ristoratore indica se l'utente è un ristoratore (true) o un cliente (false)
      * @throws RuntimeException se i dati forniti non rispettano qualche vincolo (da dettagliare)
      */
-    public Utente(String email, String nome, String cognome, String password, String nazione, String citta, boolean ristoratore) throws RuntimeException{
+    public Utente(String email, String nomeUtente, String cognomeUtente, String hashpwd, String nazione, String citta, boolean ristoratore) throws RuntimeException{
         this.email = email.trim();
-        this.nome = nome.trim();
-        this.cognome = cognome.trim();
+        this.nomeUtente = nomeUtente.trim();
+        this.cognomeUtente = cognomeUtente.trim();
         this.nazione = nazione.trim();
         this.citta = citta.trim();
         this.ristoratore = ristoratore;
-        this.password = password;
+        this.hashpwd = hashpwd;
     }
 
     /**
@@ -52,8 +51,8 @@ public class Utente implements Serializable{
      *
      * @return il nome dell'utente
      */
-    public String getNome(){
-        return this.nome;
+    public String getNomeUtente(){
+        return this.nomeUtente;
     }
 
     /**
@@ -61,8 +60,8 @@ public class Utente implements Serializable{
      *
      * @return il cognome dell'utente
      */
-    public String getCognome(){
-        return this.cognome;
+    public String getCognomeUtente(){
+        return this.cognomeUtente;
     }
 
     /**
@@ -106,26 +105,26 @@ public class Utente implements Serializable{
      *
      * @return la password dell'utente
      */
-    public String getPassword(){
-        return this.password;
+    public String getHashpwd(){
+        return this.hashpwd;
     }
 
     /**
      * Imposta il nome dell'utente.
      *
-     * @param nome il nuovo nome da impostare
+     * @param nomeUtente il nuovo nome da impostare
      */
-    public void setNome(String nome){
-        this.nome = nome;
+    public void setNomeUtente (String nomeUtente){
+        this.nomeUtente = nomeUtente;
     }
 
     /**
      * Imposta il cognome dell'utente.
      *
-     * @param cognome il nuovo cognome da impostare
+     * @param cognomeUtente il nuovo cognome da impostare
      */
-    public void setCognome(String cognome){
-        this.cognome = cognome;
+    public void setCognome(String cognomeUtente){
+        this.cognomeUtente = cognomeUtente;
     }
 
     /**
@@ -158,7 +157,13 @@ public class Utente implements Serializable{
     //Metodo to String
     @Override
     public String toString(){
-        return email.trim().toLowerCase() + "," + nome.trim() + "," + cognome.trim() + "," + password.trim() + ","+ nazione.trim().toLowerCase() + ","+ citta.trim().toLowerCase() + "," + ristoratore;
+        return email.trim().toLowerCase() + ","
+                + nomeUtente.trim() + ","
+                + cognomeUtente.trim() + ","
+                + hashpwd.trim() + ","
+                + nazione.trim().toLowerCase() + ","
+                + citta.trim().toLowerCase() + ","
+                + ristoratore;
     }
 
     /**
@@ -169,6 +174,7 @@ public class Utente implements Serializable{
      *
      * @throws RuntimeException se il digest SHA-256 non è disponibile
      */
+    /*
     //Metodo per la registrazione
     public Utente() {
         System.out.println("\n\n=== Registrazione ===");
@@ -239,9 +245,9 @@ public class Utente implements Serializable{
                 if(hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
             }
-            this.password = hexString.toString().trim();
+            this.hashpwd = hexString.toString().trim();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 }

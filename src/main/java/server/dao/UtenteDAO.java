@@ -11,18 +11,16 @@ public class UtenteDAO {
     //Registrazione
     public boolean registrazione(Utente utente){
         String sql = """
-                INSERT INTO utente (
-                    email, nome, cognome, password, nazione, citta, ristoratore
-                )
+                INSERT INTO utente (email, nomeutente, cognomeutente, hashpwd, nazione, citta, ristoratore)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
                 """;
         try (Connection connection = DatabaseConnection.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, utente.getEmail());
-            statement.setString(2, utente.getNome());
-            statement.setString(3, utente.getCognome());
-            statement.setString(4, utente.getPassword());
+            statement.setString(2, utente.getNomeUtente());
+            statement.setString(3, utente.getCognomeUtente());
+            statement.setString(4, utente.getHashpwd());
             statement.setString(5, utente.getNazione());
             statement.setString(6, utente.getCitta());
             statement.setBoolean(7, utente.getRistoratore());
@@ -38,15 +36,15 @@ public class UtenteDAO {
     //Login
     public boolean login(Utente utente){
         String sql = """
-                SELECT email, nome, cognome, password, nazione, citta, ristoratore
-                FROM utente
-                WHERE email = ? AND password = ?
+                SELECT email, hashpwd
+                FROM utente 
+                WHERE email = ? AND hashpwd = ?
                 """;
         try (Connection connection = DatabaseConnection.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, utente.getEmail());
-            statement.setString(2, utente.getPassword());
+            statement.setString(2, utente.getHashpwd());
 
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
@@ -60,8 +58,8 @@ public class UtenteDAO {
 
     public Utente trovaUtente(String email){
         String sql = """
-                SELECT email, nome, cognome, password, nazione, citta, ristoratore
-                FROM utente
+                SELECT email 
+                FROM utente 
                 WHERE email = ?
                 """;
         try (Connection connection = DatabaseConnection.getConnection();

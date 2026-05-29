@@ -5,7 +5,7 @@ import java.util.SimpleTimeZone;
 
 /**
  * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
- * @version 1.0
+ * @version 1.1
  *
  * Classe per gestione della generazione dell'elemento Ristorante.
  */
