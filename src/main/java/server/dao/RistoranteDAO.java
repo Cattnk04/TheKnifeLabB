@@ -8,6 +8,24 @@ import java.util.*;
 
 public class RistoranteDAO {
 
+    //Mapping centralizzato
+    private Ristorante map(ResultSet rs) throws SQLException {
+        return new Ristorante(
+                rs.getInt("idristorante"),
+                rs.getString("nomeristorante"),
+                rs.getString("email"),
+                rs.getString("citta"),
+                rs.getString("nazione"),
+                rs.getString("via"),
+                rs.getInt("numerocivico"),
+                rs.getInt("fasciaprezzo"),
+                rs.getBoolean("delivery"),
+                rs.getBoolean("prenotazioneonline"),
+                rs.getInt("idtipocucina")
+        );
+    }
+
+    //Inserimento
     public boolean inserisciRistorante(Ristorante ristorante){
         String sql = """
                 INSERT INTO ristorante (
@@ -37,21 +55,40 @@ public class RistoranteDAO {
             return false;
         }
     }
-    //Aggiornamento di un campo generico
-    public boolean aggiornaCampo(int idRistorante, String campo, String valore) {
 
-        String sql = "UPDATE ristorante SET " + campo + " = ? WHERE idristorante = ?";
+    //Aggiornamento del ristorante (tipizzato)
+    public enum CampoRistorante {
+        NOME,
+        CITTA,
+        NAZIONE,
+        VIA,
+        FASCIA_PREZZO
+    }
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+    public boolean aggiornaCampo(int idRistorante, CampoRistorante campo, Object valore) {
 
-            statement.setString(1, valore);
-            statement.setInt(2, idRistorante);
+        String sql = switch (campo) {
+            case NOME -> "UPDATE ristorante SET nomeristorante = ? WHERE idristorante = ?";
+            case CITTA -> "UPDATE ristorante SET citta = ? WHERE idristorante = ?";
+            case NAZIONE -> "UPDATE ristorante SET nazione = ? WHERE idristorante = ?";
+            case VIA -> "UPDATE ristorante SET via = ? WHERE idristorante = ?";
+            case FASCIA_PREZZO -> "UPDATE ristorante SET fasciaprezzo = ? WHERE idristorante = ?";
+        };
 
-            return statement.executeUpdate() > 0;
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            switch (campo) {
+                case FASCIA_PREZZO -> ps.setInt(1, (Integer) valore);
+                default -> ps.setString(1, valore.toString());
+            }
+
+            ps.setInt(2, idRistorante);
+
+            return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("Errore durante l'aggiornamento: " + e.getMessage());
+            System.out.println("Errore update: " + e.getMessage());
             return false;
         }
     }
@@ -75,6 +112,81 @@ public class RistoranteDAO {
             return false;
         }
     }
+    //Ricerca di tutti i ristoranti
+    public List<Ristorante> trovaTutti() {
 
-    //Aggiungere metodi per la ricerca
+        List<Ristorante> list = new ArrayList<>();
+        String sql = "SELECT * FROM ristorante";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(map(rs));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Errore findAll: " + e.getMessage());
+        }
+
+        return list;
+    }
+
+    //Ricerca (safe version)
+    public List<Ristorante> cercaPerCampo(CampoRistorante campo, String valore) {
+
+        List<Ristorante> risultati = new ArrayList<>();
+
+        String colonna = switch (campo) {
+            case NOME -> "nomeristorante";
+            case CITTA -> "citta";
+            case NAZIONE -> "nazione";
+            case VIA -> "via";
+            case FASCIA_PREZZO -> "fasciaprezzo";
+        };
+
+        String sql = "SELECT * FROM ristorante WHERE " + colonna + " LIKE ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "%" + valore + "%");
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    risultati.add(map(rs));
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Errore search: " + e.getMessage());
+        }
+
+        return risultati;
+    }
+
+    //Controllo esistenza ristorante
+    public boolean esisteRistorante(String nomeRistorante) {
+
+        String sql = """
+            SELECT 1
+            FROM ristorante
+            WHERE nomeristorante = ?
+            """;
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, nomeRistorante);
+
+            try (ResultSet rs = statement.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Errore controllo esistenza ristorante: " + e.getMessage());
+            return false;
+        }
+    }
 }

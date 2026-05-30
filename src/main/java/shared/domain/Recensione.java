@@ -52,7 +52,7 @@ public class Recensione implements Serializable{
      * @param recensione il testo della recensione
      * @param risposta la risposta alla recensione (può essere null)
      */
-    public Recensione(String email, int idRistorante, int valutazione, String recensione, String risposta) {
+    public Recensione(int idRistorante, String email, int valutazione, String recensione, String risposta) {
         this.email = email;
         this.idRistorante = idRistorante;
         this.valutazione = valutazione;

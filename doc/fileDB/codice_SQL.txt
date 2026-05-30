@@ -26,7 +26,7 @@ CREATE TABLE Ristorante(
     FasciaPrezzo INT NOT NULL,
     Delivery BOOLEAN NOT NULL,
     PrenotazioneOnline BOOLEAN NOT NULL,
-    IDTipoCucina INT NOT NULL,
+    IDTipoCucina INT,
     FOREIGN KEY (Email)
         REFERENCES Utente(Email) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (IDTipoCucina)
@@ -49,7 +49,7 @@ CREATE TABLE Recensioni(
     Valutazione INT NOT NULL,
     Recensione VARCHAR(750),
     Risposta VARCHAR(750),
-    PRIMARY KEY (Email, IDRistorante)
+    PRIMARY KEY (Email, IDRistorante),
     FOREIGN KEY (Email)
         REFERENCES Utente(Email) ON DELETE CASCADE ON UPDATE CASCADE
     FOREIGN KEY (IDRistorante)

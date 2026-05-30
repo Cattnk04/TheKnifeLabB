@@ -1,7 +1,6 @@
 package main.java.shared.domain;
 
 import java.io.Serializable;
-import java.util.SimpleTimeZone;
 
 /**
  * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
@@ -31,18 +30,19 @@ public class Ristorante implements Serializable{
      * con le informazioni specificate. I valori di tipo String vengono trimmati
      * per rimuovere eventuali spazi bianchi iniziali e finali.
      *
-     * @param nome il nome del ristorante
-     * @param email l'email del ristoratore responsabile
-     * @param nazione la nazione in cui si trova il ristorante
-     * @param citta la città in cui si trova il ristorante
-     * @param via l'indirizzo del ristorante
-     * @param numeroCivico il numero civico del ristorante
-     * @param fasciaPrezzo la fascia di prezzo del ristorante (es. media, alta, ecc.)
-     * @param delivery true se il ristorante offre servizio di consegna a domicilio
+     * @param idristorante
+     * @param nome               il nome del ristorante
+     * @param email              l'email del ristoratore responsabile
+     * @param nazione            la nazione in cui si trova il ristorante
+     * @param citta              la città in cui si trova il ristorante
+     * @param via                l'indirizzo del ristorante
+     * @param numeroCivico       il numero civico del ristorante
+     * @param fasciaPrezzo       la fascia di prezzo del ristorante (es. media, alta, ecc.)
+     * @param delivery           true se il ristorante offre servizio di consegna a domicilio
      * @param prenotazioneOnline true se il ristorante offre servizio di prenotazione online
-     * @param idTipoCucina il tipo di cucina offerta dal ristorante (es. italiana, giapponese, ecc.)
+     * @param idTipoCucina       il tipo di cucina offerta dal ristorante (es. italiana, giapponese, ecc.)
      */
-    public Ristorante(String nome, String email, String nazione, String citta, String via, int numeroCivico, int fasciaPrezzo, boolean delivery, boolean prenotazioneOnline, int idTipoCucina){
+    public Ristorante(int idristorante, String nome, String email, String nazione, String citta, String via, int numeroCivico, int fasciaPrezzo, boolean delivery, boolean prenotazioneOnline, int idTipoCucina){
         this.nomeRistorante = nome.trim();
         this.email = email.trim();
         this.nazione = nazione.trim();
