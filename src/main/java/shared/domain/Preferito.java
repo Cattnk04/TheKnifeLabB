@@ -1,7 +1,5 @@
 package main.java.shared.domain;
 
-import parteA.GestioneDati.ListaRistoranti;
-
 import java.io.Serializable;
 
 /**
@@ -14,7 +12,7 @@ import java.io.Serializable;
 public class Preferito implements Serializable {
 
     String email;
-    String idRistorante;
+    int idRistorante;
     //public static final String FILE_PREFERITI = "Data/Preferiti.txt";
 
 
@@ -25,7 +23,7 @@ public class Preferito implements Serializable {
      * @param email la email dell'utente che aggiunge il preferito
      * @param idRistorante il nome del ristorante da aggiungere ai preferiti
      */
-    public Preferito(String email, String idRistorante) {
+    public Preferito(String email, int idRistorante) {
         this.email = email;
         this.idRistorante = idRistorante;
     }
@@ -63,7 +61,7 @@ public class Preferito implements Serializable {
      *
      * @return il nome del ristorante
      */
-    public String getIdRistorante() {
+    public int getIdRistorante() {
         return idRistorante;
     }
 
