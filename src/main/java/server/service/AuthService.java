@@ -8,39 +8,51 @@ import java.util.Optional;
 
 public class AuthService {
 
-    private final UtenteDAO utenteDAO = new UtenteDAO();
+    private final UtenteDAO utenteDAO;
 
-    public boolean login(String email, String passwordInserita) {
+    // Dependency Injection (consigliato)
+    public AuthService(UtenteDAO utenteDAO) {
+        this.utenteDAO = utenteDAO;
+    }
 
-        Optional<Utente> utente = utenteDAO.trovaUtente(email);
+    public boolean login(String email, String passwordInput) {
 
-        if (utente.isEmpty()) {
+        Optional<Utente> optUtente = utenteDAO.trovaUtente(email);
+
+        if (optUtente.isEmpty()) {
             return false;
         }
 
-        String hashSalvato = utente.get().getHashpwd();
+        Utente utente = optUtente.get();
+        String hashSalvato = utente.getHashpwd();
 
+        boolean passwordCorretta;
+
+        // Caso 1: già BCrypt
         if (PasswordUtils.isBCryptHash(hashSalvato)) {
-            return PasswordUtils.verifyBCrypt(
-                    passwordInserita,
+
+            passwordCorretta = PasswordUtils.verifyBCrypt(
+                    passwordInput,
                     hashSalvato
             );
-        }
 
-        boolean match = PasswordUtils.verifySHA256(
-                passwordInserita,
-                hashSalvato
-        );
-
-        if (!match) {
-            return false;
         }
-        String nuovoHash =
-                PasswordUtils.hashBCrypt(passwordInserita);
-        utenteDAO.aggiornaPasswordHash(
-                utente.get().getNomeUtente(),
-                nuovoHash
-        );
-        return true;
+        // Caso 2: legacy SHA-256 + upgrade automatico
+        else {
+            passwordCorretta = PasswordUtils.verifySHA256(
+                    passwordInput,
+                    hashSalvato
+            );
+
+            if (passwordCorretta) {
+                String nuovoHash = PasswordUtils.hashBCrypt(passwordInput);
+
+                utenteDAO.aggiornaPasswordHash(
+                        utente.getNomeUtente(),
+                        nuovoHash
+                );
+            }
+        }
+        return passwordCorretta;
     }
 }
