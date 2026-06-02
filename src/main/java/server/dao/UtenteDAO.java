@@ -110,30 +110,37 @@ public class UtenteDAO {
             return false;
         }
     }
+    //Aggiornamento del utente (tipizzato)
+    public enum CampoUtente{
+        NOMEUTENTE,
+        COGNOMEUTENTE,
+        CITTA,
+        NAZIONE,
+        PASSWORD,
+        RISTORATORE
+    }
 
     //Aggiornamento utente
-    public boolean aggiornamentoUtente(String email, String nome, String cognome, String nazione, String citta){
-        String sql = """
-                UPDATE utente 
-                SET nomeutente = ?,
-                    cognomeutente = ?,
-                    citta = ?,
-                    nazione = ?
-                WHERE email = ?
-                """;
+    public boolean aggiornamentoUtente(String email, CampoUtente campo, Object valore){
+        String sql = switch (campo){
+            case NOMEUTENTE -> "UPDATE utente SET nomeutente = ? WHERE email = ?";
+            case COGNOMEUTENTE -> "UPDATE utente SET cognomeutente = ? WHERE email = ?";
+            case CITTA -> "UPDATE utente SET citta = ? WHERE email = ?";
+            case NAZIONE -> "UPDATE  utente SET nazione = ? WHERE email = ?";
+            case PASSWORD -> "UPDATE utente SET password = ? where email = ?";
+            case RISTORATORE -> "UPDATE utente SET ristoratore = ? where email = ?";
+        };
+
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)){
 
-            statement.setString(1, nome);
-            statement.setString(2, cognome);
-            statement.setString(3, citta);
-            statement.setString(4, nazione);
-            statement.setString(5, email);
+            statement.setObject(1, valore);
+            statement.setString(2, email);
 
             return statement.executeUpdate() > 0;
 
         } catch (SQLException e){
-            System.out.println("Errore durante l'aggiornamento dell'utente");
+            System.err.println("Errore durante l'aggiornamento dell'utente: " + e.getMessage());
             return false;
         }
     }
