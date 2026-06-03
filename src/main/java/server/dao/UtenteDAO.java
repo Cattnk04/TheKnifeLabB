@@ -129,6 +129,8 @@ public class UtenteDAO {
             case NAZIONE -> "UPDATE  utente SET nazione = ? WHERE email = ?";
             case PASSWORD -> "UPDATE utente SET password = ? where email = ?";
             case RISTORATORE -> "UPDATE utente SET ristoratore = ? where email = ?";
+            default -> throw new IllegalArgumentException("Campo non valido");
+
         };
 
         try(Connection connection = DatabaseConnection.getConnection();

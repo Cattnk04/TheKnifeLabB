@@ -73,6 +73,7 @@ public class RistoranteDAO {
             case NAZIONE -> "UPDATE ristorante SET nazione = ? WHERE idristorante = ?";
             case VIA -> "UPDATE ristorante SET via = ? WHERE idristorante = ?";
             case FASCIA_PREZZO -> "UPDATE ristorante SET fasciaprezzo = ? WHERE idristorante = ?";
+            default -> throw new IllegalArgumentException("Campo non valido");
         };
 
         try (Connection conn = DatabaseConnection.getConnection();
