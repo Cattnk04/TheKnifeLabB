@@ -6,12 +6,12 @@ import main.java.shared.domain.Utente;
 
 import java.util.Optional;
 
-public class AuthService {
+public class UtenteService {
 
     private final UtenteDAO utenteDAO;
 
     // Dependency Injection (consigliato)
-    public AuthService(UtenteDAO utenteDAO) {
+    public UtenteService(UtenteDAO utenteDAO) {
         this.utenteDAO = utenteDAO;
     }
 
@@ -55,4 +55,6 @@ public class AuthService {
         }
         return passwordCorretta;
     }
+
+    //Aggiungere registrazione e profilo.
 }

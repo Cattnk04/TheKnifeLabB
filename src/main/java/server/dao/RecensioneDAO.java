@@ -7,9 +7,9 @@ import main.java.shared.dto.RiepilogoRecensioniDTO;
 import java.sql.*;
 import java.util.*;
 
-public class RecensioniDAO {
+public class RecensioneDAO {
 
-    //Salvare le recensioni
+    //Salvataggio le recensioni
     public boolean salvaRecensioni (Recensione recensione){
         String sql = """
                 INSERT INTO recensioni (email, idristorante, valutazione, recensione, risposta)
@@ -39,26 +39,27 @@ public class RecensioniDAO {
     }
 
     //Aggiornamento
-    public boolean aggiornaRecensione(int idRistorante, String email, CampoRecensione campo, Object valore)       {
+    public boolean aggiornaRecensione(int idRistorante, String email, CampoRecensione campo, Object valore) {
+
         String sql = switch (campo) {
             case RECENSIONE -> "UPDATE recensioni SET recensione = ? WHERE idristorante = ? AND email = ?";
             case VALUTAZIONE -> "UPDATE recensioni SET valutazione = ? WHERE idristorante = ? AND email = ?";
             case RISPOSTA -> "UPDATE recensioni SET risposta = ? WHERE idristorante = ? AND email = ?";
-            default -> throw new IllegalArgumentException("Campo non valido");
         };
-        try(Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)){
 
-            statement.setInt(1, idRistorante);
-            statement.setString(2, email);
-            statement.setObject(3, valore);
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setObject(1, valore);
+            statement.setInt(2, idRistorante);
+            statement.setString(3, email);
 
             return statement.executeUpdate() > 0;
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Errore durante l'aggiornamento delle recensioni: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
     //Cancellazione
@@ -86,28 +87,29 @@ public class RecensioniDAO {
         List<Recensione> listaRecensioni = new ArrayList<>();
 
         String sql = """
-                SELECT *
-                FROM recensioni
-                WHERE idristorante = ?
-                """;
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+            SELECT *
+            FROM recensioni
+            """;
 
-            ResultSet rs = statement.executeQuery();
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+
+             ResultSet rs = statement.executeQuery()) {
 
             while (rs.next()) {
                 listaRecensioni.add(new Recensione(
-                        rs.getInt("IDRistorante"),
-                        rs.getString("Email"),
-                        rs.getInt("Valutazione"),
-                        rs.getString("Recensione"),
-                        rs.getString("Risposta")
+                        rs.getInt("idristorante"),
+                        rs.getString("email"),
+                        rs.getInt("valutazione"),
+                        rs.getString("recensione"),
+                        rs.getString("risposta")
                 ));
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Errore lettura recensioni: " + e.getMessage());
         }
+
         return listaRecensioni;
     }
 
@@ -131,8 +133,8 @@ public class RecensioniDAO {
 
             while (rs.next()) {
                 listaByRist.add(new Recensione(
-                        rs.getInt("IDRistorante"),
-                        rs.getString("Email"),
+                        rs.getInt("idristorante"),
+                        rs.getString("email"),
                         rs.getInt("Valutazione"),
                         rs.getString("Recensione"),
                         rs.getString("Risposta")
@@ -164,7 +166,7 @@ public class RecensioniDAO {
 
             while (rs.next()) {
                 listaByEmail.add(new Recensione(
-                        rs.getInt("IDRistorante"),
+                        rs.getInt("idristorante"),
                         rs.getString("Email"),
                         rs.getInt("Valutazione"),
                         rs.getString("Recensione"),
@@ -182,7 +184,7 @@ public class RecensioniDAO {
     //Riepilogo recensioni per ristoratore
     public RiepilogoRecensioniDTO getRiepilogo(int idRistorante) {
         String sql = """
-                SELECT COUNT(*) AS totRecensioni, 
+                SELECT COUNT(*) AS totRecensioni,
                     AVG(valutazione) AS mediaValutazione
                 FROM recensioni
                 WHERE idristorante = ?
@@ -194,8 +196,8 @@ public class RecensioniDAO {
             ResultSet rs = statement.executeQuery();
 
             if(rs.next()){
-                int totale = rs.getInt("totale");
-                double media = rs.getDouble("media");
+                int totale = rs.getInt("totRecensioni");
+                double media = rs.getDouble("mediaValutazione");
 
                 return new RiepilogoRecensioniDTO(totale, media);
             }
@@ -213,8 +215,8 @@ public class RecensioniDAO {
         String sql = """
                 UPDATE recensioni
                 SET risposta = ?
-                WHERE idristorante = ? AND email = ? 
-                    AND (risposta IS NULL OR risposta = '')                
+                WHERE idristorante = ? AND email = ?
+                    AND (risposta IS NULL OR risposta = '')
                 """;
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)){
