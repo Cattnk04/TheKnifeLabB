@@ -2,8 +2,8 @@ package main.java.server.service;
 
 import main.java.shared.domain.Recensione;
 import main.java.server.dao.RecensioneDAO;
-import main.java.server.dao.RecensioneDAO.CampoRecensione;
 import main.java.shared.dto.RiepilogoRecensioniDTO;
+import main.java.shared.enums.CampoRecensione;
 
 import java.util.List;
 
@@ -73,7 +73,7 @@ public class RecensioneService {
     //Aggiorna risposta (overide)
     public boolean aggiornaRisposta(int idRistorante, String email, String risposta) {
         return dao.aggiornaRecensione(idRistorante, email,
-                RecensioneDAO.CampoRecensione.RISPOSTA,
+                CampoRecensione.RISPOSTA,
                 risposta);
     }
 

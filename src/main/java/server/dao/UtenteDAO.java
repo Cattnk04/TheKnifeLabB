@@ -3,6 +3,7 @@ package main.java.server.dao;
 import main.java.server.db.DatabaseConnection;
 import main.java.server.security.PasswordUtils;
 import main.java.shared.domain.Utente;
+import main.java.shared.enums.CampoUtente;
 
 import java.sql.*;
 import java.util.*;
@@ -27,16 +28,11 @@ public class UtenteDAO {
     public boolean registrazione(Utente utente) {
 
         String sql = """
-        INSERT INTO utente (
-            email,
-            nomeutente,
-            cognomeutente,
-            hashpwd,
-            citta,
-            nazione,
-            ristoratore
-        )
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO utente (
+                email, nomeutente, cognomeutente, hashpwd,
+                citta, nazione, ristoratore
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (Connection connection = DatabaseConnection.getConnection();
@@ -64,8 +60,6 @@ public class UtenteDAO {
         }
     }
 
-    //Login (spostato in AutoService.java)
-
     //Ricerca dell'utente
     public Optional<Utente> trovaUtente(String email) {
         String sql = """
@@ -91,6 +85,26 @@ public class UtenteDAO {
         return Optional.empty();
     }
 
+    //Aggiornamento hash password
+    public boolean aggiornaPasswordHash(String email, String hashpwd) {
+        String sql = """
+            UPDATE utente
+            SET hashpwd = ?
+            WHERE email = ?
+        """;
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, hashpwd);
+            ps.setString(2, email);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Errore aggiornamento password: " + e.getMessage());
+            return false;
+        }
+    }
 
     //Cancellazione dell'Utente
     public boolean cancellaUtente (String email){
@@ -110,39 +124,27 @@ public class UtenteDAO {
             return false;
         }
     }
-    //Aggiornamento del utente (tipizzato)
-    public enum CampoUtente{
-        NOMEUTENTE,
-        COGNOMEUTENTE,
-        CITTA,
-        NAZIONE,
-        PASSWORD,
-        RISTORATORE
-    }
 
-    //Aggiornamento utente
-    public boolean aggiornamentoUtente(String email, CampoUtente campo, Object valore){
-        String sql = switch (campo){
-            case NOMEUTENTE -> "UPDATE utente SET nomeutente = ? WHERE email = ?";
-            case COGNOMEUTENTE -> "UPDATE utente SET cognomeutente = ? WHERE email = ?";
-            case CITTA -> "UPDATE utente SET citta = ? WHERE email = ?";
-            case NAZIONE -> "UPDATE  utente SET nazione = ? WHERE email = ?";
-            case PASSWORD -> "UPDATE utente SET password = ? where email = ?";
-            case RISTORATORE -> "UPDATE utente SET ristoratore = ? where email = ?";
-            default -> throw new IllegalArgumentException("Campo non valido");
+    //Controllo esistenza utente
+    public boolean esisteUtente(String email) {
+        String sql = """
+                SELECT 1
+                FROM utente
+                WHERE email = ?
+                LIMIT 1
+                """;
 
-        };
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-        try(Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, email);
 
-            statement.setObject(1, valore);
-            statement.setString(2, email);
+            try (ResultSet rs = statement.executeQuery()) {
+                return rs.next();
+            }
 
-            return statement.executeUpdate() > 0;
-
-        } catch (SQLException e){
-            System.err.println("Errore durante l'aggiornamento dell'utente: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Errore controllo utente: " + e.getMessage());
             return false;
         }
     }
@@ -172,73 +174,31 @@ public class UtenteDAO {
         return lista;
     }
 
-    //Controllo esistenza utente
-    public boolean esisteUtente(String email) {
-        String sql = """
-                SELECT 1
-                FROM utente
-                WHERE email = ?
-                LIMIT 1
-                """;
+    //Aggiornamento utente
+    public boolean aggiornamentoUtente(String email, CampoUtente campo, Object valore){
+        String sql = switch (campo){
+            case NOMEUTENTE -> "UPDATE utente SET nomeutente = ? WHERE email = ?";
+            case COGNOMEUTENTE -> "UPDATE utente SET cognomeutente = ? WHERE email = ?";
+            case CITTA -> "UPDATE utente SET citta = ? WHERE email = ?";
+            case NAZIONE -> "UPDATE  utente SET nazione = ? WHERE email = ?";
+            case PASSWORD -> "UPDATE utente SET hashpwd = ? where email = ?";
+            case RISTORATORE -> "UPDATE utente SET ristoratore = ? where email = ?";
+            default -> throw new IllegalArgumentException("Campo non valido");
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        };
 
-            statement.setString(1, email);
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
 
-            try (ResultSet rs = statement.executeQuery()) {
-                return rs.next();
-            }
+            statement.setObject(1, valore);
+            statement.setString(2, email);
 
-        } catch (SQLException e) {
-            System.out.println("Errore controllo utente: " + e.getMessage());
-        }
-        return false;
-    }
+            return statement.executeUpdate() > 0;
 
-    //Recupero hash password
-    public String getPasswordHashByEmail(String email) {
-        String sql = """
-            SELECT hashpwd
-            FROM utente
-            WHERE email = ?
-        """;
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, email);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getString("hashpwd");
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Errore recupero password: " + e.getMessage());
-        }
-
-        return null;
-    }
-
-    //Aggiornamento hash password
-    public boolean aggiornaPasswordHash(String email, String hashpwd) {
-        String sql = """
-            UPDATE utente
-            SET hashpwd = ?
-            WHERE email = ?
-        """;
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, hashpwd);
-            ps.setString(2, email);
-
-            return ps.executeUpdate() > 0;
-
-        } catch (SQLException e) {
-            System.out.println("Errore aggiornamento password: " + e.getMessage());
+        } catch (SQLException e){
+            System.err.println("Errore durante l'aggiornamento dell'utente: " + e.getMessage());
             return false;
         }
     }
+
 }

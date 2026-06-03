@@ -3,6 +3,7 @@ package main.java.server.dao;
 import main.java.server.db.DatabaseConnection;
 import main.java.shared.domain.Recensione;
 import main.java.shared.dto.RiepilogoRecensioniDTO;
+import main.java.shared.enums.CampoRecensione;
 
 import java.sql.*;
 import java.util.*;
@@ -30,12 +31,6 @@ public class RecensioneDAO {
             System.out.println("Errore durante la salvataggio delle recensioni: " + e.getMessage());
             return false;
         }
-    }
-    //Aggiornamento delle recensioni (tipizzato)
-    public enum CampoRecensione{
-       RECENSIONE,
-       VALUTAZIONE,
-       RISPOSTA
     }
 
     //Aggiornamento

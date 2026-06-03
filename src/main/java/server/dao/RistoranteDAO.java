@@ -2,6 +2,7 @@ package main.java.server.dao;
 
 import main.java.server.db.DatabaseConnection;
 import main.java.shared.domain.Ristorante;
+import main.java.shared.enums.CampoRistorante;
 
 import java.sql.*;
 import java.util.*;
@@ -54,15 +55,6 @@ public class RistoranteDAO {
             System.out.println("Errore durante l'inserimento del ristorante: " + e.getMessage());
             return false;
         }
-    }
-
-    //Aggiornamento del ristorante (tipizzato)
-    public enum CampoRistorante {
-        NOME,
-        CITTA,
-        NAZIONE,
-        VIA,
-        FASCIA_PREZZO
     }
 
     public boolean aggiornaCampo(int idRistorante, CampoRistorante campo, Object valore) {

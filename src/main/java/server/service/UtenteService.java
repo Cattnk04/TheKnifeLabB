@@ -17,44 +17,61 @@ public class UtenteService {
 
     public boolean login(String email, String passwordInput) {
 
-        Optional<Utente> optUtente = utenteDAO.trovaUtente(email);
+        try {
+            Optional<Utente> optUtente = utenteDAO.trovaUtente(email);
 
-        if (optUtente.isEmpty()) {
-            return false;
-        }
+            if (optUtente.isEmpty()) {
+                return false;
+            }
 
-        Utente utente = optUtente.get();
-        String hashSalvato = utente.getHashpwd();
+            Utente utente = optUtente.get();
+            String hashSalvato = utente.getHashpwd();
 
-        boolean passwordCorretta;
+            if (PasswordUtils.isBCryptHash(hashSalvato)) {
+                return PasswordUtils.verifyBCrypt(passwordInput, hashSalvato);
+            }
 
-        // Caso 1: già BCrypt
-        if (PasswordUtils.isBCryptHash(hashSalvato)) {
-
-            passwordCorretta = PasswordUtils.verifyBCrypt(
-                    passwordInput,
-                    hashSalvato
-            );
-
-        }
-        // Caso 2: legacy SHA-256 + upgrade automatico
-        else {
-            passwordCorretta = PasswordUtils.verifySHA256(
-                    passwordInput,
-                    hashSalvato
-            );
+            boolean passwordCorretta = PasswordUtils.verifySHA256(passwordInput, hashSalvato);
 
             if (passwordCorretta) {
                 String nuovoHash = PasswordUtils.hashBCrypt(passwordInput);
-
-                utenteDAO.aggiornaPasswordHash(
-                        utente.getNomeUtente(),
-                        nuovoHash
-                );
+                utenteDAO.aggiornaPasswordHash(utente.getNomeUtente(), nuovoHash);
             }
+
+            return passwordCorretta;
+
+        } catch (Exception e) {
+            // log dell'errore (meglio usare logger vero)
+            System.err.println("Errore durante login: " + e.getMessage());
+
+            return false; // fallback sicuro
         }
-        return passwordCorretta;
     }
 
-    //Aggiungere registrazione e profilo.
+    // REGISTRAZIONE
+    public boolean registraUtente(Utente u, String passwordPlain) {
+
+        if (utenteDAO.esisteUtente(u.getEmail())) {
+            return false;
+        }
+
+        String hash = PasswordUtils.hashBCrypt(passwordPlain);
+
+        Utente nuovo = new Utente(
+                u.getEmail(),
+                u.getNomeUtente(),
+                u.getCognomeUtente(),
+                hash,
+                u.getCitta(),
+                u.getNazione(),
+                u.getRistoratore()
+        );
+
+        return utenteDAO.registrazione(nuovo);
+    }
+
+    // CANCELLAZIONE
+    public boolean cancellaUtente(String email) {
+        return utenteDAO.cancellaUtente(email);
+    }
 }
