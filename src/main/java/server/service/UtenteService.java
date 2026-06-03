@@ -1,7 +1,8 @@
 package main.java.server.service;
 
 import main.java.server.dao.UtenteDAO;
-import main.java.server.security.PasswordUtils;
+import main.java.server.security.*;
+import main.java.server.service.ValidationUtils;
 import main.java.shared.domain.Utente;
 
 import java.util.Optional;
@@ -9,53 +10,55 @@ import java.util.Optional;
 public class UtenteService {
 
     private final UtenteDAO utenteDAO;
+    private final PasswordService passwordService;
 
-    // Dependency Injection (consigliato)
-    public UtenteService(UtenteDAO utenteDAO) {
+    // Dependency Injection
+    public UtenteService(UtenteDAO utenteDAO, PasswordService passwordService) {
         this.utenteDAO = utenteDAO;
+        this.passwordService = passwordService;
     }
 
+    // LOGIN
     public boolean login(String email, String passwordInput) {
 
-        try {
-            Optional<Utente> optUtente = utenteDAO.trovaUtente(email);
-
-            if (optUtente.isEmpty()) {
-                return false;
-            }
-
-            Utente utente = optUtente.get();
-            String hashSalvato = utente.getHashpwd();
-
-            if (PasswordUtils.isBCryptHash(hashSalvato)) {
-                return PasswordUtils.verifyBCrypt(passwordInput, hashSalvato);
-            }
-
-            boolean passwordCorretta = PasswordUtils.verifySHA256(passwordInput, hashSalvato);
-
-            if (passwordCorretta) {
-                String nuovoHash = PasswordUtils.hashBCrypt(passwordInput);
-                utenteDAO.aggiornaPasswordHash(utente.getNomeUtente(), nuovoHash);
-            }
-
-            return passwordCorretta;
-
-        } catch (Exception e) {
-            // log dell'errore (meglio usare logger vero)
-            System.err.println("Errore durante login: " + e.getMessage());
-
-            return false; // fallback sicuro
+        if (!ValidationUtils.isValidEmail(email) ||
+                !ValidationUtils.isValidPassword(passwordInput)) {
+            return false;
         }
+
+        Optional<Utente> optUtente = utenteDAO.trovaUtente(email);
+
+        return optUtente
+                .map(utente -> {
+
+                    String hashSalvato = utente.getHashpwd();
+
+                    boolean passwordCorretta = passwordService.verify(passwordInput, hashSalvato);
+
+                    // migrazione automatica SHA -> BCrypt
+                    if (passwordCorretta && passwordService.isLegacy(hashSalvato)) {
+                        String nuovoHash = passwordService.upgradeToBCrypt(passwordInput);
+                        utenteDAO.aggiornaPasswordHash(utente.getEmail(), nuovoHash);
+                    }
+
+                    return passwordCorretta;
+                })
+                .orElse(false);
     }
 
-    // REGISTRAZIONE
+    // Registrazione
     public boolean registraUtente(Utente u, String passwordPlain) {
 
+        if (u == null ||
+                !ValidationUtils.isValidEmail(u.getEmail()) ||
+                !PasswordPolicy.isStrong(passwordPlain)) {
+            return false;
+        }
         if (utenteDAO.esisteUtente(u.getEmail())) {
             return false;
         }
 
-        String hash = PasswordUtils.hashBCrypt(passwordPlain);
+        String hash = passwordService.hash(passwordPlain);
 
         Utente nuovo = new Utente(
                 u.getEmail(),
@@ -72,6 +75,9 @@ public class UtenteService {
 
     // CANCELLAZIONE
     public boolean cancellaUtente(String email) {
+        if (!ValidationUtils.isValidEmail(email)) {
+            return false;
+        }
         return utenteDAO.cancellaUtente(email);
     }
 }
