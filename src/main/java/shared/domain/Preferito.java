@@ -15,6 +15,8 @@ public class Preferito implements Serializable {
     int idRistorante;
     //public static final String FILE_PREFERITI = "Data/Preferiti.txt";
 
+    public Preferito() {
+    }
 
     /**
      * Costruttore della classe Preferito che crea un'istanza
@@ -64,6 +66,14 @@ public class Preferito implements Serializable {
     public int getIdRistorante() {
         return idRistorante;
     }
+
+    public String setEmail(String email){
+        return this.email = email;
+    }
+    public int setIdRistorante(int IdRistorante){
+        return this.idRistorante = IdRistorante;
+    }
+
 
     /**
      * Restituisce una rappresentazione testuale dell'oggetto Preferito,
