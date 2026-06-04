@@ -30,7 +30,7 @@ public class Ristorante implements Serializable{
      * con le informazioni specificate. I valori di tipo String vengono trimmati
      * per rimuovere eventuali spazi bianchi iniziali e finali.
      *
-     * @param idristorante
+     * @param idristorante       l'id del ristorante
      * @param nome               il nome del ristorante
      * @param email              l'email del ristoratore responsabile
      * @param nazione            la nazione in cui si trova il ristorante
@@ -43,6 +43,7 @@ public class Ristorante implements Serializable{
      * @param idTipoCucina       il tipo di cucina offerta dal ristorante (es. italiana, giapponese, ecc.)
      */
     public Ristorante(int idristorante, String nome, String email, String nazione, String citta, String via, int numeroCivico, int fasciaPrezzo, boolean delivery, boolean prenotazioneOnline, int idTipoCucina){
+        this.idRistorante = idristorante;
         this.nomeRistorante = nome.trim();
         this.email = email.trim();
         this.nazione = nazione.trim();
@@ -67,6 +68,15 @@ public class Ristorante implements Serializable{
         this.email = utenteRistoratore.getEmail();
         inserisciDatiRistorante();
     }*/
+
+    /**
+     * Restituisce l'id del Ristorante.
+     *
+     * @return l'id del Ristorante
+     */
+    public int getIdRistorante(){
+        return this.idRistorante;
+    }
 
     /**
      * Restituisce il nome del ristorante.
