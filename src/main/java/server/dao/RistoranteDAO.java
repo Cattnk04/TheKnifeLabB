@@ -109,7 +109,10 @@ public class RistoranteDAO {
     public List<Ristorante> trovaTutti() {
 
         List<Ristorante> list = new ArrayList<>();
-        String sql = "SELECT * FROM ristorante";
+        String sql = """
+                SELECT nomeristorante, email, citta, nazione, via, numeroCivico,
+                        fasciaPrezzo, delivery, prenotazioneOnline, idtipocucina
+                FROM ristorante""";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -131,15 +134,16 @@ public class RistoranteDAO {
 
         List<Ristorante> risultati = new ArrayList<>();
 
-        String colonna = switch (campo) {
-            case NOME -> "nomeristorante";
-            case CITTA -> "citta";
-            case NAZIONE -> "nazione";
-            case VIA -> "via";
-            case FASCIA_PREZZO -> "fasciaprezzo";
-        };
+        String sql;
 
-        String sql = "SELECT * FROM ristorante WHERE " + colonna + " LIKE ?";
+        switch (campo) {
+            case NOME -> sql = "SELECT * FROM ristorante WHERE nomeristorante ILIKE ?";
+            case CITTA -> sql = "SELECT * FROM ristorante WHERE citta ILIKE ?";
+            case NAZIONE -> sql = "SELECT * FROM ristorante WHERE nazione ILIKE ?";
+            case VIA -> sql = "SELECT * FROM ristorante WHERE via ILIKE ?";
+            case FASCIA_PREZZO -> sql = "SELECT * FROM ristorante WHERE fasciaprezzo = ?";
+            default -> throw new IllegalArgumentException("Campo non valido");
+        }
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -160,18 +164,19 @@ public class RistoranteDAO {
     }
 
     //Controllo esistenza ristorante
-    public boolean esisteRistorante(String nomeRistorante) {
+    public boolean esisteRistorante(String email) {
 
         String sql = """
             SELECT 1
             FROM ristorante
-            WHERE nomeristorante = ?
+            WHERE email = ?
+            LIMIT 1
             """;
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, nomeRistorante);
+            statement.setString(1, email);
 
             try (ResultSet rs = statement.executeQuery()) {
                 return rs.next();

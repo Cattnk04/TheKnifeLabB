@@ -55,6 +55,7 @@ public class PreferitiDAO {
             SELECT 1
             FROM preferiti
             WHERE email = ? AND idristorante = ?
+            LIMIT 1
             """;
 
         try (Connection connection = DatabaseConnection.getConnection();
@@ -75,9 +76,12 @@ public class PreferitiDAO {
     public List<Preferito> getPreferitiByEmail(String email) {
 
         String sql = """
-                SELECT email, idristorante
-                FROM preferiti
-                WHERE email = ?
+                SELECT r.*
+                FROM ristorante r
+                JOIN preferiti p
+                    ON r.idristorante = p.idristorante
+                WHERE p.email = ?
+                ORDER BY r.nomeristorante
                 """;
 
         List<Preferito> list = new ArrayList<>();
