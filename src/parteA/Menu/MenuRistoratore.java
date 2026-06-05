@@ -1,3 +1,4 @@
+/*
 package parteA.Menu;
 
 import main.java.shared.domain.Recensione;
@@ -15,6 +16,7 @@ import java.util.*;
  * Classe che rappresenta il menu specifico per i ristoratori,
  * permettendo di gestire ristoranti, visualizzare e rispondere alle recensioni.
  */
+/*
 public class MenuRistoratore {
 
     private Utente utenteCorrente;
@@ -31,6 +33,7 @@ public class MenuRistoratore {
      *
      * @param utente l'utente corrente con ruolo di ristoratore
      */
+/*
     public MenuRistoratore(Utente utente) {
         this.utenteCorrente = utente;
         this.listaRistoranti = new ListaRistoranti();
@@ -54,6 +57,7 @@ public class MenuRistoratore {
      * Gestisce l'input da tastiera e controlla la validità delle scelte, mostrando messaggi di errore in caso di input non valido o altre eccezioni.
      * Il menu rimane attivo fino a quando l'utente sceglie di uscire (opzione 0).
      */
+/*
     public void mostraMenuRistoratore() {
         int scelta = 0;
         do {
@@ -113,6 +117,7 @@ public class MenuRistoratore {
      * salvando poi i dati su file CSV.
      * Stampa un messaggio di conferma al termine dell'aggiunta.
      */
+/*
     private void aggiungiRistorante() {
         System.out.println("\n=== Aggiungi Nuovo Ristorante ===");
         System.out.print("Nome del ristorante: ");
@@ -181,6 +186,7 @@ public class MenuRistoratore {
      * all'email dell'utente corrente.
      * Se non sono stati registrati ristoranti, informa l'utente che non ne ha ancora aggiunti.
      */
+/*
     private void visualizzaMieiRistoranti() {
         System.out.println("\n=== I Miei Ristoranti ===");
         boolean trovati = false;
@@ -213,6 +219,7 @@ public class MenuRistoratore {
      * oppure informa se non ci sono recensioni disponibili.
      * Gestisce input non validi o selezioni fuori range.
      */
+/*
     private void visualizzaRecensioniRistorante() {
         System.out.println("\n=== Dettaglio Recensioni ===");
         Scanner scanner = new Scanner(System.in);
@@ -273,6 +280,7 @@ public class MenuRistoratore {
      * tramite input da tastiera. Salva le risposte aggiornate nel file CSV.
      * Gestisce casi di input non valido o mancanza di recensioni da rispondere.
      */
+/*
     private void rispostaRecensioni() {
         System.out.println("\n=== Rispondi alle Recensioni ===");
 
@@ -364,7 +372,7 @@ public class MenuRistoratore {
      * Se l'utente non possiede ristoranti, viene visualizzato un messaggio appropriato.
      */
     //Metodo per visualizzare il riepilogo delle recensioni di tutti i ristoranti (la media e il numero di recensioni)
-    private void visualizzaRiepilogo() {
+    /*private void visualizzaRiepilogo() {
         System.out.println("\n=== Riepilogo Recensioni ===");
 
         // Per ogni ristorante del proprietario
@@ -413,9 +421,11 @@ public class MenuRistoratore {
      * @return true se il ristorante appartiene all'utente corrente,
      *         false altrimenti
      */
-    private boolean appartienePropietario(String nomeRistorante) {
+   /* private boolean appartienePropietario(String nomeRistorante) {
         return listaRistoranti.getListaRistoranti().stream()
                 .anyMatch(r -> r.getNome().equals(nomeRistorante) &&
                         r.getEmail().equals(utenteCorrente.getEmail()));
     }
 }
+
+    */

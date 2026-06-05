@@ -16,7 +16,7 @@ import java.util.Iterator;
  * Classe che racchiude l'insieme dei metodi per la gestione dei preferiti.
  * Nello specifico per l'aggiunta, rimozione e la visualizzazione di essi.
  */
-
+/*
 public class ListaPreferiti {
     private static List<Preferito> listaPreferiti;
 
@@ -28,6 +28,7 @@ public class ListaPreferiti {
      * {@code ricavaPreferitiDaCSV()}, che legge i dati da un file CSV.
      * </p>
      */
+    /*
     public ListaPreferiti() {
         this.listaPreferiti = new ArrayList<>();
         ricavaPreferitiDaCSV();
@@ -48,6 +49,7 @@ public class ListaPreferiti {
      * @throws SecurityException se i permessi di accesso al file sono negati (non gestito direttamente ma possibile)
      */
     //Metodo per leggere i preferiti da CSV
+    /*
     private void ricavaPreferitiDaCSV(){
         try {
             FileReader reader = new FileReader(Preferito.FILE_PREFERITI);
@@ -86,6 +88,7 @@ public class ListaPreferiti {
      * @throws RuntimeException se si verifica un errore di I/O durante la scrittura del file.
      */
     //Metodo per salvare sul CSV
+    /*
     public void salvaPreferitiSuCSV(){
         File file = new File(Preferito.FILE_PREFERITI);
         file.getParentFile().mkdirs(); // Crea le directory se non esistono
@@ -114,6 +117,7 @@ public class ListaPreferiti {
      * @throws RuntimeException se si verifica un errore imprevisto durante la creazione o l'aggiunta del preferito.
      */
     //Metodo per aggiungere un preferito
+    /*
     public void aggiungiPreferito(Utente utenteCorrente, ListaRistoranti listaRistoranti){
         try {
             Preferito nuovoPreferito = new Preferito(utenteCorrente, listaRistoranti);
@@ -142,6 +146,7 @@ public class ListaPreferiti {
      * @return {@code true} se il preferito è già presente nella lista, {@code false} altrimenti.
      */
     //Controllo del duplicato
+    /*
     public boolean preferitoDuplicato(Preferito nuovoPreferito){
         for(Preferito p : listaPreferiti){
             if(p.getNomeRistorante().equals(nuovoPreferito.getNomeRistorante()) && p.getEmailUtente().equals(nuovoPreferito.getEmailUtente())){
@@ -162,6 +167,7 @@ public class ListaPreferiti {
      * @return {@code true} se l'utente ha almeno un ristorante preferito, {@code false} altrimenti.
      */
     //Metodo per mostrare i preferiti
+    /*
     public boolean mostraPreferiti(Utente utenteCorrente){
         List<Preferito> preferitiUtente = preferitiUtente(utenteCorrente);
         if (preferitiUtente.isEmpty()) {
@@ -191,6 +197,7 @@ public class ListaPreferiti {
      * @param listaRistoranti  La lista dei ristoranti da cui cercare il ristorante da rimuovere.
      */
     // Metodo per rimuovere i preferiti
+    /*
     public void rimuoviPreferito(Utente utente, ListaRistoranti listaRistoranti){
         if(mostraPreferiti(utente)){
             Ristorante ristorante = listaRistoranti.cercaPerNome("Inserisci il nome del ristorante da rimuovere dai preferiti: ");
@@ -231,6 +238,7 @@ public class ListaPreferiti {
      * @return Una lista di oggetti {@code Preferito} associati all'utente. La lista può essere vuota se non ci sono preferiti.
      */
     //Metodo per filtrare e restituire solo i preferiti dell'utente corrente
+    /*
     public List<Preferito> preferitiUtente (Utente utenteCorrente){
         List<Preferito> preferitiUtente = new ArrayList<>();
         for (Preferito p : listaPreferiti) {
@@ -241,3 +249,5 @@ public class ListaPreferiti {
         return preferitiUtente;
     }
 }
+
+     */

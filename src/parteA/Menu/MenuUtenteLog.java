@@ -1,3 +1,4 @@
+/*
 package parteA.Menu;
 
 import main.java.shared.domain.Utente;
@@ -13,7 +14,7 @@ import java.util.*;
  * Classe che rappresenta il menu specifico per gli utenti loggati,
  * permettendo di gestire i preferiti e le proprie recensioni.
  */
-
+/*
 public class MenuUtenteLog {
 
     private static final Scanner scanner = new Scanner(System.in);
@@ -34,6 +35,7 @@ public class MenuUtenteLog {
      *
      * @param utente l'utente attualmente loggato
      */
+/*
     public MenuUtenteLog(Utente utente) { // Aggiungi i parametri
         listaPreferiti = new ListaPreferiti();
         listaRecensioni = new ListaRecensioni();
@@ -59,6 +61,7 @@ public class MenuUtenteLog {
      * per assicurare l'inserimento di un numero valido.
      */
     //parteA.Menu utente
+/*
     public void mostraMenuUtente(){
         int scelta = 0;
         do{
@@ -120,30 +123,40 @@ public class MenuUtenteLog {
     }
 
     /** Mostra i ristoranti preferiti dell'utente*/
+/*
     private void mostraPreferiti() {
         //List<Preferito> preferitiUtente = listaPreferiti.preferitiUtente(utenteCorrente);
         listaPreferiti.mostraPreferiti(utenteCorrente);
     }
 
     /** Aggiunta ristorante ai preferiti dell'utente con controllo duplicati*/
+/*
     public void aggiungiPreferito() {
         listaPreferiti.aggiungiPreferito(utenteCorrente, listaRistoranti);
     }
 
     /** Rimuovi ristorante dai preferiti dell'utente*/
+/*
     public void rimuoviPreferito() {
         listaPreferiti.rimuoviPreferito(utenteCorrente, listaRistoranti);
     }
 
     /** Mostra le recensioni dell'utente */
+/*
     private void mostraRecensioni() { listaRecensioni.mostraRecensioniUtente(utenteCorrente);}
 
     /** Aggiunta recensione */
+/*
     public void aggiungiRecensione() { listaRecensioni.inserisciRecensione(utenteCorrente, listaRistoranti);}
 
+
     /** Modifica recensione */
+/*
     public void modificaRecensione() { listaRecensioni.modificaRecensione(utenteCorrente);}
 
     /** Elimina recensione */
+/*
     public void eliminaRecensione() { listaRecensioni.eliminaRecensione(utenteCorrente);}
 }
+
+ */

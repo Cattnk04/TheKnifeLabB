@@ -1,4 +1,4 @@
-package parteA.GestioneDati;
+/*package parteA.GestioneDati;
 
 import main.java.shared.domain.Recensione;
 import main.java.shared.domain.Ristorante;
@@ -18,7 +18,7 @@ import java.util.Scanner;
  * la visualizzazione di esse.
  */
 
-public class ListaRecensioni {
+/*public class ListaRecensioni {
 
     private List<Recensione> listaRecensioni = new ArrayList<>();
 
@@ -30,19 +30,19 @@ public class ListaRecensioni {
      * caricare i dati da un file CSV.
      * </p>
      */
-    public ListaRecensioni() {
-        if (listaRecensioni.isEmpty()){
-            ricavaRecensioniDaCSV();
-        }
-    }
+/* public ListaRecensioni() {
+     if (listaRecensioni.isEmpty()){
+         ricavaRecensioniDaCSV();
+     }
+ }
 
-    //Metodi Get e Set
-    /**
-     * Restituisce la lista delle recensioni memorizzate.
-     *
-     * @return La lista di oggetti {@code Recensione}.
-     */
-    public List<Recensione> getListaRecensione() {
+ //Metodi Get e Set
+ /**
+  * Restituisce la lista delle recensioni memorizzate.
+  *
+  * @return La lista di oggetti {@code Recensione}.
+  */
+   /* public List<Recensione> getListaRecensione() {
         return listaRecensioni;
     }
     /**
@@ -50,7 +50,7 @@ public class ListaRecensioni {
      *
      * @param listaRecensione La nuova lista di oggetti {@code Recensione} da assegnare.
      */
-    public void setListaRecensione(List<Recensione> listaRecensione) {
+   /* public void setListaRecensione(List<Recensione> listaRecensione) {
         this.listaRecensioni = listaRecensione;
     }
 
@@ -64,7 +64,7 @@ public class ListaRecensioni {
      * In caso di errore durante la scrittura, viene stampato un messaggio di errore su console.
      */
     //Metodo per salvare su CSV
-    public void salvaRecensioniSuCSV() {
+  /*  public void salvaRecensioniSuCSV() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(Recensione.FILE_RECENSIONI))){
             for (Recensione r :listaRecensioni){
                 writer.write(r.toString());
@@ -86,7 +86,7 @@ public class ListaRecensioni {
      * In caso di errori di I/O o di parsing della valutazione, viene stampato un messaggio di errore su console.
      */
     //Metodo per ricavare da CSV
-    public void ricavaRecensioniDaCSV() {
+   /* public void ricavaRecensioniDaCSV() {
         try (BufferedReader reader = new BufferedReader(new FileReader(Recensione.FILE_RECENSIONI))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -126,7 +126,7 @@ public class ListaRecensioni {
      * @throws RuntimeException se si verifica un errore durante la creazione o l'inserimento della recensione.
      */
     //Metodo per aggiungere una recensione al file di recensioni
-    public void inserisciRecensione(Utente utente, ListaRistoranti listaRistoranti){
+    /*public void inserisciRecensione(Utente utente, ListaRistoranti listaRistoranti){
         try {
             Recensione recensione = new Recensione(utente, listaRistoranti);
             if (recensioneDuplicato(recensione)){
@@ -152,7 +152,7 @@ public class ListaRecensioni {
      * @return {@code true} se una recensione dello stesso utente per lo stesso ristorante esiste già, {@code false} altrimenti.
      */
     //Metodo per il controllo della duplicazione delle recensioni
-    public boolean recensioneDuplicato(Recensione recensione){
+   /* public boolean recensioneDuplicato(Recensione recensione){
         for(Recensione r : listaRecensioni){
             if(r.getEmail().equals(recensione.getEmail()) && r.getNomeRistorante().equals(recensione.getNomeRistorante())){
                 return true;
@@ -179,7 +179,7 @@ public class ListaRecensioni {
      * @param utente L'utente che vuole modificare la propria recensione.
      */
     //Metodo per modificare una recensione
-    public void modificaRecensione(Utente utente) {
+   /* public void modificaRecensione(Utente utente) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Inserisci il nome del ristorante da modificare: ");
         String nomeRistorante = scanner.nextLine();
@@ -230,7 +230,7 @@ public class ListaRecensioni {
      * @param utente L'utente che vuole eliminare la propria recensione.
      */
     //Metodo per eliminare una recensione
-    public void eliminaRecensione(Utente utente) {
+   /* public void eliminaRecensione(Utente utente) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Inserisci il nome del ristorante di cui eliminare la recensione: ");
         String nomeRistorante = scanner.nextLine();
@@ -268,7 +268,7 @@ public class ListaRecensioni {
      * @param ristorante Il ristorante di cui mostrare le recensioni.
      */
     //Metodo per visuallizare le recensioni del ristorante selezionato dopo il cerca RiSTORANTE
-    public void mostraRecensioniRistorante(Ristorante ristorante) {
+   /* public void mostraRecensioniRistorante(Ristorante ristorante) {
         List<Recensione> recensioniRistorante = recensioniRistorante(ristorante.getNome());
 
         if (recensioniRistorante == null || recensioniRistorante.isEmpty()) {
@@ -293,7 +293,7 @@ public class ListaRecensioni {
      * @param utente L'utente di cui mostrare le recensioni.
      */
     //Metodo per la stampa delle recensioni per il menu utente log
-    public void mostraRecensioniUtente(Utente utente) {
+   /* public void mostraRecensioniUtente(Utente utente) {
         List<Recensione> recensioni = recensioniUtente(utente);
         if (recensioni == null || recensioni.isEmpty()) {
             System.out.println("\nNon hai ancora scritto recensioni.");
@@ -318,7 +318,7 @@ public class ListaRecensioni {
      * @return Una lista di oggetti {@code Recensione} relative al ristorante specificato.
      */
     //Metodo per filtrare e restituire solo per le recensioni appartenenti al ristorante inserito
-    public List<Recensione> recensioniRistorante(String nomeRistorante){
+   /* public List<Recensione> recensioniRistorante(String nomeRistorante){
         List<Recensione> recensioniRistorante = new ArrayList<>();
         for (Recensione r : listaRecensioni) {
             if (r.getNomeRistorante().trim().equalsIgnoreCase(nomeRistorante.trim())) {
@@ -339,7 +339,7 @@ public class ListaRecensioni {
      * @return Una lista di oggetti {@code Recensione} scritte dall'utente.
      */
     //Metodo per filtrare e restituire solo le recensioni dell'utente corrente
-    public List<Recensione> recensioniUtente(Utente utente) {
+   /* public List<Recensione> recensioniUtente(Utente utente) {
         List<Recensione> recensioniUtente = new ArrayList<>();
         for (Recensione r : listaRecensioni) {
             if (r.getEmail().trim().equalsIgnoreCase(utente.getEmail())) {
@@ -349,3 +349,5 @@ public class ListaRecensioni {
         return recensioniUtente; // sempre lista, mai null
     }
 }
+
+    */

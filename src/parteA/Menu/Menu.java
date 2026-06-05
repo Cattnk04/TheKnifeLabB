@@ -1,3 +1,4 @@
+/*
 package parteA.Menu;
 
 
@@ -25,7 +26,7 @@ import java.util.InputMismatchException;
  * </ul>
  *
  */
-
+/*
 public class Menu {
 
     private static final Scanner scanner = new Scanner(System.in);
@@ -48,6 +49,7 @@ public class Menu {
      * Se un utente si registra o fa login con successo, viene aperto il menu dedicato
      * in base al tipo di utente (ristoratore o utente normale).
      */
+/*
     public Menu(){
     //Creazione delle diverse liste per l'accesso ai dati
     ListaUtenti listaUtenti = new ListaUtenti();
@@ -116,6 +118,7 @@ public class Menu {
      *  * @return un intero corrispondente alla scelta dell'utente, o -1 se l'input non è valido
      */
     //Metodo per la scelta fatta dell'utente ospite
+/*
     public static int menuGuest() {
         int choice = -1;
         System.out.println("\nBenvenuto nella schermata home ospite!");
@@ -152,6 +155,7 @@ public class Menu {
      * @return il nuovo utente aggiunto se la registrazione ha successo, {@code null} altrimenti
      */
     //Metodo per la registrazione
+/*
     public static Utente registraUtente(ListaUtenti listaUtenti){
         try {
             Utente nuovoUtente = new Utente();
@@ -173,6 +177,7 @@ public class Menu {
      * @return l'utente autenticato se il login ha successo, {@code null} in caso di errore o fallimento
      */
     //Metodo per il login
+/*
     public static Utente loginUtente(ListaUtenti listaUtenti) {
         try {
             return listaUtenti.loginUtente();
@@ -182,3 +187,5 @@ public class Menu {
         }
     }
 }
+
+ */

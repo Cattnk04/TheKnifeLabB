@@ -1,4 +1,4 @@
-package parteA.GestioneDati;
+/*package parteA.GestioneDati;
 
 import main.java.shared.domain.Recensione;
 import main.java.shared.domain.Ristorante;
@@ -17,7 +17,7 @@ import java.util.Scanner;
  * la ricerca di essi.
  */
 
-public class ListaRistoranti {
+/*public class ListaRistoranti {
 
     public List<Ristorante> listaRistoranti = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class ListaRistoranti {
      * </p>
      */
     //Costruttore
-    public ListaRistoranti(){
+ /*   public ListaRistoranti(){
         if(listaRistoranti.isEmpty())
             ricavaRistorantiDaCSV();
     }
@@ -50,7 +50,7 @@ public class ListaRistoranti {
      * </p>
      */
     //Metodo per salvare sul CSV
-    public void salvaRistorantiSuCSV() {
+  /*  public void salvaRistorantiSuCSV() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(Ristorante.FILE_RISTORANTI))) {
             for (Ristorante r : listaRistoranti) {
                 writer.write(r.toString());
@@ -74,7 +74,7 @@ public class ListaRistoranti {
      * </p>
      */
     //Metodo per ricavare il ristorante dal CSV
-    public void ricavaRistorantiDaCSV(){
+  /*  public void ricavaRistorantiDaCSV(){
         //lettura del file Ristoranti.txt e salvataggio nella lista listaRistoranti
         listaRistoranti.clear();
         try (BufferedReader reader = new BufferedReader(new FileReader(Ristorante.FILE_RISTORANTI))){
@@ -113,7 +113,7 @@ public class ListaRistoranti {
      * @param ristorante Il ristorante da aggiungere alla lista.
      */
     //Metodo per inserire un ristorante
-    public void inserisciRistorante(Ristorante ristorante) {
+  /*  public void inserisciRistorante(Ristorante ristorante) {
         //funzione per l'inserimento di un nuovo ristorante nella lista
         if(ristorante != null && !ristoranteDuplicato(ristorante))
             listaRistoranti.add(ristorante);
@@ -131,7 +131,7 @@ public class ListaRistoranti {
      * @param ristorante Il ristorante da controllare.
      * @return {@code true} se un ristorante con lo stesso nome è già presente, {@code false} altrimenti.
      */
-    private boolean ristoranteDuplicato(Ristorante ristorante) {
+  /*  private boolean ristoranteDuplicato(Ristorante ristorante) {
         for (Ristorante r : listaRistoranti) {
             if(r.getNome().equalsIgnoreCase(ristorante.getNome()))
                 return true;
@@ -152,7 +152,7 @@ public class ListaRistoranti {
      * @return Il {@code Ristorante} trovato, oppure {@code null} se non esiste.
      */
     //Cerca ristorante con filtri
-    public Ristorante cercaPerNome(String messaggio){
+  /*  public Ristorante cercaPerNome(String messaggio){
         //Funzione per cercare un ristorante in base al suo nome
         Scanner scanner = new Scanner(System.in);
         System.out.print(messaggio);
@@ -177,7 +177,7 @@ public class ListaRistoranti {
      *
      * @param ristoranti La lista di ristoranti da mostrare.
      */
-    private void stampaRistorantiFiltrati(List<Ristorante> ristoranti) {
+ /*   private void stampaRistorantiFiltrati(List<Ristorante> ristoranti) {
         if (ristoranti.isEmpty()) {
             System.out.println("\nNessun ristorante trovato con i criteri specificati.");
             return;
@@ -229,7 +229,7 @@ public class ListaRistoranti {
      * @param ristorante Il ristorante di cui mostrare i dettagli.
      * @return {@code true} per tornare al menu principale, {@code false} per tornare alla lista.
      */
-    private boolean mostraDettagliRistorante(Ristorante ristorante) {
+  /*  private boolean mostraDettagliRistorante(Ristorante ristorante) {
         // Mostra i dettagli del ristorante solo la prima volta
         System.out.println("\n=== Dettagli del ristorante ===");
         System.out.println("Nome: " + ristorante.getNome());
@@ -282,7 +282,7 @@ public class ListaRistoranti {
      * @return Lista di ristoranti filtrati in base alle scelte dell'utente.
      */
     //Metodo per la ricerca dei ristoranti
-    public List<Ristorante> cercaRistorante(){
+  /*  public List<Ristorante> cercaRistorante(){
         List<Ristorante> filtrati = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         String sn;
@@ -373,7 +373,7 @@ public class ListaRistoranti {
      * @param citta la città in cui cercare i ristoranti (case-insensitive)
      * @return la lista filtrati aggiornata se contiene elementi, {@code null} se nessun ristorante trovato
      */
-    private List<Ristorante> filtraPerCitta(List<Ristorante> filtrati, String citta){
+   /* private List<Ristorante> filtraPerCitta(List<Ristorante> filtrati, String citta){
         for(Ristorante r : listaRistoranti){
             if(r.getCitta().toLowerCase().equalsIgnoreCase(citta)){
                 filtrati.add(r);
@@ -394,7 +394,7 @@ public class ListaRistoranti {
      * @param prezzoMax valore massimo della fascia prezzo
      * @param prezzoMin valore minimo della fascia prezzo
      */
-    private void filtraPerPrezzo(List<Ristorante> filtrati, double prezzoMax, double prezzoMin){
+   /* private void filtraPerPrezzo(List<Ristorante> filtrati, double prezzoMax, double prezzoMin){
         filtrati.removeIf(r -> r.getFasciaPrezzo() < prezzoMin || r.getFasciaPrezzo() > prezzoMax);
         System.out.println("Filtro per prezzo medio inserito.");
     }
@@ -403,7 +403,7 @@ public class ListaRistoranti {
      *
      * @param filtrati lista di ristoranti su cui applicare il filtro (verrà modificata)
      */
-    private void filtraPerDelivery(List<Ristorante> filtrati){
+   /* private void filtraPerDelivery(List<Ristorante> filtrati){
         filtrati.removeIf(r -> !r.getDelivery());
         System.out.println("Filtro per delivery medio inserito.");
     }
@@ -412,7 +412,7 @@ public class ListaRistoranti {
      *
      * @param filtrati lista di ristoranti su cui applicare il filtro (verrà modificata)
      */
-    private void filtraPerPrenotazioneOnline(List<Ristorante> filtrati){
+   /* private void filtraPerPrenotazioneOnline(List<Ristorante> filtrati){
         filtrati.removeIf(r -> !r.getPrenotazioneOnline());
         System.out.println("Filtro per prenotazione online inserito.");
     }
@@ -423,9 +423,11 @@ public class ListaRistoranti {
      * @param filtrati lista di ristoranti su cui applicare il filtro (verrà modificata)
      * @param tipoCucina il tipo di cucina da filtrare
      */
-    private void filtraPerTipoCucina(List<Ristorante> filtrati, String tipoCucina){
+   /* private void filtraPerTipoCucina(List<Ristorante> filtrati, String tipoCucina){
         filtrati.removeIf(r -> !r.getTipoCucina().equalsIgnoreCase(tipoCucina));
         System.out.println("Filtro per tipo cucina inserito.");
     }
 
 }
+
+    */

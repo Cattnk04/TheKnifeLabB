@@ -1,4 +1,4 @@
-package parteA.GestioneDati;
+/*package parteA.GestioneDati;
 
 import main.java.shared.domain.Utente;
 
@@ -19,7 +19,7 @@ import java.util.Scanner;
  * e i controlli su di essi.
  */
 
-public class ListaUtenti {
+/*public class ListaUtenti {
 
     public static List<Utente> listaUtenti = new ArrayList<Utente>();
 
@@ -28,7 +28,7 @@ public class ListaUtenti {
      * Se la lista degli utenti è vuota, inizializza la lista caricando gli utenti da un file CSV.
      */
     //Costruttore
-    public ListaUtenti(){
+ /*   public ListaUtenti(){
         if (listaUtenti.isEmpty())
             ricavaUtentiDaCSV();
     }
@@ -47,7 +47,7 @@ public class ListaUtenti {
      * In caso di errore durante la scrittura, viene stampato un messaggio di errore e lo stack trace.
      */
     //Metodo per salvare gli utenti sul CSV
-    public void salvaUtentiSuCSV(){
+   /* public void salvaUtentiSuCSV(){
         File file = new File(Utente.FILE_UTENTI);
         file.getParentFile().mkdirs(); // Crea le directory se non esistono
     
@@ -74,7 +74,7 @@ public class ListaUtenti {
      * In caso di errore di lettura, viene stampato un messaggio di errore.
      */
     //Metodo per ricavare dal CSV
-    private void ricavaUtentiDaCSV() {
+  /*  private void ricavaUtentiDaCSV() {
         try {
             FileReader reader = new FileReader(Utente.FILE_UTENTI);
             BufferedReader bufferedReader = new BufferedReader(reader);
@@ -115,7 +115,7 @@ public class ListaUtenti {
      * @param nuovoUtente l'oggetto {@code Utente} da aggiungere
      * @return l'utente aggiunto se l'operazione ha successo, {@code null} altrimenti
      */
-    //Metodo per aggiungere utente
+  /*  //Metodo per aggiungere utente
     public Utente aggiungiUtente(Utente nuovoUtente){
         if(nuovoUtente != null && !utenteDuplicato(nuovoUtente)){
             listaUtenti.add(nuovoUtente);
@@ -138,7 +138,7 @@ public class ListaUtenti {
      * @throws RuntimeException se l'algoritmo SHA-256 non è supportato (evento raro)
      */
     //Metodo per il login
-    public Utente loginUtente(){
+  /*  public Utente loginUtente(){
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -193,7 +193,7 @@ public class ListaUtenti {
      * @return l'oggetto {@code Utente} corrispondente se trovato e password corretta, {@code null} altrimenti
      */
     //Metodo per cercare l'utente nel sistema
-    public Utente trovaUtente(String email, String password) {
+   /* public Utente trovaUtente(String email, String password) {
     
     for(Utente utente : listaUtenti) {
         if(utente.getEmail().equals(email)) {
@@ -218,7 +218,7 @@ public class ListaUtenti {
      * @return {@code true} se esiste già un utente con la stessa email, {@code false} altrimenti
      */
     //Controllo del duplicato
-    public boolean utenteDuplicato(Utente nuovoUtente){
+  /*  public boolean utenteDuplicato(Utente nuovoUtente){
         //scorrere la lista e verificare se esistono altri utenti con la stessa email del nuovo utente e in caso tornare true
         for(Utente utente : listaUtenti){
             if(utente.getEmail().equals(nuovoUtente.getEmail())){
@@ -228,3 +228,5 @@ public class ListaUtenti {
         return false;
     }
 }
+
+   */

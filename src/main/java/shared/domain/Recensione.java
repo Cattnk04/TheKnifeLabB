@@ -1,6 +1,6 @@
 package main.java.shared.domain;
 
-import parteA.GestioneDati.ListaRistoranti;
+//import parteA.GestioneDati.ListaRistoranti;
 
 import java.io.Serializable;
 import java.util.InputMismatchException;
