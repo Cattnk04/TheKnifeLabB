@@ -109,7 +109,10 @@ public class RistoranteDAO {
     public List<Ristorante> trovaTutti() {
 
         List<Ristorante> list = new ArrayList<>();
-        String sql = "SELECT * FROM ristorante";
+        String sql = """
+                SELECT nomeristorante, email, citta, nazione, via, numeroCivico,
+                        fasciaPrezzo, delivery, prenotazioneOnline, idtipocucina
+                FROM ristorante""";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -166,6 +169,7 @@ public class RistoranteDAO {
             SELECT 1
             FROM ristorante
             WHERE nomeristorante = ?
+            LIMIT 1
             """;
 
         try (Connection connection = DatabaseConnection.getConnection();

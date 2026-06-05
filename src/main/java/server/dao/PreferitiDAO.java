@@ -55,6 +55,7 @@ public class PreferitiDAO {
             SELECT 1
             FROM preferiti
             WHERE email = ? AND idristorante = ?
+            LIMIT 1
             """;
 
         try (Connection connection = DatabaseConnection.getConnection();

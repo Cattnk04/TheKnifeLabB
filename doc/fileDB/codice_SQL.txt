@@ -36,7 +36,7 @@ CREATE TABLE Ristorante(
 CREATE TABLE Preferiti(
     IDRistorante INT,
     Email VARCHAR(50),
-    PRIMARY KEY (IDRistorante, Email)
+    PRIMARY KEY (IDRistorante, Email),
     FOREIGN KEY (IDRistorante)
         REFERENCES Ristorante(IDRistorante)  ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (Email)
@@ -51,7 +51,7 @@ CREATE TABLE Recensioni(
     Risposta VARCHAR(750),
     PRIMARY KEY (Email, IDRistorante),
     FOREIGN KEY (Email)
-        REFERENCES Utente(Email) ON DELETE CASCADE ON UPDATE CASCADE
+        REFERENCES Utente(Email) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (IDRistorante)
         REFERENCES Ristorante(IDRistorante) ON DELETE CASCADE ON UPDATE CASCADE
 );

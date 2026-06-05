@@ -82,7 +82,7 @@ public class RecensioneDAO {
         List<Recensione> listaRecensioni = new ArrayList<>();
 
         String sql = """
-            SELECT *
+            SELECT email, idristorante, valutazione, recensione, risposta
             FROM recensioni
             """;
 
@@ -114,7 +114,7 @@ public class RecensioneDAO {
         List<Recensione> listaByRist = new ArrayList<>();
 
         String sql = """
-            SELECT *
+            SELECT email, idristorante, valutazione, recensione, risposta
             FROM recensioni
             WHERE idristorante = ?
             """;
@@ -149,7 +149,7 @@ public class RecensioneDAO {
         List<Recensione> listaByEmail = new ArrayList<>();
 
         String sql = """
-                SELECT *
+                SELECT email, idristorante, valutazione, recensione, risposta
                 FROM recensioni
                 WHERE email = ?
                 """;
@@ -180,7 +180,7 @@ public class RecensioneDAO {
     public RiepilogoRecensioniDTO getRiepilogo(int idRistorante) {
         String sql = """
                 SELECT COUNT(*) AS totRecensioni,
-                    AVG(valutazione) AS mediaValutazione
+                    COALESCE(AVG(valutazione),0) AS mediaValutazione
                 FROM recensioni
                 WHERE idristorante = ?
                 """;
@@ -210,7 +210,8 @@ public class RecensioneDAO {
         String sql = """
                 UPDATE recensioni
                 SET risposta = ?
-                WHERE idristorante = ? AND email = ?
+                WHERE idristorante = ? 
+                    AND email = ?
                     AND (risposta IS NULL OR risposta = '')
                 """;
         try(Connection connection = DatabaseConnection.getConnection();
