@@ -25,6 +25,8 @@ public class Ristorante implements Serializable{
 
     //public static final String FILE_RISTORANTI = "Data/Ristoranti.txt";
 
+    public Ristorante() {}
+
     /**
      * Costruttore della classe Ristorante che inizializza un nuovo ristorante
      * con le informazioni specificate. I valori di tipo String vengono trimmati
@@ -173,7 +175,7 @@ public class Ristorante implements Serializable{
      *
      * @param nome il nuovo nome del ristorante
      */
-    public void setNome(String nome){
+    public void setNomeRistorante(String nome){
         this.nomeRistorante = nome;
     }
 

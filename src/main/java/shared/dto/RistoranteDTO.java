@@ -37,5 +37,5 @@ public class RistoranteDTO {
     public int getFasciaPrezzo() { return fasciaPrezzo; }
     public boolean isDelivery() { return delivery; }
     public boolean isPrenotazioneOnline() { return prenotazioneOnline; }
-    public String getTipoCucina() { return tipoCucina; }
+    public int getTipoCucina() { return tipoCucina; }
 }
