@@ -1,10 +1,13 @@
 package main.java.client.gui.azioniRistoratore;
 
+import main.java.client.gui.TemplateGUI;
+
 import javax.swing.*;
 
-public class AggiungiRistoranteGUI extends JPanel {
-    JFrame frame;
+public class AggiungiRistoranteGUI extends TemplateGUI {
+
     public AggiungiRistoranteGUI(JFrame frame) {
+        super(frame);
         this.frame = frame;
         JTextField nomeRistorante= new JTextField();
         nomeRistorante.setEditable(true);

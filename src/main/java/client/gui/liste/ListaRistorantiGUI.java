@@ -1,10 +1,13 @@
 package main.java.client.gui.liste;
 
+import main.java.client.gui.TemplateGUI;
+
 import javax.swing.*;
 
-public class ListaRistorantiGUI extends JPanel {
-    JFrame frame;
+public class ListaRistorantiGUI extends TemplateGUI {
+
     public ListaRistorantiGUI(JFrame frame) {
+        super(frame);
         this.frame = frame;
     }
 }

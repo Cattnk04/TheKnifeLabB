@@ -1,5 +1,6 @@
 package main.java.client.gui.menu;
 
+import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.autenticazione.LoginGUI;
 
 import javax.swing.*;
@@ -8,28 +9,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.EventListener;
 
-public class GuestGUI extends JPanel {
-    JFrame frame;
-    Color bianco = new Color(255,255,255);
+public class GuestGUI extends TemplateGUI {
+
     public GuestGUI(JFrame frame) {
+        super(frame);
         this.frame = frame;
         JButton login = new JButton("Login");
         login.setFocusable(false);
-        login.setBorder(new LineBorder(bianco));
+        login.setBorder(new LineBorder(Color.WHITE));
         login.addActionListener(e -> {
             frame.setContentPane(new LoginGUI(frame));
             frame.revalidate();
             frame.repaint();
         });
 
-        JButton logo = new JButton("Logo");
-        logo.setFocusable(false);
-        logo.setBorder(new LineBorder(bianco));
-
         JLabel consigliati = new JLabel("Consigliati");
         consigliati.setFocusable(false);
-        consigliati.setBorder(new LineBorder(bianco));
+        consigliati.setBorder(new LineBorder(Color.WHITE));
         consigliati.setFont(new Font("Arial", Font.BOLD, 50));
+
+
 
         /*
         Popola le nazioni all'avvio
@@ -72,8 +71,7 @@ panel.add(comboNazione);
 panel.add(comboCitta);
          */
 
-        this.add(login);
-        this.add(logo);
+        pannello.add(login);
         this.add(consigliati);
     }
 }

@@ -1,10 +1,13 @@
 package main.java.client.gui.azioniRistoratore;
 
+import main.java.client.gui.TemplateGUI;
+
 import javax.swing.*;
 
-public class RispondiRecensioneGUI extends JPanel {
-    JFrame frame;
+public class RispondiRecensioneGUI extends TemplateGUI {
+
     public RispondiRecensioneGUI(JFrame frame) {
+        super(frame);
         this.frame = frame;
         String testoRecensione = "aggiungere query per ricevere la recensione del DB";
         JLabel lblTestoRecensione = new JLabel(testoRecensione);
