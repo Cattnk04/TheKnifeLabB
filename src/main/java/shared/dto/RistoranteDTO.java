@@ -11,12 +11,12 @@ public class RistoranteDTO {
     private final int fasciaPrezzo;
     private final boolean delivery;
     private final boolean prenotazioneOnline;
-    private final String tipoCucina;
+    private final int tipoCucina;
 
     public RistoranteDTO(String nomeRistorante, String citta, String nazione,
                          String via, int numeroCivico, int fasciaPrezzo,
                          boolean delivery, boolean prenotazioneOnline,
-                         String tipoCucina) {
+                         int tipoCucina) {
 
         this.nomeRistorante = nomeRistorante;
         this.citta = citta;
