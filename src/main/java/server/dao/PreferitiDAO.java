@@ -8,7 +8,7 @@ import java.util.*;
 
 public class PreferitiDAO {
 
-    //Salvare i preferiti
+    //Salvataggio dei preferiti
     public boolean salvaPreferiti (String email, int idRistorante){
         String sql = """
                 INSERT INTO preferiti (email, idristorante)
