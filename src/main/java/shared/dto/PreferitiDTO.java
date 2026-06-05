@@ -1,10 +1,20 @@
 package main.java.shared.dto;
 
 public class PreferitiDTO {
-    public String email;
-    public int ristoranteID;
-    public PreferitiDTO(String email, int ristoranteID) {
+
+    private final String email;
+    private final int idRistorante;
+
+    public PreferitiDTO(String email, int idRistorante) {
         this.email = email;
-        this.ristoranteID = ristoranteID;
+        this.idRistorante = idRistorante;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getIdRistorante() {
+        return idRistorante;
     }
 }

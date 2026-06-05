@@ -70,6 +70,7 @@ public class Preferito implements Serializable {
     public String setEmail(String email){
         return this.email = email;
     }
+
     public int setIdRistorante(int IdRistorante){
         return this.idRistorante = IdRistorante;
     }

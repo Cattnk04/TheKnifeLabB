@@ -3,6 +3,7 @@ package main.java.server.security;
 public class PasswordService {
 
     public boolean verify(String plain, String hash) {
+
         if (PasswordUtils.isBCryptHash(hash)) {
             return PasswordUtils.verifyBCrypt(plain, hash);
         }

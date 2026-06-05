@@ -1,10 +1,14 @@
 package main.java.shared.dto;
 
 public class LoginDTO {
-    public String email;
-    public String password;
+    private final String email;
+    private final String password;
     public LoginDTO(String email, String password) {
         this.email = email;
         this.password = password;
     }
+
+    public String getEmail() { return email; }
+
+    public String getPassword() { return password; }
 }

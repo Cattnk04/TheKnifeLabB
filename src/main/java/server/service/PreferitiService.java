@@ -2,28 +2,51 @@ package main.java.server.service;
 
 import main.java.server.dao.PreferitiDAO;
 import main.java.shared.domain.Preferito;
+import main.java.shared.dto.PreferitiDTO;
 
 import java.util.List;
 
 public class PreferitiService {
 
-    private final PreferitiDAO preferitiDAO = new PreferitiDAO();
+    private final PreferitiDAO preferitiDAO;
+
+    public PreferitiService(PreferitiDAO preferitiDAO) {
+        this.preferitiDAO = preferitiDAO;
+    }
 
     //Aggiungi preferito con controllo duplicati
-    public boolean aggiungiPreferito(String email, int idRistorante){
+    public boolean aggiungiPreferito(PreferitiDTO dto) {
+
+        if (dto == null) return false;
+
+        String email = dto.getEmail();
+        int idRistorante = dto.getIdRistorante();
+
         if (preferitiDAO.esistePreferito(email, idRistorante)) {
             return false;
         }
+
         return preferitiDAO.salvaPreferiti(email, idRistorante);
     }
 
     //Rimuovi preferito
-    public boolean rimuoviPreferito(String email, int idRistorante){
-        return preferitiDAO.cancellaPreferiti(email, idRistorante);
+    public boolean rimuoviPreferito(PreferitiDTO dto) {
+
+        if (dto == null) return false;
+
+        return preferitiDAO.cancellaPreferiti(
+                dto.getEmail(),
+                dto.getIdRistorante()
+        );
     }
 
     //Toggler preferito
-    public boolean togglePreferito(String email, int idRistorante) {
+    public boolean togglePreferito(PreferitiDTO dto) {
+
+        if (dto == null) return false;
+
+        String email = dto.getEmail();
+        int idRistorante = dto.getIdRistorante();
 
         if (preferitiDAO.esistePreferito(email, idRistorante)) {
             return preferitiDAO.cancellaPreferiti(email, idRistorante);

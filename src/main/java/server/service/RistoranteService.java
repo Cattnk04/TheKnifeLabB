@@ -19,7 +19,7 @@ public class RistoranteService {
         if (ristorante == null) {
             throw new IllegalArgumentException("Ristorante nullo");
         }
-        if (!ValidationUtils.isValidNomeRistorante(ristorante.getNomeRistorante())) {
+        if (!ValidationUtils.isValidName(ristorante.getNomeRistorante())) {
             throw new IllegalArgumentException("Nome ristorante non valido");
         }
 
@@ -43,7 +43,7 @@ public class RistoranteService {
             throw new IllegalArgumentException("Numero civico non valido");
         }
 
-        if (ristoranteDAO.esisteRistorante(ristorante.getNomeRistorante())) {
+        if (ristoranteDAO.esisteRistorante(ristorante.getEmail())) {
             throw new IllegalArgumentException("Ristorante già esistente");
         }
 
@@ -67,7 +67,7 @@ public class RistoranteService {
         // validazioni specifiche per campo
         switch (campo) {
             case NOME -> {
-                if (!ValidationUtils.isValidNomeRistorante(valore.toString())) {
+                if (!ValidationUtils.isValidName(valore.toString())) {
                     throw new IllegalArgumentException("Nome non valido");
                 }
             }
@@ -121,12 +121,10 @@ public class RistoranteService {
     //Esiste
     public boolean esiste(String nome) {
 
-        if (!ValidationUtils.isValidNomeRistorante(nome)) {
+        if (!ValidationUtils.isValidName(nome)) {
             return false;
         }
 
         return ristoranteDAO.esisteRistorante(nome);
     }
-
-    //CRUD ristorante, ricerca e filtri
 }

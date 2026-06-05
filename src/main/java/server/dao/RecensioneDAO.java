@@ -25,7 +25,7 @@ public class RecensioneDAO {
             statement.setString(4, recensione.getRecensione());
             statement.setString(5, recensione.getRisposta());
 
-            return statement.executeUpdate() == 1;
+            return statement.executeUpdate() > 0;
 
         }catch (SQLException e){
             System.out.println("Errore durante la salvataggio delle recensioni: " + e.getMessage());
@@ -120,21 +120,22 @@ public class RecensioneDAO {
             ORDER BY email DESC
             """;
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            statement.setInt(1, idRistorante);
+            ps.setInt(1, idRistorante);
 
-            ResultSet rs = statement.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()) {
-                listaByRist.add(new Recensione(
-                        rs.getInt("idristorante"),
-                        rs.getString("email"),
-                        rs.getInt("Valutazione"),
-                        rs.getString("Recensione"),
-                        rs.getString("Risposta")
-                ));
+                while (rs.next()) {
+                    listaByRist.add(new Recensione(
+                            rs.getInt("idristorante"),
+                            rs.getString("email"),
+                            rs.getInt("valutazione"),
+                            rs.getString("recensione"),
+                            rs.getString("risposta")
+                    ));
+                }
             }
 
         } catch (SQLException e) {
@@ -158,16 +159,18 @@ public class RecensioneDAO {
             PreparedStatement statement = connection.prepareStatement(sql)){
 
                 statement.setString(1, email);
-                ResultSet rs = statement.executeQuery();
 
-            while (rs.next()) {
-                listaByEmail.add(new Recensione(
-                        rs.getInt("idristorante"),
-                        rs.getString("Email"),
-                        rs.getInt("Valutazione"),
-                        rs.getString("Recensione"),
-                        rs.getString("Risposta")
-                ));
+            try (ResultSet rs = statement.executeQuery()) {
+
+                while (rs.next()) {
+                    listaByEmail.add(new Recensione(
+                            rs.getInt("idristorante"),
+                            rs.getString("email"),
+                            rs.getInt("valutazione"),
+                            rs.getString("recensione"),
+                            rs.getString("risposta")
+                    ));
+                }
             }
 
         } catch (SQLException e ){
@@ -189,13 +192,14 @@ public class RecensioneDAO {
         PreparedStatement statement = connection.prepareStatement(sql)){
 
             statement.setInt(1, idRistorante);
-            ResultSet rs = statement.executeQuery();
+            try (ResultSet rs = statement.executeQuery()) {
 
-            if(rs.next()){
-                int totale = rs.getInt("totRecensioni");
-                double media = rs.getDouble("mediaValutazione");
-
-                return new RiepilogoRecensioniDTO(totale, media);
+                if (rs.next()) {
+                    return new RiepilogoRecensioniDTO(
+                            rs.getInt("tot"),
+                            rs.getDouble("media")
+                    );
+                }
             }
 
         } catch (SQLException e) {

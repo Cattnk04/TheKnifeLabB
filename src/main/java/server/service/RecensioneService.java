@@ -9,7 +9,11 @@ import java.util.List;
 
 public class RecensioneService {
 
-    private final RecensioneDAO dao = new RecensioneDAO();
+    private final RecensioneDAO dao;
+
+    public RecensioneService(RecensioneDAO dao) {
+        this.dao = dao;
+    }
 
     /* --------
     UTENTE
@@ -17,6 +21,8 @@ public class RecensioneService {
 
     //Crea recensione
     public boolean creaRecensione(Recensione r) {
+
+        if (r == null) return false;
 
         if(r.getValutazione() < 1 || r.getValutazione() > 5){
             throw new IllegalArgumentException("La valutazione deve essere compresa tra 1 e 5");
@@ -58,12 +64,13 @@ public class RecensioneService {
     }
 
     //Risposta recensioni
-    public boolean rispostaRecensione (int idRistorante, String email, String risposta){
+    public boolean rispostaRecensione(int idRistorante, String email, String risposta) {
 
-        if(risposta == null || risposta.isBlank()) {
+        if (risposta == null || risposta.isBlank()) {
             throw new IllegalArgumentException("Risposta vuota");
         }
-        if(risposta.length() > 255) {
+
+        if (risposta.length() > 255) {
             throw new IllegalArgumentException("Risposta troppo lunga");
         }
 

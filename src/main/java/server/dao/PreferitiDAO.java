@@ -4,51 +4,56 @@ import main.java.server.db.DatabaseConnection;
 import main.java.shared.domain.Preferito;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PreferitiDAO {
 
-    //Salvataggio dei preferiti
-    public boolean salvaPreferiti (String email, int idRistorante){
+    // INSERT
+    public boolean salvaPreferiti(String email, int idRistorante) {
+
         String sql = """
-                INSERT INTO preferiti (email, idristorante)
-                VALUES (?, ?)
-                """;
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)){
+            INSERT INTO preferiti (email, idristorante)
+            VALUES (?, ?)
+        """;
 
-            statement.setString(1, email);
-            statement.setInt(2, idRistorante);
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            return statement.executeUpdate() > 0;
+            ps.setString(1, email);
+            ps.setInt(2, idRistorante);
+
+            return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("Errore durante la salvataggio dei preferiti: " + e.getMessage());
+            System.out.println("Errore inserimento preferito: " + e.getMessage());
             return false;
         }
     }
 
-    //Cancellazione
-    public boolean cancellaPreferiti (String email, int idRistorante){
+    // DELETE
+    public boolean cancellaPreferiti(String email, int idRistorante) {
+
         String sql = """
-                DELETE FROM preferiti
-                WHERE email = ? AND idristorante = ?
-                """;
-        try(Connection connection = DatabaseConnection.getConnection();
-         PreparedStatement statement = connection.prepareStatement(sql)){
+            DELETE FROM preferiti
+            WHERE email = ? AND idristorante = ?
+        """;
 
-            statement.setString(1, email);
-            statement.setInt(2, idRistorante);
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            return statement.executeUpdate() > 0;
+            ps.setString(1, email);
+            ps.setInt(2, idRistorante);
 
-        } catch (SQLException e){
-            System.out.println("Errore durante la cancellazione dei preferiti: " + e.getMessage());
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Errore cancellazione preferito: " + e.getMessage());
             return false;
         }
     }
 
-    //Controllo esistenza preferito
+    // EXISTS
     public boolean esistePreferito(String email, int idRistorante) {
 
         String sql = """
@@ -56,48 +61,47 @@ public class PreferitiDAO {
             FROM preferiti
             WHERE email = ? AND idristorante = ?
             LIMIT 1
-            """;
+        """;
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            statement.setString(1, email);
-            statement.setInt(2, idRistorante);
+            ps.setString(1, email);
+            ps.setInt(2, idRistorante);
 
-            return statement.executeQuery().next();
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
 
         } catch (SQLException e) {
-            System.out.println("Errore controllo preferito: " + e.getMessage());
+            System.out.println("Errore check preferito: " + e.getMessage());
             return false;
         }
     }
 
-    //Ricerca preferiti per email
+    // LISTA
     public List<Preferito> getPreferitiByEmail(String email) {
 
         String sql = """
-                SELECT r.*
-                FROM ristorante r
-                JOIN preferiti p
-                    ON r.idristorante = p.idristorante
-                WHERE p.email = ?
-                ORDER BY r.nomeristorante
-                """;
+            SELECT email, idristorante
+            FROM preferiti
+            WHERE email = ?
+        """;
 
         List<Preferito> list = new ArrayList<>();
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            statement.setString(1, email);
+            ps.setString(1, email);
 
-            try (ResultSet rs = statement.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
 
                 while (rs.next()) {
-                    Preferito p = new Preferito();
-                    p.setEmail(rs.getString("email"));
-                    p.setIdRistorante(rs.getInt("idristorante"));
-                    list.add(p);
+                    list.add(new Preferito(
+                            rs.getString("email"),
+                            rs.getInt("idristorante")
+                    ));
                 }
             }
 

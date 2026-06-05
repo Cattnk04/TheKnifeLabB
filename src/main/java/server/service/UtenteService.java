@@ -4,6 +4,8 @@ import main.java.server.dao.UtenteDAO;
 import main.java.server.security.*;
 import main.java.server.service.ValidationUtils;
 import main.java.shared.domain.Utente;
+import main.java.shared.dto.LoginDTO;
+import main.java.shared.dto.RegistrazioneDTO;
 
 import java.util.Optional;
 
@@ -19,65 +21,71 @@ public class UtenteService {
     }
 
     // LOGIN
-    public boolean login(String email, String passwordInput) {
+    public boolean login(LoginDTO dto) {
+
+        if (dto == null) return false;
+
+        String email = dto.getEmail();
+        String password = dto.getPassword();
 
         if (!ValidationUtils.isValidEmail(email) ||
-                !ValidationUtils.isValidPassword(passwordInput)) {
+                !ValidationUtils.isValidPassword(password)) {
             return false;
         }
 
-        Optional<Utente> optUtente = utenteDAO.trovaUtente(email);
+        Optional<Utente> opt = utenteDAO.trovaUtente(email);
 
-        return optUtente
-                .map(utente -> {
+        return opt.map(utente -> {
 
-                    String hashSalvato = utente.getHashpwd();
+            String hash = utente.getHashpwd();
 
-                    boolean passwordCorretta = passwordService.verify(passwordInput, hashSalvato);
+            boolean ok = passwordService.verify(password, hash);
 
-                    // migrazione automatica SHA -> BCrypt
-                    if (passwordCorretta && passwordService.isLegacy(hashSalvato)) {
-                        String nuovoHash = passwordService.upgradeToBCrypt(passwordInput);
-                        utenteDAO.aggiornaPasswordHash(utente.getEmail(), nuovoHash);
-                    }
+            if (ok && passwordService.isLegacy(hash)) {
+                String newHash = passwordService.upgradeToBCrypt(password);
+                utenteDAO.aggiornaPasswordHash(email, newHash);
+            }
+            return ok;
 
-                    return passwordCorretta;
-                })
-                .orElse(false);
+        }).orElse(false);
     }
 
     // Registrazione
-    public boolean registraUtente(Utente u, String passwordPlain) {
+    public boolean registraUtente(RegistrazioneDTO dto) {
 
-        if (u == null ||
-                !ValidationUtils.isValidEmail(u.getEmail()) ||
-                !PasswordPolicy.isStrong(passwordPlain)) {
+        if (dto == null) return false;
+
+        if (!ValidationUtils.isValidEmail(dto.getEmail()) ||
+                !PasswordPolicy.isStrong(dto.getPassword()) ||
+                !ValidationUtils.isValidName(dto.getNome()) ||
+                !ValidationUtils.isValidName(dto.getCognome()) ||
+                !ValidationUtils.isValidCitta(dto.getCitta()) ||
+                !ValidationUtils.isValidNazione(dto.getNazione())) {
             return false;
         }
-        if (utenteDAO.esisteUtente(u.getEmail())) {
+
+        if (utenteDAO.esisteUtente(dto.getEmail())) {
             return false;
         }
 
-        String hash = passwordService.hash(passwordPlain);
+        String hash = passwordService.hash(dto.getPassword());
 
-        Utente nuovo = new Utente(
-                u.getEmail(),
-                u.getNomeUtente(),
-                u.getCognomeUtente(),
+        Utente utente = new Utente(
+                dto.getEmail(),
+                dto.getNome(),
+                dto.getCognome(),
                 hash,
-                u.getCitta(),
-                u.getNazione(),
-                u.getRistoratore()
+                dto.getNazione(),
+                dto.getCitta(),
+                dto.isRistoratore()
         );
 
-        return utenteDAO.registrazione(nuovo);
+        return utenteDAO.registrazione(utente);
     }
 
     // CANCELLAZIONE
     public boolean cancellaUtente(String email) {
-        if (!ValidationUtils.isValidEmail(email)) {
-            return false;
-        }
-        return utenteDAO.cancellaUtente(email);
+        return ValidationUtils.isValidEmail(email)
+                && utenteDAO.cancellaUtente(email);
     }
 }

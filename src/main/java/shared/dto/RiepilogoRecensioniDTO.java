@@ -2,8 +2,8 @@ package main.java.shared.dto;
 
 public class RiepilogoRecensioniDTO {
 
-    private int numeroRecensioni;
-    private double mediaValutazioni;
+    private final int numeroRecensioni;
+    private final double mediaValutazioni;
 
     public RiepilogoRecensioniDTO(int numeroRecensioni, double mediaValutazioni) {
         this.numeroRecensioni = numeroRecensioni;

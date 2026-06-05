@@ -16,11 +16,11 @@ import java.util.Scanner;
 public class Recensione implements Serializable{
 
     //public static final String FILE_RECENSIONI = "Data/Recensioni.txt";
-    String email;
-    int idRistorante;
-    int valutazione;
-    String recensione;
-    public String risposta;
+    private String email;
+    private int idRistorante;
+    private int valutazione;
+    private String recensione;
+    private String risposta;
 
 
     /**
@@ -53,8 +53,8 @@ public class Recensione implements Serializable{
      * @param risposta la risposta alla recensione (può essere null)
      */
     public Recensione(int idRistorante, String email, int valutazione, String recensione, String risposta) {
-        this.email = email;
         this.idRistorante = idRistorante;
+        this.email = email;
         this.valutazione = valutazione;
         this.recensione = recensione;
         this.risposta = risposta;
@@ -130,7 +130,7 @@ public class Recensione implements Serializable{
      *
      * @return la valutazione inserita dall'utente (intero tra 1 e 5)
      */
-    //Metodo per inserire valutazione
+    /*//Metodo per inserire valutazione
     public int valutazione(){
         Scanner scanner = new Scanner(System.in);
         int valutazione;
@@ -149,7 +149,7 @@ public class Recensione implements Serializable{
                 valutazione = 0;
             }
         } while (true);
-    }
+    }*/
 
     /**
      * Metodo che permette all'utente di inserire una recensione testuale
@@ -157,13 +157,14 @@ public class Recensione implements Serializable{
      *
      * @return la recensione inserita dall'utente sotto forma di stringa
      */
+    /*
     //Metodo per inserire recensione
     public String recensione(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Puoi inserire una recensione a questo ristorante: ");
         String recensione = scanner.nextLine();
         return recensione;
-    }
+    }*/
 
     /**
      * Restituisce una rappresentazione testuale compatta dell'oggetto Recensione,
@@ -184,6 +185,7 @@ public class Recensione implements Serializable{
      *
      * @return la stringa formattata con i dettagli della recensione
      */
+    /*
     //Metodo per stampare le recensioni
     public String stampaRecensione(){
         System.out.println("\n----------------------------------------");
@@ -192,6 +194,6 @@ public class Recensione implements Serializable{
             stringa += "\nRisposta: " + getRisposta();
         }
         return stringa;
-    }
+    }*/
 
 }

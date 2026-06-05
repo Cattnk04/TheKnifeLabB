@@ -29,7 +29,7 @@ public class ValidationUtils {
     }
 
     //Ristorante
-    public static boolean isValidNomeRistorante(String nome) {
+    public static boolean isValidName(String nome) {
         return isNotBlank(nome) && isValidStringLength(nome, 2, 50);
     }
 

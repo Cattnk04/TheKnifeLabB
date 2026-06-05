@@ -25,8 +25,7 @@ public class PasswordUtils {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
 
-            byte[] hashBytes =
-                    md.digest(password.getBytes(StandardCharsets.UTF_8));
+            byte[] hashBytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
 
             StringBuilder sb = new StringBuilder();
 
@@ -45,9 +44,7 @@ public class PasswordUtils {
         return hashSHA256(password).equals(storedHash);
     }
 
-    // Riconosce un hash BCrypt
     public static boolean isBCryptHash(String hash) {
-
         return hash != null &&
                 (hash.startsWith("$2a$")
                         || hash.startsWith("$2b$")
