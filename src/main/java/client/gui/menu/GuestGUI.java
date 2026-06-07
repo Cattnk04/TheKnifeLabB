@@ -23,10 +23,12 @@ public class GuestGUI extends TemplateGUI {
             frame.repaint();
         });
 
+
+
+
         JLabel consigliati = new JLabel("Consigliati");
         consigliati.setFocusable(false);
-        consigliati.setBorder(new LineBorder(Color.WHITE));
-        consigliati.setFont(new Font("Arial", Font.BOLD, 50));
+        consigliati.setFont(new Font("Arial", Font.BOLD, 30));
 
 
 
