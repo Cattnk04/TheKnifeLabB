@@ -2,6 +2,7 @@ package main.java.client.gui.menu;
 
 import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.autenticazione.LoginGUI;
+import main.java.server.service.UtenteService;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -11,12 +12,12 @@ import java.util.EventListener;
 
 public class GuestGUI extends TemplateGUI {
 
-    public GuestGUI(JFrame frame) {
+    public GuestGUI(JFrame frame, UtenteService utenteService) {
         super(frame);
         this.frame = frame;
 
         visualizzaProfilo.addActionListener(e -> {
-            frame.setContentPane(new LoginGUI(frame));
+            frame.setContentPane(new LoginGUI(frame,utenteService));
             frame.revalidate();
             frame.repaint();
         });

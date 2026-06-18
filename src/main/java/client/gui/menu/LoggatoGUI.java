@@ -1,14 +1,14 @@
 package main.java.client.gui.menu;
 
 import main.java.client.gui.TemplateGUI;
-import main.java.client.gui.autenticazione.LoginGUI;
 import main.java.client.gui.azioniLoggato.VisualizzaProfiloGUI;
+import main.java.server.service.UtenteService;
 
 import javax.swing.*;
 
 public class LoggatoGUI extends TemplateGUI {
 
-    public LoggatoGUI(JFrame frame) {
+    public LoggatoGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
         this.frame = frame;
 

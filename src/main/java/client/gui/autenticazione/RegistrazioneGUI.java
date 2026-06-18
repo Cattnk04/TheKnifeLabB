@@ -2,6 +2,7 @@ package main.java.client.gui.autenticazione;
 
 import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.menu.GuestGUI;
+import main.java.server.service.UtenteService;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -20,7 +21,7 @@ public class RegistrazioneGUI extends TemplateGUI {
     private JPasswordField campoPassword;
     private JButton registrazione;
 
-    public RegistrazioneGUI(JFrame frame) {
+    public RegistrazioneGUI(JFrame frame, UtenteService utenteService) {
         super(frame);
         this.frame = frame;
 
@@ -169,7 +170,7 @@ public class RegistrazioneGUI extends TemplateGUI {
         home.setFocusPainted(false);
         home.setBorder(new LineBorder(Color.WHITE));
         home.addActionListener(e ->{
-            frame.setContentPane(new GuestGUI(frame));
+            frame.setContentPane(new GuestGUI(frame,utenteService));
             frame.revalidate();
             frame.repaint();
         });

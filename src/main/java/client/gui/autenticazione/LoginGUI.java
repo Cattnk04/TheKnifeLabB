@@ -3,6 +3,10 @@ package main.java.client.gui.autenticazione;
 import jdk.dynalink.linker.GuardingDynamicLinkerExporter;
 import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.menu.GuestGUI;
+import main.java.client.gui.menu.LoggatoGUI;
+import main.java.client.network.ClientConnection;
+import main.java.server.service.UtenteService;
+import main.java.shared.dto.LoginDTO;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -12,7 +16,7 @@ public class LoginGUI extends TemplateGUI {
     private JTextField campoEmail;
     private JPasswordField campoPassword;
 
-    public LoginGUI(JFrame frame) {
+    public LoginGUI(JFrame frame, UtenteService utenteService) {
         super(frame);
         this.frame = frame;
 
@@ -52,13 +56,29 @@ public class LoginGUI extends TemplateGUI {
         effettuaLogin.setBorder(new LineBorder(Color.WHITE));
 
 
+        effettuaLogin.addActionListener(e -> {
+            String email = campoEmail.getText().trim();
+            String password = new String(campoPassword.getPassword());
+            LoginDTO dto = new LoginDTO(email, password);
+
+               if(utenteService.login(dto)) {
+                  frame.setContentPane(new LoggatoGUI(frame,utenteService,email));
+                  frame.revalidate();
+                  frame.repaint();
+               }else {
+                   JOptionPane.showMessageDialog(frame,"email o password errati", "errore di login", JOptionPane.ERROR_MESSAGE);
+               }
+        });
+
+
+
         JButton registrazione = new JButton("Non sei registrato? Registrati qui!");
         registrazione.setPreferredSize(dimensioneCampo);
         registrazione.setMinimumSize(dimensioneCampo);
         registrazione.setMaximumSize(dimensioneCampo);
         registrazione.setAlignmentX(Component.CENTER_ALIGNMENT);
         registrazione.addActionListener(e ->{
-            frame.setContentPane(new RegistrazioneGUI(frame));
+            frame.setContentPane(new RegistrazioneGUI(frame,utenteService));
             frame.revalidate();
             frame.repaint();
         });
@@ -89,7 +109,7 @@ public class LoginGUI extends TemplateGUI {
         home.setFocusPainted(false);
         home.setBorder(new LineBorder(Color.WHITE));
         home.addActionListener(e ->{
-            frame.setContentPane(new GuestGUI(frame));
+            frame.setContentPane(new GuestGUI(frame,utenteService));
             frame.revalidate();
             frame.repaint();
         });
