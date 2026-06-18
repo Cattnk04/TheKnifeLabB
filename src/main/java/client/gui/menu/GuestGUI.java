@@ -14,10 +14,8 @@ public class GuestGUI extends TemplateGUI {
     public GuestGUI(JFrame frame) {
         super(frame);
         this.frame = frame;
-        JButton login = new JButton("Login");
-        login.setFocusable(false);
-        login.setBorder(new LineBorder(Color.WHITE));
-        login.addActionListener(e -> {
+
+        visualizzaProfilo.addActionListener(e -> {
             frame.setContentPane(new LoginGUI(frame));
             frame.revalidate();
             frame.repaint();
@@ -73,7 +71,6 @@ panel.add(comboNazione);
 panel.add(comboCitta);
          */
 
-        pannello.add(login);
         this.add(consigliati);
     }
 }

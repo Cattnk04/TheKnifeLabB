@@ -16,6 +16,7 @@ public class TemplateGUI extends JPanel {
     TemplateGUI possano accedere agli elementi senza bisogno di getter
      */
     protected JPanel pannello;
+    protected JButton visualizzaProfilo;
     public TemplateGUI(JFrame frame) {
         this.frame = frame;
         setLayout(new BorderLayout());
@@ -25,6 +26,12 @@ public class TemplateGUI extends JPanel {
         logo.setPreferredSize(new Dimension(150,60 ));
         logo.setFocusable(false);
         logo.setBorder(new LineBorder(Color.WHITE));
+
+        //Creazione bottone profilo
+        visualizzaProfilo = new JButton("Profilo");
+        logo.setPreferredSize(new Dimension(150,60 ));
+        visualizzaProfilo.setFocusable(false);
+        visualizzaProfilo.setBorder(new LineBorder(Color.WHITE));
 
         //creazione pannello colorato
         pannello = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15)){ //centra il logo nel pannello
@@ -37,6 +44,7 @@ public class TemplateGUI extends JPanel {
         };
         pannello.setOpaque(false);
         pannello.add(logo);
+        pannello.add(visualizzaProfilo);
         add(pannello, BorderLayout.NORTH);
 
 

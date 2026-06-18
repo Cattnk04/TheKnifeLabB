@@ -93,6 +93,9 @@ public class LoginGUI extends TemplateGUI {
             frame.revalidate();
             frame.repaint();
         });
+
+        visualizzaProfilo.setVisible(false);
+
         pannello.add(home);
 
     }
