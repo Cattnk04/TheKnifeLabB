@@ -1,6 +1,7 @@
 package main.java.server.dao;
 
 import main.java.server.db.DatabaseConnection;
+import main.java.server.exception.UtenteException;
 import main.java.server.security.PasswordUtils;
 import main.java.shared.domain.Utente;
 import main.java.shared.enums.CampoUtente;
@@ -26,6 +27,18 @@ public class UtenteDAO {
 
     //Registrazione dell'Utente
     public boolean registrazione(Utente utente) {
+
+        if (utente == null) {
+            throw new UtenteException("L'utente non può essere null.");
+        }
+
+        if (utente.getEmail() == null || utente.getEmail().isBlank()) {
+            throw new UtenteException("L'email dell'utente è obbligatoria.");
+        }
+
+        if (utente.getHashpwd() == null || utente.getHashpwd().isBlank()) {
+            throw new UtenteException("La password dell'utente è obbligatoria.");
+        }
 
         String sql = """
             INSERT INTO utente (
@@ -54,9 +67,7 @@ public class UtenteDAO {
             return statement.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("Errore durante il salvataggio dell'utente: "
-                    + e.getMessage());
-            return false;
+            throw new UtenteException("Errore durante il salvataggio dell'utente.", e);
         }
     }
 

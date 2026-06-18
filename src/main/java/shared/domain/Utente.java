@@ -166,6 +166,7 @@ public class Utente implements Serializable{
                 + ristoratore;
     }
 
+
     /**
      * Costruttore per la registrazione di un nuovo utente tramite input da console.
      * Richiede all'utente di inserire nome, cognome, nazione, città, stato di ristoratore,

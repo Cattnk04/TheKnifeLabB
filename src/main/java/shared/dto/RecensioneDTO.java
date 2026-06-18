@@ -26,4 +26,11 @@ public class RecensioneDTO {
     public int getValutazione() { return valutazione; }
     public String getRecensione() { return recensione; }
     public String getRisposta() { return risposta; }
+    public void setValutazione(int valutazione) {
+        if (valutazione < 1 || valutazione > 5) {
+            throw new IllegalArgumentException("La valutazione deve essere compresa tra 1 e 5.");
+        }
+
+        this.valutazione = valutazione;
+    }
 }

@@ -1,10 +1,8 @@
 package main.java.shared.domain;
 
-//import parteA.GestioneDati.ListaRistoranti;
+import main.java.server.exception.RecensioniException;
 
 import java.io.Serializable;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 /**
  * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
@@ -117,12 +115,16 @@ public class Recensione implements Serializable{
     /**
      * Imposta o aggiorna la valutazione del ristorante.
      *
-     * @param valutazione il nuovo punteggio (intero)
+     * @param valutazione il nuovo punteggio
+     * @throws RecensioniException se la valutazione non è compresa tra 1 e 5
      */
-    public void setValutazione(int valutazione){
+    public void setValutazione(int valutazione) {
+        if (valutazione < 1 || valutazione > 5) {
+            throw new RecensioniException("La valutazione deve essere compresa tra 1 e 5.");
+        }
+
         this.valutazione = valutazione;
     }
-
     /**
      * Richiede all'utente di inserire una valutazione intera compresa tra 1 e 5.
      * Continua a richiedere l'input finché non viene fornito un valore valido.
