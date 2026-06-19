@@ -19,8 +19,8 @@ public class RegistrazioneGUI extends TemplateGUI {
     JFrame frame;
     private JTextField campoNome;
     private JTextField campoCognome;
-    private JTextField campoNazione;
     private JTextField campoCitta;
+    private JTextField campoNazione;
     private JLabel ristoratore;
     private JRadioButton radioSi;
     private JRadioButton radioNo;
@@ -54,17 +54,17 @@ public class RegistrazioneGUI extends TemplateGUI {
         campoCognome.setMinimumSize(dimensioneCampo);
         campoCognome.setMaximumSize(dimensioneCampo);
 
-        JLabel nazioneLabel = new JLabel("Nazione: ");
-        campoNazione = new JTextField();
-        campoNazione.setPreferredSize(dimensioneCampo);
-        campoNazione.setMinimumSize(dimensioneCampo);
-        campoNazione.setMaximumSize(dimensioneCampo);
-
         JLabel cittaLabel = new JLabel("Città: ");
         campoCitta = new JTextField();
         campoCitta.setPreferredSize(dimensioneCampo);
         campoCitta.setMinimumSize(dimensioneCampo);
         campoCitta.setMaximumSize(dimensioneCampo);
+
+        JLabel nazioneLabel = new JLabel("Nazione: ");
+        campoNazione = new JTextField();
+        campoNazione.setPreferredSize(dimensioneCampo);
+        campoNazione.setMinimumSize(dimensioneCampo);
+        campoNazione.setMaximumSize(dimensioneCampo);
 
         JLabel ristoratoreLabel = new JLabel("Sei un ristoratore? ");
         radioSi = new JRadioButton("Si");
@@ -111,15 +111,16 @@ public class RegistrazioneGUI extends TemplateGUI {
             }
             String nome = campoNome.getText().trim();
             String cognome = campoCognome.getText().trim();
-            String nazione = campoNazione.getText().trim();
             String citta = campoCitta.getText().trim();
+            String nazione = campoNazione.getText().trim();
             String email = campoEmail.getText().trim();
             String password = new String(campoPassword.getPassword());
             boolean isRistoratore = radioSi.isSelected();
 
-            RegistrazioneDTO dto = new RegistrazioneDTO(nome, cognome, nazione, citta, email, password, isRistoratore);
+            RegistrazioneDTO dto = new RegistrazioneDTO(nome, cognome, email, password, citta, nazione, isRistoratore);
             Richiesta richiesta = new Richiesta(TipoRichieste.REGISTER, dto);
             Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
+
 
             if(risposta != null && risposta.getSuccesso()){
                 if(isRistoratore){

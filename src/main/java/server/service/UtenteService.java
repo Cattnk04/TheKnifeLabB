@@ -54,14 +54,36 @@ public class UtenteService {
     // Registrazione
     public boolean registraUtente(RegistrazioneDTO dto) {
 
-        if (dto == null) return false;
-
-        if (!ValidationUtils.isValidEmail(dto.getEmail()) ||
-                !PasswordPolicy.isStrong(dto.getPassword()) ||
-                !ValidationUtils.isValidName(dto.getNome()) ||
-                !ValidationUtils.isValidName(dto.getCognome()) ||
-                !ValidationUtils.isValidCitta(dto.getCitta()) ||
-                !ValidationUtils.isValidNazione(dto.getNazione())) {
+        if (dto == null) {
+            System.out.println("Registrazione fallita: DTO null");
+            return false;
+        }
+        if (!ValidationUtils.isValidEmail(dto.getEmail())) {
+            System.out.println("Registrazione fallita: email non valida -> " + dto.getEmail());
+            return false;
+        }
+        if (!PasswordPolicy.isStrong(dto.getPassword())) {
+            System.out.println("Registrazione fallita: password non abbastanza forte");
+            return false;
+        }
+        if (!ValidationUtils.isValidName(dto.getNome())) {
+            System.out.println("Registrazione fallita: nome non valido -> " + dto.getNome());
+            return false;
+        }
+        if (!ValidationUtils.isValidName(dto.getCognome())) {
+            System.out.println("Registrazione fallita: cognome non valido -> " + dto.getCognome());
+            return false;
+        }
+        if (!ValidationUtils.isValidCitta(dto.getCitta())) {
+            System.out.println("Registrazione fallita: città non valida -> " + dto.getCitta());
+            return false;
+        }
+        if (!ValidationUtils.isValidNazione(dto.getNazione())) {
+            System.out.println("Registrazione fallita: nazione non valida -> " + dto.getNazione());
+            return false;
+        }
+        if (utenteDAO.esisteUtente(dto.getEmail())) {
+            System.out.println("Registrazione fallita: utente già esistente -> " + dto.getEmail());
             return false;
         }
 
@@ -76,8 +98,8 @@ public class UtenteService {
                 dto.getNome(),
                 dto.getCognome(),
                 hash,
-                dto.getNazione(),
                 dto.getCitta(),
+                dto.getNazione(),
                 dto.isRistoratore()
         );
 
