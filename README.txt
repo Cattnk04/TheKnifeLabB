@@ -21,7 +21,7 @@ Per avviare il server è necessario avere PostgreSQL installato e un database ch
 
 Ogni sviluppatore deve configurare le seguenti variabili d'ambiente nella propria configurazione di esecuzione:
 
-DB_URL=jdbc:postgresql://localhost:5432/theknife
+DB_URL=jdbc:postgresql://localhost:5432/postgres
 DB_USER=postgres
 DB_PASSWORD=la_propria_password_postgres
 
@@ -29,6 +29,6 @@ In IntelliJ IDEA:
 Run → Edit Configurations... → selezionare ServerMain → Modify options → Environment variables
 
 Esempio:
-DB_URL=jdbc:postgresql://localhost:5432/theknife;DB_USER=postgres;DB_PASSWORD=postgres
+DB_URL=jdbc:postgresql://localhost:5432/postgres;DB_USER=postgres;DB_PASSWORD=postgres
 
 Non salvare password reali nel codice sorgente.

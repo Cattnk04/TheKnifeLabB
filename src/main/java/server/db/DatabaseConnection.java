@@ -8,7 +8,7 @@ public class DatabaseConnection {
 
     private static final String URL = System.getenv().getOrDefault(
             "DB_URL",
-            "jdbc:postgresql://localhost:5432/theknife"
+            "jdbc:postgresql://localhost:5432/postgres"
     );
 
     private static final String USER = System.getenv().getOrDefault(

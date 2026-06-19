@@ -8,6 +8,7 @@ import main.java.shared.communication.Risposta;
 import main.java.shared.dto.LoginDTO;
 import main.java.shared.dto.RegistrazioneDTO;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -19,26 +20,32 @@ public class ClientHandler extends Thread{
     private ObjectInputStream in;
     private UtenteService utenteService;
 
-    public ClientHandler(Socket clientSocket){
+    public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
         this.utenteService = new UtenteService(new UtenteDAO(), new PasswordService());
     }
 
     @Override
     public void run() {
-        try{
+        try {
             out = new ObjectOutputStream(clientSocket.getOutputStream());
             in = new ObjectInputStream(clientSocket.getInputStream());
 
-            while(true){
+            while (true) {
                 Richiesta richiesta = (Richiesta) in.readObject();
+                System.out.println("Richiesta ricevuta: " + richiesta.getTipoRichiesta());
+
                 Risposta risposta = gestisciRichiesta(richiesta);
 
                 out.writeObject(risposta);
                 out.flush();
+
+                System.out.println("Risposta inviata: " + risposta.getMsg());
             }
-        } catch(Exception e){
-            System.out.println("errore nella connessione del client");
+        } catch (EOFException e) {
+            System.out.println("Client disconnesso");
+        } catch (Exception e) {
+            System.out.println("Errore nella connessione del client: " + e.getMessage());
         } finally {
             chiudiConnessione();
         }
