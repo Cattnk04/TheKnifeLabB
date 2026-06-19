@@ -111,15 +111,16 @@ public class RegistrazioneGUI extends TemplateGUI {
             }
             String nome = campoNome.getText().trim();
             String cognome = campoCognome.getText().trim();
-            String nazione = campoNazione.getText().trim();
             String citta = campoCitta.getText().trim();
+            String nazione = campoNazione.getText().trim();
             String email = campoEmail.getText().trim();
             String password = new String(campoPassword.getPassword());
             boolean isRistoratore = radioSi.isSelected();
 
-            RegistrazioneDTO dto = new RegistrazioneDTO(nome, cognome, nazione, citta, email, password, isRistoratore);
+            RegistrazioneDTO dto = new RegistrazioneDTO(nome, cognome, email, password, citta, nazione, isRistoratore);
             Richiesta richiesta = new Richiesta(TipoRichieste.REGISTER, dto);
             Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
+
 
             if(risposta != null && risposta.getSuccesso()){
                 if(isRistoratore){
