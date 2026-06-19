@@ -2,7 +2,6 @@ package main.java.server.dao;
 
 import main.java.server.db.DatabaseConnection;
 import main.java.server.exception.UtenteException;
-import main.java.server.security.PasswordUtils;
 import main.java.shared.domain.Utente;
 import main.java.shared.enums.CampoUtente;
 
@@ -51,15 +50,10 @@ public class UtenteDAO {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            String hashBCrypt =
-                    PasswordUtils.hashBCrypt(
-                            utente.getHashpwd()
-                    );
-
             statement.setString(1, utente.getEmail());
             statement.setString(2, utente.getNomeUtente());
             statement.setString(3, utente.getCognomeUtente());
-            statement.setString(4, hashBCrypt);
+            statement.setString(4, utente.getHashpwd());
             statement.setString(5, utente.getCitta());
             statement.setString(6, utente.getNazione());
             statement.setBoolean(7, utente.getRistoratore());

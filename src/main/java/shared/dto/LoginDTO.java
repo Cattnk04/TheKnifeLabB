@@ -1,8 +1,14 @@
 package main.java.shared.dto;
 
-public class LoginDTO {
+import java.io.Serializable;
+
+public class LoginDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private final String email;
     private final String password;
+
     public LoginDTO(String email, String password) {
         this.email = email;
         this.password = password;

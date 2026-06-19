@@ -29,7 +29,8 @@ public class UtenteService {
         String password = dto.getPassword();
 
         if (!ValidationUtils.isValidEmail(email) ||
-                !ValidationUtils.isValidPassword(password)) {
+                password == null ||
+                password.isBlank()) {
             return false;
         }
 

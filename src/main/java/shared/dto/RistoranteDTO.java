@@ -1,7 +1,10 @@
 package main.java.shared.dto;
 
+import java.io.Serializable;
 
-public class RistoranteDTO {
+public class RistoranteDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final String nomeRistorante;
     private final String citta;

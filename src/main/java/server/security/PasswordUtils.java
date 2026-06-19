@@ -12,15 +12,25 @@ public class PasswordUtils {
 
     // BCrypt
     public static String hashBCrypt(String password) {
+        if (password == null) {
+            throw new IllegalArgumentException("La password non può essere null");
+        }
+
         return BCrypt.hashpw(password, BCrypt.gensalt(12));
     }
 
     public static boolean verifyBCrypt(String password, String hash) {
+        if (password == null || hash == null) {
+            return false;
+        }
         return BCrypt.checkpw(password, hash);
     }
 
     // SHA-256 legacy
     public static String hashSHA256(String password) {
+        if (password == null) {
+            throw new IllegalArgumentException("La password non può essere null");
+        }
 
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -41,6 +51,9 @@ public class PasswordUtils {
     }
 
     public static boolean verifySHA256(String password, String storedHash) {
+        if (password == null || storedHash == null) {
+            return false;
+        }
         return hashSHA256(password).equals(storedHash);
     }
 

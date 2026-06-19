@@ -36,13 +36,13 @@ public class Utente implements Serializable{
      * @param ristoratore indica se l'utente è un ristoratore (true) o un cliente (false)
      * @throws RuntimeException se i dati forniti non rispettano qualche vincolo (da dettagliare)
      */
-    public Utente(String email, String nomeUtente, String cognomeUtente, String hashpwd, String nazione, String citta, boolean ristoratore) {
+    public Utente(String email, String nomeUtente, String cognomeUtente, String hashpwd, String citta, String nazione, boolean ristoratore) {
         this.email = email.trim().toLowerCase();
         this.nomeUtente = nomeUtente.trim();
         this.cognomeUtente = cognomeUtente.trim();
         this.hashpwd = hashpwd;
-        this.nazione = nazione.trim().toLowerCase();
         this.citta = citta.trim().toLowerCase();
+        this.nazione = nazione.trim().toLowerCase();
         this.ristoratore = ristoratore;
     }
 

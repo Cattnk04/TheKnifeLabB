@@ -1,6 +1,11 @@
 package main.java.shared.dto;
 
-public class RecensioneDTO {
+import java.io.Serializable;
+
+public class RecensioneDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String email;
     private int idRistorante;
     private int valutazione;

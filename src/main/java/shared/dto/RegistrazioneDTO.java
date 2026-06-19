@@ -1,6 +1,11 @@
 package main.java.shared.dto;
 
-public class RegistrazioneDTO {
+import java.io.Serializable;
+
+public class RegistrazioneDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private final String nome;
     private final String cognome;
     private final String email;
@@ -8,6 +13,7 @@ public class RegistrazioneDTO {
     private final String citta;
     private final String nazione;
     private final boolean ristoratore;
+
     public RegistrazioneDTO(String nome, String cognome, String email, String password,
                             String citta, String nazione, boolean ristoratore) {
         this.nome = nome;

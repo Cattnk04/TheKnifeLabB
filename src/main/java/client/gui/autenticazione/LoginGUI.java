@@ -6,15 +6,24 @@ import main.java.client.gui.menu.GuestGUI;
 import main.java.client.gui.menu.LoggatoGUI;
 import main.java.client.network.ClientConnection;
 import main.java.server.service.UtenteService;
+import main.java.shared.communication.Richiesta;
+import main.java.shared.communication.Risposta;
+import main.java.shared.communication.TipoRichieste;
 import main.java.shared.dto.LoginDTO;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 public class LoginGUI extends TemplateGUI {
     private JTextField campoEmail;
     private JPasswordField campoPassword;
+
+    private static final String SERVER_HOST = "localhost";
+    private static final int SERVER_PORT = 10000;
 
     public LoginGUI(JFrame frame, UtenteService utenteService) {
         super(frame);
@@ -59,15 +68,27 @@ public class LoginGUI extends TemplateGUI {
         effettuaLogin.addActionListener(e -> {
             String email = campoEmail.getText().trim();
             String password = new String(campoPassword.getPassword());
-            LoginDTO dto = new LoginDTO(email, password);
 
-               if(utenteService.login(dto)) {
-                  frame.setContentPane(new LoggatoGUI(frame,utenteService,email));
-                  frame.revalidate();
-                  frame.repaint();
-               }else {
-                   JOptionPane.showMessageDialog(frame,"email o password errati", "errore di login", JOptionPane.ERROR_MESSAGE);
-               }
+            LoginDTO dto = new LoginDTO(email, password);
+            Richiesta richiesta = new Richiesta(TipoRichieste.LOGIN, dto);
+            Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
+
+            if (risposta != null && risposta.getSuccesso()) {
+                frame.setContentPane(new LoggatoGUI(frame, utenteService, email));
+                frame.revalidate();
+                frame.repaint();
+            } else {
+                String messaggioErrore = risposta != null
+                        ? risposta.getMsg()
+                        : "Impossibile contattare il server";
+
+                JOptionPane.showMessageDialog(
+                        frame,
+                        messaggioErrore,
+                        "Errore di login",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
         });
 
 
@@ -117,6 +138,5 @@ public class LoginGUI extends TemplateGUI {
         visualizzaProfilo.setVisible(false);
 
         pannello.add(home);
-
     }
 }
