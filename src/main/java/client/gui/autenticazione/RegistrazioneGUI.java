@@ -2,7 +2,14 @@ package main.java.client.gui.autenticazione;
 
 import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.menu.GuestGUI;
+import main.java.client.gui.menu.LoggatoGUI;
+import main.java.client.gui.menu.RistoratoreGUI;
+import main.java.client.network.ClientConnection;
 import main.java.server.service.UtenteService;
+import main.java.shared.communication.Richiesta;
+import main.java.shared.communication.Risposta;
+import main.java.shared.communication.TipoRichieste;
+import main.java.shared.dto.RegistrazioneDTO;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -91,6 +98,53 @@ public class RegistrazioneGUI extends TemplateGUI {
         registrazione.setMinimumSize(dimensioneCampo);
         registrazione.setMaximumSize(dimensioneCampo);
 
+        //Aggiunta listener al bottone registrazione
+        registrazione.addActionListener(e ->{
+            if (!radioSi.isSelected() && !radioNo.isSelected()) {
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Devi specificare se si un ristoratore oppure no!",
+                        "Campo obbligatorio",
+                        JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+            String nome = campoNome.getText().trim();
+            String cognome = campoCognome.getText().trim();
+            String nazione = campoNazione.getText().trim();
+            String citta = campoCitta.getText().trim();
+            String email = campoEmail.getText().trim();
+            String password = new String(campoPassword.getPassword());
+            boolean isRistoratore = radioSi.isSelected();
+
+            RegistrazioneDTO dto = new RegistrazioneDTO(nome, cognome, nazione, citta, email, password, isRistoratore);
+            Richiesta richiesta = new Richiesta(TipoRichieste.REGISTER, dto);
+            Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
+
+            if(risposta != null && risposta.getSuccesso()){
+                if(isRistoratore){
+                    frame.setContentPane(new RistoratoreGUI(frame, utenteService, email));
+                } else {
+                    frame.setContentPane(new LoggatoGUI(frame, utenteService, email));
+                }
+                frame.revalidate();
+                frame.repaint();
+            } else{
+                String messaggioErrore = risposta != null
+                        ? risposta.getMsg()
+                        : "Impossibile contattare il server";
+
+                JOptionPane.showMessageDialog(
+                        frame,
+                        messaggioErrore,
+                        "Errore di registrazione",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        });
+
+
+        //composizione griglia
         // nome     cognome
         vincoloGriglia.gridx = 0; //colonna 0 della griglia
         vincoloGriglia.gridy = 0; //riga 0 della griglia

@@ -36,6 +36,12 @@ public class LoginGUI extends TemplateGUI {
 
         Dimension dimensioneCampo = new Dimension(300, 40);
 
+        JLabel titoloCentrale = new JLabel("Non sei registrato!");
+        titoloCentrale.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel titoloCentrale2 = new JLabel("Puoi accedere, oppure registrarti!");
+        titoloCentrale2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
         JLabel emailLabel = new JLabel("Email: ");
         emailLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -106,6 +112,10 @@ public class LoginGUI extends TemplateGUI {
         registrazione.setFocusPainted(false);
         registrazione.setBorder(new LineBorder(Color.WHITE));
 
+        pannelloCentrale.add(titoloCentrale);
+        pannelloCentrale.add(titoloCentrale2);
+        pannelloCentrale.add(Box.createVerticalStrut(15));
+
 
         pannelloCentrale.add(emailLabel);
         pannelloCentrale.add(Box.createVerticalStrut(5));
@@ -118,7 +128,7 @@ public class LoginGUI extends TemplateGUI {
         pannelloCentrale.add(Box.createVerticalStrut(40));
 
         pannelloCentrale.add(effettuaLogin);
-        pannelloCentrale.add(Box.createVerticalStrut(40));
+        pannelloCentrale.add(Box.createVerticalStrut(10));
         pannelloCentrale.add(registrazione);
 
         //centratura del pannelloCentrale
