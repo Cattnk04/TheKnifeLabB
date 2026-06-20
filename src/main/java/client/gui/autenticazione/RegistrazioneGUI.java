@@ -17,16 +17,15 @@ import java.awt.*;
 
 public class RegistrazioneGUI extends TemplateGUI {
     JFrame frame;
-    private JTextField campoNome;
-    private JTextField campoCognome;
-    private JTextField campoCitta;
-    private JTextField campoNazione;
+    private final JTextField campoNome;
+    private final JTextField campoCognome;
+    private final JTextField campoCitta;
+    private final JTextField campoNazione;
     private JLabel ristoratore;
-    private JRadioButton radioSi;
-    private JRadioButton radioNo;
-    private JTextField campoEmail;
-    private JPasswordField campoPassword;
-    private JButton registrazione;
+    private final JRadioButton radioSi;
+    private final JRadioButton radioNo;
+    private final JTextField campoEmail;
+    private final JPasswordField campoPassword;
 
     public RegistrazioneGUI(JFrame frame, UtenteService utenteService) {
         super(frame);
@@ -93,7 +92,7 @@ public class RegistrazioneGUI extends TemplateGUI {
         campoPassword.setMinimumSize(dimensioneCampo);
         campoPassword.setMaximumSize(dimensioneCampo);
 
-        registrazione = new JButton("Registrati");
+        JButton registrazione = new JButton("Registrati");
         registrazione.setPreferredSize(dimensioneCampo);
         registrazione.setMinimumSize(dimensioneCampo);
         registrazione.setMaximumSize(dimensioneCampo);
@@ -146,7 +145,7 @@ public class RegistrazioneGUI extends TemplateGUI {
 
 
         //composizione griglia
-        // nome     cognome
+        // nome - cognome
         vincoloGriglia.gridx = 0; //colonna 0 della griglia
         vincoloGriglia.gridy = 0; //riga 0 della griglia
         pannelloCentrale.add(nomeLabel, vincoloGriglia);
@@ -161,7 +160,7 @@ public class RegistrazioneGUI extends TemplateGUI {
         vincoloGriglia.gridy = 1;
         pannelloCentrale.add(campoCognome, vincoloGriglia);
 
-        //nazione       citta
+        // città - nazione
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 2;
         pannelloCentrale.add(nazioneLabel, vincoloGriglia);
@@ -192,7 +191,7 @@ public class RegistrazioneGUI extends TemplateGUI {
 
         vincoloGriglia.gridwidth = 1;
 
-        //email         password
+        //email - password
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 6;
         pannelloCentrale.add(emailLabel, vincoloGriglia);
