@@ -13,8 +13,7 @@ import java.nio.charset.StandardCharsets;
  */
 
 public class Utente implements Serializable{
-    /* public static final String FILE_UTENTI = "Data/Utenti.txt";
-    private static final Scanner scanner = new Scanner(System.in);*/
+
     private String email;
     private String nomeUtente;
     private String cognomeUtente;
@@ -165,90 +164,4 @@ public class Utente implements Serializable{
                 + citta.trim().toLowerCase() + ","
                 + ristoratore;
     }
-
-
-    /**
-     * Costruttore per la registrazione di un nuovo utente tramite input da console.
-     * Richiede all'utente di inserire nome, cognome, nazione, città, stato di ristoratore,
-     * email e password. Effettua controlli di validità su nome, cognome, email e password.
-     * La password inserita viene crittografata tramite SHA-256 e salvata in forma hashata.
-     *
-     * @throws RuntimeException se il digest SHA-256 non è disponibile
-     */
-    /*
-    //Metodo per la registrazione
-    public Utente() {
-        System.out.println("\n\n=== Registrazione ===");
-        do{
-            System.out.print("Inserisci il tuo nome: ");
-            this.nome = scanner.nextLine().trim();
-            if(this.nome.length()<=1)
-                System.out.println("Nome non valido");
-        }while (this.nome.length()<=1);
-        do{
-            System.out.print("Inserisci il tuo cognome: ");
-            this.cognome = scanner.nextLine().trim();
-            if(this.cognome.length()<=1){
-                System.out.println("Cognome non valido");
-            }
-        } while (this.cognome.length()<=1);
-
-        System.out.print("Inserisci la Nazione: ");
-        this.nazione = scanner.nextLine().trim();
-
-        System.out.print("Inserisci la provincia di domicilio: ");
-        this.citta = scanner.nextLine().trim();
-
-        boolean valido = false;
-        do{
-            valido = true;
-            System.out.print("Sei proprietario di un ristorante? [s/n]: ");
-            String risposta = scanner.nextLine().trim().toLowerCase(); // Salva l'input in una variabile
-            if(risposta.equals("s"))
-                this.ristoratore = true;
-            else if (risposta.equals("n"))
-                this.ristoratore = false;
-            else
-                valido = false;
-
-        } while (!valido);
-
-        String email = "";
-        do{
-            valido = true;
-            System.out.print("Inserisci la tua email: ");
-            email = scanner.nextLine().trim().toLowerCase();
-            if(!email.contains("@") || !email.contains(".")){
-                valido = false;
-                System.out.println("Email non valida");
-            }
-        } while (!valido);
-        this.email = email;
-        String password = "";
-        do{
-            valido = true;
-            System.out.print("Inserisci la tua password: ");
-            password = scanner.nextLine();
-            if(password.length()<8){
-                valido = false;
-                System.out.println("Password troppo corta, inserirne una più lunga.");
-            }
-        } while (!valido);
-
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-
-            // Converti i byte in una stringa esadecimale
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hashBytes) {
-                String hex = Integer.toHexString(0xff & b);
-                if(hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-            this.hashpwd = hexString.toString().trim();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
 }

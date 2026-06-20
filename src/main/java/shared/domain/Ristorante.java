@@ -23,8 +23,10 @@ public class Ristorante implements Serializable{
     private boolean prenotazioneOnline;
     private int idTipoCucina;
 
-    //public static final String FILE_RISTORANTI = "Data/Ristoranti.txt";
-
+    /**
+     * Costruttore della classe Ristorante che inizializza un nuovo ristorante
+     * necessario per il funzionamento del DAO.
+     */
     public Ristorante() {}
 
     /**
@@ -57,19 +59,6 @@ public class Ristorante implements Serializable{
         this.prenotazioneOnline = prenotazioneOnline;
         this.idTipoCucina = idTipoCucina;
     }
-
-    /**
-     * Costruttore della classe Ristorante che inizializza un nuovo ristorante
-     * associandolo all'email di un utente ristoratore e richiedendo l'inserimento
-     * interattivo dei dati del ristorante tramite il metodo inserisciDatiRistorante().
-     *
-     * @param utenteRistoratore l'utente che rappresenta il ristoratore associato al ristorante
-     */
-     /*
-    public Ristorante(Utente utenteRistoratore){
-        this.email = utenteRistoratore.getEmail();
-        inserisciDatiRistorante();
-    }*/
 
     /**
      * Restituisce l'id del Ristorante.
@@ -272,59 +261,5 @@ public class Ristorante implements Serializable{
                 prenotazioneOnline + "," +
                 idTipoCucina;
     }
-
-    /**
-     * Metodo privato che richiede all'utente di inserire interattivamente
-     * tutti i dati necessari per configurare un oggetto Ristorante.
-     * Chiede nome, nazione, città, indirizzo, fascia di prezzo,
-     * se offre servizio delivery, se accetta prenotazioni online e tipo di cucina.
-     *
-     * Valida gli input per i servizi delivery e prenotazione online, accettando
-     * solo 's' (sì) o 'n' (no), e continua a richiedere finché l'input non è corretto.
-     */
-    /*
-    //Metodo per creare un ristorante
-    private void inserisciDatiRistorante(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Inserisci il nome del ristorante:");
-        this.setNome(scanner.nextLine());
-        System.out.print("Inserisci il nazione del ristorante:");
-        this.setNazione(scanner.nextLine());
-        System.out.print("Inserisci la citta del ristorante:");
-        this.setCitta(scanner.nextLine());
-        System.out.print("Inserisci l'indirizzo del ristorante:");
-        this.setIndirizzo(scanner.nextLine());
-        System.out.print("Inserisci il prezzo medio del ristorante:");
-        this.setFasciaPrezzo(scanner.nextDouble());
-        boolean valido;
-        do{
-            valido = true;
-            System.out.print("Il ristorante fornisce il servizio delivery? [s/n]");
-            String risposta = scanner.nextLine().trim().toLowerCase(); // Salva l'input in una variabile
-            if(risposta.equals("s")){
-                this.setDelivery(true);
-            } else if (risposta.equals("n")){
-                this.setDelivery(false);
-            } else {
-                System.out.println("Devi inserire 's' o 'n'");
-                valido = false;
-            }
-        } while (!valido);
-        do{
-            valido = true;
-            System.out.println("Il ristorante accetta prenotazioni online? [s/n]");
-            String risposta = scanner.nextLine().trim().toLowerCase();
-            if(risposta.equals("s")){
-                this.setPrenotazioneOnline(true);
-            } else if (risposta.equals("n")){
-                this.setPrenotazioneOnline(false);
-            } else {
-                System.out.println("Devi inserire 's' o 'n'");
-                valido = false;
-            }
-        } while (!valido);
-        System.out.println("Inserisci il tipo di cucina del ristorante: ");
-        this.setTipoCucina(scanner.nextLine());
-    }*/
 
 }

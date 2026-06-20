@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
- * @version 1.0
+ * @version 1.1
  *
  * Classe per gestione della generazione dell'elemento Preferito.
  */
@@ -13,8 +13,10 @@ public class Preferito implements Serializable {
 
     String email;
     int idRistorante;
-    //public static final String FILE_PREFERITI = "Data/Preferiti.txt";
 
+    /**
+     * Costruttore della classe Preferito che crea un'istanza vuota necessario per il funzionamento del DAO.
+     */
     public Preferito() {
     }
 
@@ -29,25 +31,6 @@ public class Preferito implements Serializable {
         this.email = email;
         this.idRistorante = idRistorante;
     }
-
-    /**
-     * Costruttore della classe Preferito che crea un'istanza
-     * utilizzando un oggetto Utente e una ListaRistoranti.
-     * Viene richiesto all'utente di inserire il nome del ristorante
-     * da aggiungere alla lista dei preferiti.
-     *
-     * @param utente l'oggetto Utente che aggiunge il preferito
-     * @param listaRistoranti la lista di ristoranti da cui cercare il preferito
-     */
-    /*
-    public Preferito(Utente utente, ListaRistoranti listaRistoranti) {
-        this.email = utente.getEmail();
-        Ristorante ristorante = listaRistoranti.cercaPerNome("\nInserisci il nome del ristorante che vuoi aggiungere alla tua lista dei preferiti: ");
-        if(ristorante != null)
-            this.idRistorante = ristorante.getNomeRistorante();
-        else
-            this.idRistorante = null;
-    }*/
 
     //Metodi Get
     /**

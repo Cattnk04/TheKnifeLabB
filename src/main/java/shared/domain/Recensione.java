@@ -6,39 +6,18 @@ import java.io.Serializable;
 
 /**
  * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
- * @version 1.0
+ * @version 1.1
  *
  * Classe per gestione della generazione dell'elemento Recensione.
  */
 
 public class Recensione implements Serializable{
 
-    //public static final String FILE_RECENSIONI = "Data/Recensioni.txt";
     private String email;
     private int idRistorante;
     private int valutazione;
     private String recensione;
     private String risposta;
-
-
-    /**
-     * Costruttore della classe Recensione che crea un'istanza
-     * utilizzando un oggetto Utente e una ListaRistoranti.
-     * Richiede il nome del ristorante a cui lasciare la recensione,
-     * assegna la valutazione e il testo della recensione tramite metodi
-     * (presumibilmente input da utente) e inizializza la risposta a null.
-     *
-     * @param utente l'utente che lascia la recensione
-     * @param ristoranti la lista di ristoranti da cui scegliere il ristorante da recensire
-     */
-    /*
-    public Recensione(Utente utente, ListaRistoranti ristoranti) {
-        this.email = utente.getEmail();
-        this.idRistorante = ristoranti.cercaPerNome("Inserisci il nome del ristorante a cui vuoi lasciare una recensione: ").getNomeRistorante();
-        this.valutazione = valutazione();
-        this.recensione = recensione();
-        this.risposta = null;
-    }*/
 
     /**
      * Costruttore della classe Recensione che crea un'istanza
@@ -125,48 +104,6 @@ public class Recensione implements Serializable{
 
         this.valutazione = valutazione;
     }
-    /**
-     * Richiede all'utente di inserire una valutazione intera compresa tra 1 e 5.
-     * Continua a richiedere l'input finché non viene fornito un valore valido.
-     * Gestisce input non validi e mostra messaggi di errore appropriati.
-     *
-     * @return la valutazione inserita dall'utente (intero tra 1 e 5)
-     */
-    /*//Metodo per inserire valutazione
-    public int valutazione(){
-        Scanner scanner = new Scanner(System.in);
-        int valutazione;
-        do{
-            System.out.print("Puoi inserire una valutazione da 1 a 5: ");
-            try {
-                valutazione = scanner.nextInt();
-                scanner.nextLine(); // consuma il newline
-                if (valutazione >= 1 && valutazione <= 5) {
-                    return valutazione;
-                }
-                System.out.println("Per favore inserisci un numero tra 1 e 5.");
-            } catch (InputMismatchException e) {
-                System.out.println("Per favore inserisci un numero valido.");
-                scanner.nextLine(); // pulisce l'input non valido
-                valutazione = 0;
-            }
-        } while (true);
-    }*/
-
-    /**
-     * Metodo che permette all'utente di inserire una recensione testuale
-     * per un ristorante tramite input da tastiera.
-     *
-     * @return la recensione inserita dall'utente sotto forma di stringa
-     */
-    /*
-    //Metodo per inserire recensione
-    public String recensione(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Puoi inserire una recensione a questo ristorante: ");
-        String recensione = scanner.nextLine();
-        return recensione;
-    }*/
 
     /**
      * Restituisce una rappresentazione testuale compatta dell'oggetto Recensione,
@@ -179,23 +116,5 @@ public class Recensione implements Serializable{
     public String toString(){
         return this.email + '*' + this.idRistorante + '*' + this.valutazione + '*' + this.recensione + '*' + this.risposta;
     }
-
-    /**
-     * Restituisce una stringa formattata per stampare i dettagli della recensione,
-     * inclusa la valutazione, il testo della recensione e, se presente, la risposta.
-     * Stampa anche una linea separatrice sulla console.
-     *
-     * @return la stringa formattata con i dettagli della recensione
-     */
-    /*
-    //Metodo per stampare le recensioni
-    public String stampaRecensione(){
-        System.out.println("\n----------------------------------------");
-        String stringa =  "Valutazione: " + getValutazione() + "\nRecensione: " + getRecensione();
-        if(getRisposta() != null){
-            stringa += "\nRisposta: " + getRisposta();
-        }
-        return stringa;
-    }*/
 
 }
