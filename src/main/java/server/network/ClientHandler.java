@@ -7,6 +7,7 @@ import main.java.shared.communication.Richiesta;
 import main.java.shared.communication.Risposta;
 import main.java.shared.dto.LoginDTO;
 import main.java.shared.dto.RegistrazioneDTO;
+import main.java.server.main.ServerMain;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -81,11 +82,16 @@ public class ClientHandler extends Thread{
             case REGISTER:
                 return gestisciRegistrazione(richiesta.getContenuto());
 
+            //Mancano gli altri tipi di richieste
+
+            case SHUTDOWN_SERVER:
+                return gestisciShutdown();
             default:
                 return new Risposta(false, null, "Tipo richiesta non supportato");
         }
     }
 
+    //Metodi per gestire le richieste
     private Risposta gestisciLogin(Object contenuto) {
         if (!(contenuto instanceof LoginDTO loginDTO)) {
             return new Risposta(false, null, "Dati login non validi");
@@ -96,7 +102,6 @@ public class ClientHandler extends Thread{
         if (ok) {
             return new Risposta(true, loginDTO.getEmail(), "Login effettuato");
         }
-
         return new Risposta(false, null, "Email o password errati");
     }
 
@@ -110,7 +115,19 @@ public class ClientHandler extends Thread{
         if (ok) {
             return new Risposta(true, null, "Registrazione effettuata");
         }
-
         return new Risposta(false, null, "Registrazione fallita");
     }
+
+    private Risposta gestisciShutdown() {
+
+        System.out.println("Richiesta di chiusura server ricevuta");
+        ServerMain.stopServer();
+        return new Risposta(
+                true,
+                null,
+                "Server chiuso correttamente"
+        );
+    }
+
+
 }

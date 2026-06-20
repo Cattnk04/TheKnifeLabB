@@ -12,5 +12,8 @@ public enum TipoRichieste {
     ELIMINA_RECENSIONE,
     AGGIUNGI_PRFERITO,
     RIMUOVI_PREFERITO,
-    RISPONDI_RCENSIONE
+    RISPONDI_RCENSIONE,
+
+    // Richiesta per terminare il server
+    SHUTDOWN_SERVER
 }
