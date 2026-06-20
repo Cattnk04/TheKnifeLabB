@@ -82,7 +82,32 @@ public class ClientHandler extends Thread{
             case REGISTER:
                 return gestisciRegistrazione(richiesta.getContenuto());
 
-            //Mancano gli altri tipi di richieste
+            case LOGOUT:
+                return new Risposta(true, null, "Logout effettuato");
+
+            case GET_RISTORANTE:
+                return gestisciGetRistorante(richiesta.getContenuto());
+
+            case GET_RECENSIONI_RISTORANTE:
+                return gestisciGetRecensioniRistorante(richiesta.getContenuto());
+
+            case SCRIVI_RECENSIONE:
+                return gestisciScriviRecensione(richiesta.getContenuto());
+
+            case MODIFICA_RECENSIONE:
+                return gestisciModificaRecensione(richiesta.getContenuto());
+
+            case ELIMINA_RECENSIONE:
+                return gestisciEliminaRecensione(richiesta.getContenuto());
+
+            case AGGIUNGI_PREFERITO:
+                return gestisciAggiungiPreferito(richiesta.getContenuto());
+
+            case RIMUOVI_PREFERITO:
+                return gestisciRimuoviPreferito(richiesta.getContenuto());
+
+            case RISPONDI_RECENSIONE:
+                return gestisciRispondiRecensione(richiesta.getContenuto());
 
             case SHUTDOWN_SERVER:
                 return gestisciShutdown();
@@ -118,6 +143,38 @@ public class ClientHandler extends Thread{
         return new Risposta(false, null, "Registrazione fallita");
     }
 
+    private Risposta gestisciGetRistorante(Object contenuto) {
+        return new Risposta(true, null, "Metodo non implementato");
+    }
+
+    private Risposta gestisciGetRecensioniRistorante(Object contenuto) {
+        return new Risposta(false, null, "Non implementato");
+    }
+
+    private Risposta gestisciScriviRecensione(Object contenuto) {
+        return new Risposta(false, null, "Non implementato");
+    }
+
+    private Risposta gestisciModificaRecensione(Object contenuto){
+        return new Risposta(false, null, "Non implementato");
+    }
+
+    private Risposta gestisciEliminaRecensione(Object contenuti){
+        return new Risposta(false, null, "Non implementato");
+    }
+
+    private Risposta gestisciAggiungiPreferito(Object contenuto){
+        return new Risposta(false, null, "Non implementato");
+    }
+
+    private Risposta gestisciRimuoviPreferito(Object contenuto){
+        return new Risposta(false, null, "Non implementato");
+    }
+
+    private Risposta gestisciRispondiRecensione(Object contenuto){
+        return new Risposta(false, null, "Non implementato");
+    }
+
     private Risposta gestisciShutdown() {
 
         System.out.println("Richiesta di chiusura server ricevuta");
@@ -128,6 +185,4 @@ public class ClientHandler extends Thread{
                 "Server chiuso correttamente"
         );
     }
-
-
 }
