@@ -11,6 +11,35 @@ import java.awt.event.ActionEvent;
 import java.util.EventListener;
 
 public class GuestGUI extends TemplateGUI {
+    private JTextField campoNomeRitstorante;
+
+    /*
+    private JPanel creaPannelloRicerca(){
+        JPanel pannelloRicerca = new JPanel(new GridLayout());
+        pannelloRicerca.setBorder(BorderFactory.createTitledBorder("Cerca il ristorante:")); //titolo nel bordo del pannello
+        BorderFactory.createLineBorder(Color.BLUE);
+        BorderFactory.createEtchedBorder(); //bordo con effetto incassato
+        GridBagConstraints vincoloGriglia = new GridBagConstraints();
+        vincoloGriglia.insets = new Insets(10, 10, 10, 10);
+        vincoloGriglia.anchor = GridBagConstraints.WEST;
+        vincoloGriglia.fill = GridBagConstraints.HORIZONTAL;
+
+        //popolamento righe e colonne
+        //riga 0    nome ristorante: ....
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.gridy = 0;
+        vincoloGriglia.weightx = 0; //la colonna non si allarga
+        pannello.add(new JLabel("inserisci il nome del ristorante: "), vincoloGriglia);
+        vincoloGriglia.gridx = 1;
+        vincoloGriglia.weightx = 1;
+        this.campoNomeRitstorante = new JTextField(20);
+        pannello.add(campoNomeRitstorante, vincoloGriglia);
+
+        //
+
+    }
+
+     */
 
     public GuestGUI(JFrame frame, UtenteService utenteService) {
         super(frame);
@@ -25,9 +54,13 @@ public class GuestGUI extends TemplateGUI {
 
 
 
+
+        /*
         JLabel consigliati = new JLabel("Consigliati");
         consigliati.setFocusable(false);
         consigliati.setFont(new Font("Arial", Font.BOLD, 30));
+        this.add(consigliati);
+         */
 
 
 
@@ -72,6 +105,6 @@ panel.add(comboNazione);
 panel.add(comboCitta);
          */
 
-        this.add(consigliati);
+
     }
 }

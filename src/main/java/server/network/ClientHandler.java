@@ -1,29 +1,35 @@
 package main.java.server.network;
 
+import main.java.server.dao.TipoCucinaDAO;
 import main.java.server.dao.UtenteDAO;
 import main.java.server.security.PasswordService;
+import main.java.server.service.TipoCucinaService;
 import main.java.server.service.UtenteService;
 import main.java.shared.communication.Richiesta;
 import main.java.shared.communication.Risposta;
 import main.java.shared.dto.LoginDTO;
 import main.java.shared.dto.RegistrazioneDTO;
 import main.java.server.main.ServerMain;
+import main.java.shared.dto.TipoCucinaDTO;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 public class ClientHandler extends Thread{
     private Socket clientSocket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private UtenteService utenteService;
+    private TipoCucinaService tipoCucinaService;
 
     public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
         this.utenteService = new UtenteService(new UtenteDAO(), new PasswordService());
+        this.tipoCucinaService = new TipoCucinaService(new TipoCucinaDAO());
     }
 
     @Override
@@ -75,6 +81,7 @@ public class ClientHandler extends Thread{
             return new Risposta(false, null, "Richiesta non valida");
         }
 
+
         switch (richiesta.getTipoRichiesta()) {
             case LOGIN:
                 return gestisciLogin(richiesta.getContenuto());
@@ -108,6 +115,9 @@ public class ClientHandler extends Thread{
 
             case RISPONDI_RECENSIONE:
                 return gestisciRispondiRecensione(richiesta.getContenuto());
+
+            case GET_TIPO_CUCINA:
+                return gestisciGetTipoCucina();
 
             case SHUTDOWN_SERVER:
                 return gestisciShutdown();
@@ -171,9 +181,16 @@ public class ClientHandler extends Thread{
         return new Risposta(false, null, "Non implementato");
     }
 
-    private Risposta gestisciRispondiRecensione(Object contenuto){
+    private Risposta gestisciRispondiRecensione(Object contenuto) {
         return new Risposta(false, null, "Non implementato");
     }
+
+    public Risposta gestisciGetTipoCucina(){
+        List<TipoCucinaDTO> tipi = tipoCucinaService.getTipoCucina();
+        return new Risposta(true, tipi, "Tipi di cucina recuperati");
+    }
+
+
 
     private Risposta gestisciShutdown() {
 

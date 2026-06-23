@@ -1,0 +1,23 @@
+package main.java.shared.dto;
+
+import java.io.Serializable;
+
+public class TipoCucinaDTO implements Serializable {
+    private int idTipoCucina;
+    private String tipoCucina;
+
+    public TipoCucinaDTO(int idTipoCucina, String tipoCucina) {
+        this.idTipoCucina = idTipoCucina;
+        this.tipoCucina = tipoCucina;
+    }
+
+    public int getIdTipoCucina() {
+        return idTipoCucina;
+    }
+
+    @Override
+    public String toString() {
+        return tipoCucina;
+    }
+
+}

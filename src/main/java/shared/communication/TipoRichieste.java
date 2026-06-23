@@ -28,7 +28,7 @@ public enum TipoRichieste {
     AGGIUNGI_PREFERITO,
     RIMUOVI_PREFERITO,
 
-
+    GET_TIPO_CUCINA,
     // Richiesta per terminare il server
     SHUTDOWN_SERVER
 }
