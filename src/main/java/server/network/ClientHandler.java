@@ -175,15 +175,96 @@ public class ClientHandler extends Thread{
     }
 
     private Risposta gestisciScriviRecensione(Object contenuto) {
-        return new Risposta(false, null, "Non implementato");
+        if(!(contenuto instanceof RecensioneDTO dto)){
+            return new Risposta(false, null, "Dati ricerca non validi");
+        }
+        else {
+            try{
+                RecensioneDTO recDto = (RecensioneDTO) contenuto;
+
+                Recensione recensione = new Recensione(
+                        recDto.getIdRistorante(),
+                        recDto.getEmail(),
+                        recDto.getValutazione(),
+                        recDto.getRecensione(),
+                        recDto.getRisposta()
+                );
+
+                boolean successo = recensioneService.creaRecensione(recensione);
+
+                return new Risposta(
+                        successo,
+                        null,
+                        successo
+                                ? "Recensione creata correttamente"
+                                : "Errore durante la creazione della recensione"
+                );
+            } catch (Exception e) {
+                return new Risposta(false, null, e.getMessage());
+            }
+        }
     }
 
     private Risposta gestisciModificaRecensione(Object contenuto){
-        return new Risposta(false, null, "Non implementato");
+        if(!(contenuto instanceof RecensioneDTO dto)){
+            return new Risposta(false, null, "Dati ricerca non validi");
+        }
+        else{
+            try{
+                RecensioneDTO recDto = (RecensioneDTO) contenuto;
+
+                boolean testoAggiornato = recensioneService.modificaRecensione(
+                        recDto.getIdRistorante(),
+                        recDto.getEmail(),
+                        recDto.getRecensione()
+                );
+                boolean valutazioneAggiornata = recensioneService.modificaValutazione(
+                        recDto.getIdRistorante(),
+                        recDto.getEmail(),
+                        recDto.getValutazione()
+                );
+
+                boolean successo = testoAggiornato && valutazioneAggiornata;
+
+                return new Risposta(
+                        successo,
+                        null,
+                        successo
+                                ? "Recensione modificata correttamente"
+                                : "Errore durante la modifica della recensione"
+                );
+
+            } catch (Exception e) {
+                return new Risposta(false, null, e.getMessage());
+            }
+        }
     }
 
-    private Risposta gestisciEliminaRecensione(Object contenuti){
-        return new Risposta(false, null, "Non implementato");
+    private Risposta gestisciEliminaRecensione(Object contenuto) {
+        if(!(contenuto instanceof RecensioneDTO dto)){
+            return new Risposta(false, null, "Dati ricerca non validi");
+        }
+        else {
+            try {
+                RecensioneDTO recDto = (RecensioneDTO) contenuto;
+
+                boolean successo = recensioneService.cancellaRecensione(
+                        recDto.getIdRistorante(),
+                        recDto.getEmail()
+                );
+
+                return new Risposta(
+                        successo,
+                        null,
+                        successo
+                                ? "Recensione eliminata correttamente"
+                                : "Errore durante l'eliminazione della recensione"
+                );
+
+            } catch (Exception e) {
+                return new Risposta(false, null, e.getMessage());
+            }
+        }
     }
 
     private Risposta gestisciAggiungiPreferito(Object contenuto){
@@ -207,8 +288,6 @@ public class ClientHandler extends Thread{
             return new Risposta(true, tipi, "Tipi di cucina recuperati");
         }
     }
-
-
 
     private Risposta gestisciShutdown() {
 
