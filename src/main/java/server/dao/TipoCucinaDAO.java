@@ -1,11 +1,8 @@
 package main.java.server.dao;
 
-
-
 import main.java.server.db.DatabaseConnection;
 import main.java.shared.dto.TipoCucinaDTO;
 
-import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TipoCucinaDAO {
+
     private TipoCucinaDTO map(ResultSet rs) throws SQLException {
         return new TipoCucinaDTO(
                 rs.getInt("idtipocucina"),
@@ -21,23 +19,26 @@ public class TipoCucinaDAO {
         );
     }
 
-    public List<TipoCucinaDTO> getTipoCucina(){
+    public List<TipoCucinaDTO> getTipoCucina() {
         List<TipoCucinaDTO> lista = new ArrayList<>();
 
         String sql = """
                 SELECT idtipocucina, tipocucina
-                FROM tipocucina
+                FROM tipicucina
                 """;
 
-        try(Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery()){
-            while (rs.next()){
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet rs = statement.executeQuery()) {
+
+            while (rs.next()) {
                 lista.add(map(rs));
             }
-        } catch (SQLException e){
+
+        } catch (SQLException e) {
             System.out.println("Errore recupero tipi di cucina: " + e.getMessage());
         }
+
         return lista;
     }
 }

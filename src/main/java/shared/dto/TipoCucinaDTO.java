@@ -15,6 +15,8 @@ public class TipoCucinaDTO implements Serializable {
         return idTipoCucina;
     }
 
+    public String getTipoCucina() { return tipoCucina; }
+
     @Override
     public String toString() {
         return tipoCucina;
