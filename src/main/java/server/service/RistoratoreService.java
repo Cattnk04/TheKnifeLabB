@@ -16,9 +16,9 @@ public class RistoratoreService {
     private final RistoranteDAO ristoranteDAO;
     private final RecensioneDAO recensioneDAO;
 
-    public RistoratoreService(UtenteDAO utenteDAO, RistoranteDAO ristoranteDAO, RecensioneDAO recensioneDAO) {
-        this.utenteDAO = utenteDAO;
+    public RistoratoreService(RistoranteDAO ristoranteDAO, UtenteDAO utenteDAO, RecensioneDAO recensioneDAO) {
         this.ristoranteDAO = ristoranteDAO;
+        this.utenteDAO = utenteDAO;
         this.recensioneDAO = recensioneDAO;
     }
 

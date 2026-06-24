@@ -1,21 +1,15 @@
 package main.java.server.network;
 
-import main.java.server.dao.TipoCucinaDAO;
-import main.java.server.dao.UtenteDAO;
+import main.java.server.dao.*;
 import main.java.server.security.PasswordService;
-import main.java.server.service.TipoCucinaService;
-import main.java.server.service.UtenteService;
-import main.java.shared.communication.Richiesta;
-import main.java.shared.communication.Risposta;
-import main.java.shared.dto.LoginDTO;
-import main.java.shared.dto.RegistrazioneDTO;
+import main.java.server.service.*;
+import main.java.shared.communication.*;
+import main.java.shared.domain.Recensione;
+import main.java.shared.domain.Ristorante;
+import main.java.shared.dto.*;
 import main.java.server.main.ServerMain;
-import main.java.shared.dto.TipoCucinaDTO;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.List;
 
@@ -25,11 +19,17 @@ public class ClientHandler extends Thread{
     private ObjectInputStream in;
     private UtenteService utenteService;
     private TipoCucinaService tipoCucinaService;
+    private RistoranteService ristoranteService;
+    private RecensioneService recensioneService;
+    private PreferitiService preferitiService;
 
     public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
         this.utenteService = new UtenteService(new UtenteDAO(), new PasswordService());
         this.tipoCucinaService = new TipoCucinaService(new TipoCucinaDAO());
+        this.ristoranteService = new RistoranteService(new RistoranteDAO());
+        this.recensioneService = new RecensioneService(new RecensioneDAO());
+        this.preferitiService = new PreferitiService(new PreferitiDAO());
     }
 
     @Override
@@ -154,11 +154,24 @@ public class ClientHandler extends Thread{
     }
 
     private Risposta gestisciGetRistorante(Object contenuto) {
-        return new Risposta(true, null, "Metodo non implementato");
+        if(!(contenuto instanceof RistoranteDTO dto)){
+            return new Risposta(false, null, "Dati ricerca non validi");
+        }
+        else{
+            List<Ristorante> ristoranti = ristoranteService.getTuttiRistoranti();
+            return new Risposta(true, ristoranti, "Ristoranti trovati");
+        }
     }
 
     private Risposta gestisciGetRecensioniRistorante(Object contenuto) {
-        return new Risposta(false, null, "Non implementato");
+        if(!(contenuto instanceof Integer idRistorante)){
+            return new Risposta(false, null, "Dati ricerca non validi");
+        }
+        else{
+            List<Recensione> recensioni = recensioneService.getRecensioniRistorante(idRistorante);
+            return new Risposta(true, recensioni, "Recensioni trovate");
+        }
+
     }
 
     private Risposta gestisciScriviRecensione(Object contenuto) {
@@ -186,8 +199,13 @@ public class ClientHandler extends Thread{
     }
 
     public Risposta gestisciGetTipoCucina(){
-        List<TipoCucinaDTO> tipi = tipoCucinaService.getTipoCucina();
-        return new Risposta(true, tipi, "Tipi di cucina recuperati");
+        if(!(tipoCucinaService instanceof TipoCucinaService tipoCucinaService)){
+            return new Risposta(false, null, "Errore nel recupero dei tipi di cucina");
+        }
+        else{
+            List<TipoCucinaDTO> tipi = tipoCucinaService.getTipoCucina();
+            return new Risposta(true, tipi, "Tipi di cucina recuperati");
+        }
     }
 
 

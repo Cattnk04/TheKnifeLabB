@@ -11,7 +11,7 @@ public class RistoranteService {
 
     private final RistoranteDAO ristoranteDAO;
 
-    public RistoranteService() {
+    public RistoranteService(RistoranteDAO ristoranteDAO) {
         this.ristoranteDAO = new RistoranteDAO();
     }
 
