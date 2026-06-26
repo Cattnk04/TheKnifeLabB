@@ -268,15 +268,41 @@ public class ClientHandler extends Thread{
     }
 
     private Risposta gestisciAggiungiPreferito(Object contenuto){
-        return new Risposta(false, null, "Non implementato");
+        if(!(contenuto instanceof PreferitiDTO dto)){
+            return new Risposta(false, null, "Dati ricerca non validi");
+        }
+        try {
+            boolean successo = preferitiService.aggiungiPreferito(dto);
+
+            return new Risposta(successo, null,
+                    successo ? "Preferito aggiunto con successo"
+                            : "Impossibile aggiungere il preferito"
+            );
+        } catch (Exception e) {
+            return new Risposta(false, null, e.getMessage());
+        }
     }
 
-    private Risposta gestisciRimuoviPreferito(Object contenuto){
-        return new Risposta(false, null, "Non implementato");
+    private Risposta gestisciRimuoviPreferito(Object contenuto) {
+        if (!(contenuto instanceof PreferitiDTO dto)) {
+            return new Risposta(false, null, "Dati del preferito non validi");
+        }
+
+        try {
+            boolean successo = preferitiService.rimuoviPreferito(dto);
+
+            return new Risposta(successo, null,
+                    successo ? "Preferito rimosso con successo"
+                            : "Impossibile rimuovere il preferito"
+            );
+
+        } catch (Exception e) {
+            return new Risposta(false, null, e.getMessage());
+        }
     }
 
     private Risposta gestisciRispondiRecensione(Object contenuto) {
-        return new Risposta(false, null, "Non implementato");
+       return new Risposta(false, null, "Rispondi recensione non supportato");
     }
 
     public Risposta gestisciGetTipoCucina(){
