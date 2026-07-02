@@ -175,29 +175,23 @@ public class ClientHandler extends Thread{
     //Metodi per gestire le richieste
     //UTENTE
     private Risposta gestisciLogin(Object contenuto) {
-        if (!(contenuto instanceof LoginDTO loginDTO)) {
+        if (!(contenuto instanceof LoginDTO loginDTO))
             return new Risposta(false, null, "Dati login non validi");
-        }
 
         boolean ok = utenteService.login(loginDTO);
 
-        if (ok) {
-            return new Risposta(true, loginDTO.getEmail(), "Login effettuato");
-        }
-        return new Risposta(false, null, "Email o password errati");
+        if (ok) return new Risposta(ok, loginDTO.getEmail(), "Login effettuato");
+        else return new Risposta(ok, null, "Email o password errati");
     }
 
     private Risposta gestisciRegistrazione(Object contenuto) {
-        if (!(contenuto instanceof RegistrazioneDTO registrazioneDTO)) {
+        if (!(contenuto instanceof RegistrazioneDTO registrazioneDTO))
             return new Risposta(false, null, "Dati registrazione non validi");
-        }
 
         boolean ok = utenteService.registraUtente(registrazioneDTO);
 
-        if (ok) {
-            return new Risposta(true, null, "Registrazione effettuata");
-        }
-        return new Risposta(false, null, "Registrazione fallita");
+        if (ok) return new Risposta(true, null, "Registrazione effettuata");
+        else return new Risposta(false, null, "Registrazione fallita");
     }
 
     //RISTORANTE
@@ -207,24 +201,58 @@ public class ClientHandler extends Thread{
         }
         else{
             List<Ristorante> ristoranti = ristoranteService.getTuttiRistoranti();
-            return new Risposta(true, ristoranti, "Ristoranti trovati");
+            if(ristoranti.size() == 1) return new Risposta(true, ristoranti, "Ristoranti trovati");
+            else return new Risposta(false, null, "Nessun ristorante trovato");
         }
     }
 
+    //DA CONTROLLARE
     public Risposta gestisciCreaRistorante(Object contenuto) {
-        return new Risposta(true, null, "Metodo non ancora implementato");
+        if(!(contenuto instanceof RistoranteDTO dto)){
+            return new Risposta(false, null, "Dati creazione ristorante non validi");
+        }
+        else {
+            boolean creato = ristoranteService.creaRistorante(dto);
+            if (creato) return new Risposta(true, null, "Ristorante creato con successo");
+            else return new Risposta(false, null, "Impossibile creare il ristorante");
+        }
     }
 
+    //DA CONTROLLARE
+    //bisogna capire come passare con il DTO il campo da modificare altrimenti si crea un metodo che
+    // modifichi tutti i campi del ristorante come se lo creasse se vogliamo usare il DTO che abbiamo già creato
     public Risposta gestisciModificaRistorante(Object contenuto) {
+        if(!(contenuto instanceof RistoranteDTO dto)){
+            return new Risposta(false, null, "Dati per modificare il ristorante non validi");
+        }
+        else {
+        }
         return new Risposta(true, null, "Metodo non ancora implementato");
     }
 
+    //DA CONTROLLARE
     public Risposta gestisciEliminaRistorante(Object contenuto) {
-        return new Risposta(true, null, "Metodo non ancora implementato");
+        if(!(contenuto instanceof RistoranteDTO dto)){
+            return new Risposta(false, null, "Dati per eliminare il ristorante non validi");
+        }
+        else {
+            boolean eliminato = ristoranteService.cancellaRistorante(dto.getNomeRistorante());
+            if (eliminato) return new Risposta(true, null, "Ristorante eliminato con successo");
+            else return new Risposta(false, null, "Impossibile cancellare il ristorante");
+        }
     }
 
+    //DA CONTROLLARE
+    //bisogna cercare un ristorante specifico o ritorna tutti i ristoranti?
     public Risposta gestisciCercaRistorante(Object contenuto) {
-        return new Risposta(true, null, "Metodo non ancora implementato");
+        if(!(contenuto instanceof RistoranteDTO dto)){
+            return new Risposta(false, null, "Dati per ricerca del ristorante non validi");
+        }
+        else {
+            List<Ristorante> ristoranti = ristoranteService.getTuttiRistoranti();
+            if(!(ristoranti.isEmpty())) return new Risposta(true, ristoranti, "Ristoranti trovati");
+            else return new Risposta(false, null, "Nessun ristorante trovato");
+        }
     }
 
     public Risposta gestisciEsistenzaRistorante(Object contenuto) {

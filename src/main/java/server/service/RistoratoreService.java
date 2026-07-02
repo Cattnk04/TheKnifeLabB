@@ -52,8 +52,8 @@ public class RistoratoreService {
         return ristoranteDAO.aggiornaCampo(idRistorante, campo, valore);
     }
 
-    public boolean eliminaRistorante(int idRistorante) {
-        return ristoranteDAO.rimuoviRistorante(idRistorante);
+    public boolean eliminaRistorante(String nomeRistorante) {
+        return ristoranteDAO.rimuoviRistorante(nomeRistorante);
     }
 
     //Dashboard

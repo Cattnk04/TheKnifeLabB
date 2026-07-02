@@ -115,11 +115,11 @@ public class RistoranteService {
     }
 
     // DELETE
-    public boolean cancellaRistorante(int idRistorante) {
-        if (idRistorante <= 0) {
+    public boolean cancellaRistorante(String nomeRistorante) {
+        if (nomeRistorante != null) {
             throw new IllegalArgumentException("ID non valido");
         }
-        return ristoranteDAO.rimuoviRistorante(idRistorante);
+        return ristoranteDAO.rimuoviRistorante(nomeRistorante);
     }
 
     // READ ALL

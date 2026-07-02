@@ -87,16 +87,16 @@ public class RistoranteDAO {
     }
 
     //Cancellazione
-    public boolean rimuoviRistorante(int idRistorante) {
+    public boolean rimuoviRistorante(String nomeRistorante) {
         String sql = """
             DELETE FROM ristorante
-            WHERE idRistorante = ?
+            WHERE nomeRistorante = ?
         """;
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setInt(1, idRistorante);
+            statement.setString(1, nomeRistorante);
 
             return statement.executeUpdate() > 0;
 
