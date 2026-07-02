@@ -10,6 +10,7 @@ import main.java.shared.communication.TipoRichieste;
 import main.java.shared.dto.TipoCucinaDTO;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -33,9 +34,9 @@ public class GuestGUI extends TemplateGUI {
 
     private JPanel creaPannelloRicerca(){
         JPanel pannelloRicerca = new JPanel(new GridBagLayout());
-        pannelloRicerca.setBorder(BorderFactory.createTitledBorder("Cerca il ristorante:")); //titolo nel bordo del pannello
-        BorderFactory.createLineBorder(Color.BLUE);
-        BorderFactory.createEtchedBorder(); //bordo con effetto incassato
+        Border bordoTitolo = BorderFactory.createTitledBorder("Cerca il ristorante");
+        Border margineInterno = BorderFactory.createEmptyBorder(20, 15, 20, 15); //valori per la distanza tra il bordo e i componenti centrali
+        pannelloRicerca.setBorder(BorderFactory.createCompoundBorder(bordoTitolo, margineInterno));
         GridBagConstraints vincoloGriglia = new GridBagConstraints();
         vincoloGriglia.insets = new Insets(10, 10, 10, 10);
         vincoloGriglia.anchor = GridBagConstraints.WEST;
@@ -46,7 +47,7 @@ public class GuestGUI extends TemplateGUI {
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 0;
         vincoloGriglia.weightx = 0; //la colonna non si allarga
-        pannelloRicerca.add(new JLabel("inserisci il nome del ristorante: "), vincoloGriglia);
+        pannelloRicerca.add(new JLabel("Inserisci il nome del ristorante: "), vincoloGriglia);
         vincoloGriglia.gridx = 1;
         vincoloGriglia.weightx = 0;
         this.campoNomeRitstorante = new JTextField(20);
@@ -158,7 +159,7 @@ public class GuestGUI extends TemplateGUI {
         vincoloGriglia.fill = GridBagConstraints.NONE;  //permette di non riempire orizzontalmente
         vincoloGriglia.anchor = GridBagConstraints.CENTER;
         pannelloRicerca.add(new JButton("Cerca"), vincoloGriglia);
-
+        //DA AGGIUNGERE LISTENER AL BOTTONE RICERCA
 
         return pannelloRicerca;
     }
@@ -196,61 +197,11 @@ public class GuestGUI extends TemplateGUI {
             frame.repaint();
         });
 
-        this.add(creaPannelloRicerca());
+        //Per fare in modo che il bordo con scritto "cerca ristorante" sia vicino ai componenti cetnrali
+        JPanel contenutoCentrale = new JPanel(new GridBagLayout());
+        contenutoCentrale.add(creaPannelloRicerca());
 
-
-
-
-
-        /*
-        JLabel consigliati = new JLabel("Consigliati");
-        consigliati.setFocusable(false);
-        consigliati.setFont(new Font("Arial", Font.BOLD, 30));
-        this.add(consigliati);
-         */
-
-
-
-        /*
-        Popola le nazioni all'avvio
-JComboBox<String> comboNazione = new JComboBox<>();
-JComboBox<String> comboCitta = new JComboBox<>();
-
-// --- Carica nazioni dal DB ---
-try {
-    DTO/DAO String query = "SELECT DISTINCT nazione FROM ristoranti"; // adatta alla tua tabella
-    PreparedStatement ps = connection.prepareStatement(query);
-    ResultSet rs = ps.executeQuery();
-
-    while (rs.next()) {
-        comboNazione.addItem(rs.getString("nazione"));
-    }
-} catch (SQLException ex) {
-    ex.printStackTrace();
-}
-
-// --- Quando cambia nazione, carica le città ---
-comboNazione.addActionListener(e -> {
-    String nazioneScelta = (String) comboNazione.getSelectedItem();
-    comboCitta.removeAllItems();
-
-    try {
-        String query = "SELECT DISTINCT citta FROM ristoranti WHERE nazione = ?";
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, nazioneScelta);
-        ResultSet rs = ps.executeQuery();
-
-        while (rs.next()) {
-            comboCitta.addItem(rs.getString("citta"));
-        }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-    }
-});
-
-panel.add(comboNazione);
-panel.add(comboCitta);
-         */
+        this.add(contenutoCentrale, BorderLayout.CENTER);
 
 
     }
