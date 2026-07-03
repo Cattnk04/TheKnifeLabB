@@ -7,14 +7,12 @@ import main.java.server.service.UtenteService;
 import main.java.shared.communication.Richiesta;
 import main.java.shared.communication.Risposta;
 import main.java.shared.communication.TipoRichieste;
+import main.java.shared.dto.RistoranteDTO;
 import main.java.shared.dto.TipoCucinaDTO;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.EventListener;
 import javax.swing.JOptionPane;
 import java.util.List;
 
@@ -30,6 +28,7 @@ public class GuestGUI extends TemplateGUI {
     private JRadioButton radioPrenotazioneNo;
     private JRadioButton radioPrenotazioneIndifferente;
     private JComboBox campoTipoCucina;
+    private JButton btnRicerca;
 
 
     private JPanel creaPannelloRicerca(){
@@ -146,7 +145,7 @@ public class GuestGUI extends TemplateGUI {
         pannelloRicerca.add(new JLabel("Tipo di cucina: "), vincoloGriglia);
         this.campoTipoCucina = new JComboBox<>();
         this.campoTipoCucina.addItem("Qualsiasi");
-        //caricaTipiCucina();
+        caricaTipiCucina();
 
         vincoloGriglia.gridx = 1;
         vincoloGriglia.weightx = 0;
@@ -158,13 +157,33 @@ public class GuestGUI extends TemplateGUI {
         vincoloGriglia.gridwidth = 2;
         vincoloGriglia.fill = GridBagConstraints.NONE;  //permette di non riempire orizzontalmente
         vincoloGriglia.anchor = GridBagConstraints.CENTER;
-        pannelloRicerca.add(new JButton("Cerca"), vincoloGriglia);
+        this.btnRicerca = new JButton("Ricerca");
+        pannelloRicerca.add(btnRicerca, vincoloGriglia);
         //DA AGGIUNGERE LISTENER AL BOTTONE RICERCA
+        Object itemFasciaPrezzo = campoFasciaPrezzo.getSelectedItem();
+        String fasciaPrezzo;
+        if(itemFasciaPrezzo != null)
+            fasciaPrezzo = itemFasciaPrezzo.toString();
+        else fasciaPrezzo = null;
+        //valori dei radio button da passare al DTO
+        int delivery, prenotazioneOnline;
+        if(radioPrenotazioneIndifferente.isSelected()) prenotazioneOnline = -1;
+        else if(radioPrenotazioneNo.isSelected()) prenotazioneOnline = 0;
+        else prenotazioneOnline = 1;
+        if(radioDeliveryIndifferente.isSelected()) delivery = -1;
+        else if(radioDeliveryNo.isSelected()) delivery = 0;
+        else delivery = 1;
+        btnRicerca.addActionListener(e -> {
+            //DIO CANE I CAMPI DOVEVANO ESSERE INTERI E NON BOOLEANI (mo va cambiata la rappresentazione dei dati di metà progetto o trovare un altra soluzione)
+            /*RistoranteDTO ristoranteDTO = new RistoranteDTO(campoNomeRitstorante.getText(), campoCitta.getText(),campoNazione.getText(),
+                    null, null, fasciaPrezzo, delivery, prenotazioneOnline, campoTipoCucina.getSelectedIndex());*/
+        });
+
 
         return pannelloRicerca;
     }
 
-    /*private void caricaTipiCucina(){
+    private void caricaTipiCucina(){
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_TIPO_CUCINA, null);
         Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
         if (risposta != null && risposta.getSuccesso()) {
@@ -183,7 +202,7 @@ public class GuestGUI extends TemplateGUI {
         }
     }
 
-     */
+
 
 
 
