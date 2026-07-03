@@ -4,11 +4,8 @@ import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.autenticazione.LoginGUI;
 import main.java.client.network.ClientConnection;
 import main.java.server.service.UtenteService;
-import main.java.shared.communication.Richiesta;
-import main.java.shared.communication.Risposta;
-import main.java.shared.communication.TipoRichieste;
-import main.java.shared.dto.RistoranteDTO;
-import main.java.shared.dto.TipoCucinaDTO;
+import main.java.shared.communication.*;
+import main.java.shared.dto.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -42,7 +39,7 @@ public class GuestGUI extends TemplateGUI {
         vincoloGriglia.fill = GridBagConstraints.HORIZONTAL;
 
         //popolamento righe e colonne
-        //riga 0    nome ristorante: ....
+        //riga 0 - nome ristorante:...
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 0;
         vincoloGriglia.weightx = 0; //la colonna non si allarga
@@ -52,7 +49,7 @@ public class GuestGUI extends TemplateGUI {
         this.campoNomeRitstorante = new JTextField(20);
         pannelloRicerca.add(campoNomeRitstorante, vincoloGriglia);
 
-        //riga 1    città: ...
+        //riga 1 - città:...
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 1;
         vincoloGriglia.weightx = 0;
@@ -62,7 +59,7 @@ public class GuestGUI extends TemplateGUI {
         this.campoCitta = new JTextField(20);
         pannelloRicerca.add(campoCitta, vincoloGriglia);
 
-        //riga 2    Nazione: ...
+        //riga 2 - Nazione:...
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 2;
         vincoloGriglia.weightx = 0;
@@ -72,7 +69,7 @@ public class GuestGUI extends TemplateGUI {
         this.campoNazione = new JTextField(20);
         pannelloRicerca.add(campoNazione, vincoloGriglia);
 
-        //riga 3    FasciaPrezzo:
+        //riga 3 - FasciaPrezzo
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 3;
         vincoloGriglia.weightx = 0;
@@ -86,7 +83,7 @@ public class GuestGUI extends TemplateGUI {
         }
         pannelloRicerca.add(campoFasciaPrezzo, vincoloGriglia);
 
-        //riga 4    servizio delivery
+        //riga 4 - servizio delivery
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 4;
         vincoloGriglia.weightx = 0;
@@ -112,7 +109,7 @@ public class GuestGUI extends TemplateGUI {
         vincoloGriglia.weightx = 0;
         pannelloRicerca.add(pannelloDelivery, vincoloGriglia);
 
-        //riga 5    prenotazione Online
+        //riga 5 - prenotazione Online
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 5;
         vincoloGriglia.weightx = 0;
@@ -138,7 +135,7 @@ public class GuestGUI extends TemplateGUI {
         vincoloGriglia.weightx = 0;
         pannelloRicerca.add(pannelloPrenotazione, vincoloGriglia);
 
-        //riga 6    tipo cucina
+        //riga 6 - tipo cucina
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 6;
         vincoloGriglia.weightx = 0;
@@ -160,25 +157,49 @@ public class GuestGUI extends TemplateGUI {
         this.btnRicerca = new JButton("Ricerca");
         pannelloRicerca.add(btnRicerca, vincoloGriglia);
         //DA AGGIUNGERE LISTENER AL BOTTONE RICERCA
-        Object itemFasciaPrezzo = campoFasciaPrezzo.getSelectedItem();
-        String fasciaPrezzo;
-        if(itemFasciaPrezzo != null)
-            fasciaPrezzo = itemFasciaPrezzo.toString();
-        else fasciaPrezzo = null;
-        //valori dei radio button da passare al DTO
-        int delivery, prenotazioneOnline;
-        if(radioPrenotazioneIndifferente.isSelected()) prenotazioneOnline = -1;
-        else if(radioPrenotazioneNo.isSelected()) prenotazioneOnline = 0;
-        else prenotazioneOnline = 1;
-        if(radioDeliveryIndifferente.isSelected()) delivery = -1;
-        else if(radioDeliveryNo.isSelected()) delivery = 0;
-        else delivery = 1;
-        btnRicerca.addActionListener(e -> {
-            //DIO CANE I CAMPI DOVEVANO ESSERE INTERI E NON BOOLEANI (mo va cambiata la rappresentazione dei dati di metà progetto o trovare un altra soluzione)
-            /*RistoranteDTO ristoranteDTO = new RistoranteDTO(campoNomeRitstorante.getText(), campoCitta.getText(),campoNazione.getText(),
-                    null, null, fasciaPrezzo, delivery, prenotazioneOnline, campoTipoCucina.getSelectedIndex());*/
-        });
 
+        btnRicerca.addActionListener(e -> {
+            Object itemFasciaPrezzo = campoFasciaPrezzo.getSelectedItem();
+            Integer fasciaPrezzoMassima = (itemFasciaPrezzo instanceof Integer) ? (Integer) itemFasciaPrezzo : null;
+
+            Integer delivery;
+            if (radioDeliveryIndifferente.isSelected()) delivery = null;
+            else if (radioDeliveryNo.isSelected()) delivery = 0;
+            else delivery = 1;
+
+            Integer prenotazioneOnline;
+            if (radioPrenotazioneIndifferente.isSelected()) prenotazioneOnline = null;
+            else if (radioPrenotazioneNo.isSelected()) prenotazioneOnline = 0;
+            else prenotazioneOnline = 1;
+
+            int indiceSelezionato = campoTipoCucina.getSelectedIndex();
+            Integer tipoCucina;
+            if (indiceSelezionato <= 0) {
+                tipoCucina = null; // "Qualsiasi" -> nessun filtro
+            } else {
+                TipoCucinaDTO tipoSelezionato = (TipoCucinaDTO) campoTipoCucina.getSelectedItem();
+                tipoCucina = tipoSelezionato.getId(); // adatta al metodo reale del DTO
+            }
+
+            String nome = campoNomeRitstorante.getText().isBlank() ? null : campoNomeRitstorante.getText();
+            String citta = campoCitta.getText().isBlank() ? null : campoCitta.getText();
+            String nazione = campoNazione.getText().isBlank() ? null : campoNazione.getText();
+
+            FiltroRicercaDTO filtro = new FiltroRicercaDTO(
+                    nome, citta, nazione, fasciaPrezzoMassima, delivery, prenotazioneOnline, tipoCucina
+            );
+
+            Richiesta richiestaRicerca = new Richiesta(TipoRichieste.CERCA_RISTORANTE, filtro);
+            Risposta rispostaRicerca = ClientConnection.inviaRichiesta(richiestaRicerca);
+
+            if (rispostaRicerca != null && rispostaRicerca.getSuccesso()) {
+                List<RistoranteDTO> risultati = (List<RistoranteDTO>) rispostaRicerca.getContenuto();
+                // TODO: passare "risultati" a una GUI/pannello che mostri l'elenco dei ristoranti trovati
+            } else {
+                String messaggioErrore = (rispostaRicerca != null) ? rispostaRicerca.getMsg() : "Impossibile contattare il server";
+                JOptionPane.showMessageDialog(this, messaggioErrore, "Errore", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
         return pannelloRicerca;
     }
@@ -201,9 +222,6 @@ public class GuestGUI extends TemplateGUI {
             JOptionPane.showMessageDialog(this, messaggioErrore, "Errore", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-
-
 
 
     public GuestGUI(JFrame frame, UtenteService utenteService) {

@@ -6,7 +6,6 @@ import main.java.server.service.*;
 import main.java.shared.communication.*;
 import main.java.shared.domain.Preferito;
 import main.java.shared.domain.Recensione;
-import main.java.shared.domain.Ristorante;
 import main.java.shared.dto.*;
 import main.java.server.main.ServerMain;
 
@@ -200,7 +199,7 @@ public class ClientHandler extends Thread{
             return new Risposta(false, null, "Dati ricerca non validi");
         }
         else{
-            List<Ristorante> ristoranti = ristoranteService.getTuttiRistoranti();
+            List<RistoranteDTO> ristoranti = ristoranteService.getTuttiRistoranti();
             if(ristoranti.size() == 1) return new Risposta(true, ristoranti, "Ristoranti trovati");
             else return new Risposta(false, null, "Nessun ristorante trovato");
         }
@@ -236,7 +235,7 @@ public class ClientHandler extends Thread{
             return new Risposta(false, null, "Dati per eliminare il ristorante non validi");
         }
         else {
-            boolean eliminato = ristoranteService.cancellaRistorante(dto.getNomeRistorante());
+            boolean eliminato = ristoranteService.cancellaRistorante(dto.getIdRistorante());
             if (eliminato) return new Risposta(true, null, "Ristorante eliminato con successo");
             else return new Risposta(false, null, "Impossibile cancellare il ristorante");
         }
@@ -245,18 +244,20 @@ public class ClientHandler extends Thread{
     //DA CONTROLLARE
     //bisogna cercare un ristorante specifico o ritorna tutti i ristoranti?
     public Risposta gestisciCercaRistorante(Object contenuto) {
-        if(!(contenuto instanceof RistoranteDTO dto)){
+        if (!(contenuto instanceof FiltroRicercaDTO filtro)) {
             return new Risposta(false, null, "Dati per ricerca del ristorante non validi");
         }
-        else {
-            List<Ristorante> ristoranti = ristoranteService.getTuttiRistoranti();
-            if(!(ristoranti.isEmpty())) return new Risposta(true, ristoranti, "Ristoranti trovati");
-            else return new Risposta(false, null, "Nessun ristorante trovato");
-        }
+        List<RistoranteDTO> risultati = ristoranteService.cercaRistoranti(filtro);
+        if (!risultati.isEmpty()) return new Risposta(true, risultati, "Ristoranti trovati");
+        else return new Risposta(false, null, "Nessun ristorante trovato");
     }
 
     public Risposta gestisciEsistenzaRistorante(Object contenuto) {
-        return new Risposta(true, null, "Metodo non ancora implementato");
+        if (!(contenuto instanceof RistoranteDTO dto)) {
+            return new Risposta(false, null, "Dati non validi");
+        }
+        boolean esiste = ristoranteService.esiste(dto.getNomeRistorante(), dto.getEmail());
+        return new Risposta(true, esiste, esiste ? "Ristorante esistente" : "Ristorante non esistente");
     }
 
     //RECENSIONI
@@ -503,14 +504,12 @@ public class ClientHandler extends Thread{
     }
 
     //TIPO CUCINA
-    public Risposta gestisciGetTipoCucina(){
-        if(!(tipoCucinaService instanceof TipoCucinaService tipoCucinaService)){
+    public Risposta gestisciGetTipoCucina() {
+        if (tipoCucinaService == null) {
             return new Risposta(false, null, "Errore nel recupero dei tipi di cucina");
         }
-        else{
-            List<TipoCucinaDTO> tipi = tipoCucinaService.getTipoCucina();
-            return new Risposta(true, tipi, "Tipi di cucina recuperati");
-        }
+        List<TipoCucinaDTO> tipi = tipoCucinaService.getTipoCucina();
+        return new Risposta(true, tipi, "Tipi di cucina recuperati");
     }
 
 

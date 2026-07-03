@@ -2,6 +2,7 @@ package main.java.server.dao;
 
 import main.java.server.db.DatabaseConnection;
 import main.java.shared.domain.Ristorante;
+import main.java.shared.dto.FiltroRicercaDTO;
 import main.java.shared.enums.CampoRistorante;
 
 import java.sql.*;
@@ -57,6 +58,7 @@ public class RistoranteDAO {
         }
     }
 
+    //Aggiornamento campo singolo (per ID, univoco anche con più ristoranti per ristoratore)
     public boolean aggiornaCampo(int idRistorante, CampoRistorante campo, Object valore) {
 
         String sql = switch (campo) {
@@ -81,22 +83,20 @@ public class RistoranteDAO {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println("Errore update: " + e.getMessage());
+            System.out.println("Errore durante l'aggiornamento del campo: " + e.getMessage());
             return false;
         }
     }
 
-    //Cancellazione
-    public boolean rimuoviRistorante(String nomeRistorante) {
-        String sql = """
-            DELETE FROM ristorante
-            WHERE nomeRistorante = ?
-        """;
+    //Cancellazione per ID (il nome da solo non è più un identificatore affidabile:
+    //un ristoratore può avere più ristoranti, e nomi uguali possono ripetersi tra ristoratori diversi)
+    public boolean rimuoviRistorante(int idRistorante) {
+        String sql = "DELETE FROM ristorante WHERE idristorante = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, nomeRistorante);
+            statement.setInt(1, idRistorante);
 
             return statement.executeUpdate() > 0;
 
@@ -105,14 +105,17 @@ public class RistoranteDAO {
             return false;
         }
     }
+
     //Ricerca di tutti i ristoranti
     public List<Ristorante> trovaTutti() {
 
         List<Ristorante> list = new ArrayList<>();
         String sql = """
-                SELECT nomeristorante, email, citta, nazione, via, numeroCivico,
-                        fasciaPrezzo, delivery, prenotazioneOnline, idtipocucina
-                FROM ristorante""";
+                    SELECT idristorante, nomeristorante, email, citta, nazione, via, numeroCivico,
+                            fasciaPrezzo, delivery, prenotazioneOnline, idtipocucina
+                    FROM ristorante
+                    ORDER BY nomeristorante ASC
+                    """;
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -129,26 +132,87 @@ public class RistoranteDAO {
         return list;
     }
 
-    //Ricerca (safe version)
-    public List<Ristorante> cercaPerCampo(CampoRistorante campo, String valore) {
+    //Tutti i ristoranti di un determinato ristoratore (identificato per email)
+    public List<Ristorante> trovaPerRistoratore(String email) {
 
-        List<Ristorante> risultati = new ArrayList<>();
-
-        String sql;
-
-        switch (campo) {
-            case NOME -> sql = "SELECT * FROM ristorante WHERE nomeristorante ILIKE ?";
-            case CITTA -> sql = "SELECT * FROM ristorante WHERE citta ILIKE ?";
-            case NAZIONE -> sql = "SELECT * FROM ristorante WHERE nazione ILIKE ?";
-            case VIA -> sql = "SELECT * FROM ristorante WHERE via ILIKE ?";
-            case FASCIA_PREZZO -> sql = "SELECT * FROM ristorante WHERE fasciaprezzo = ?";
-            default -> throw new IllegalArgumentException("Campo non valido");
-        }
+        List<Ristorante> list = new ArrayList<>();
+        String sql = """
+                SELECT idristorante, nomeristorante, email, citta, nazione, via, numeroCivico,
+                        fasciaPrezzo, delivery, prenotazioneOnline, idtipocucina
+                FROM ristorante
+                WHERE email = ?""";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, "%" + valore + "%");
+            ps.setString(1, email);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(map(rs));
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Errore trovaPerRistoratore: " + e.getMessage());
+        }
+
+        return list;
+    }
+
+    //Ricerca con filtro multi-criterio (usata dalla ricerca guest)
+    public List<Ristorante> cercaConFiltro(FiltroRicercaDTO filtro) {
+
+        List<Ristorante> risultati = new ArrayList<>();
+
+        StringBuilder sql = new StringBuilder("""
+                SELECT idristorante, nomeristorante, email, citta, nazione, via, numeroCivico,
+                        fasciaPrezzo, delivery, prenotazioneOnline, idtipocucina
+                FROM ristorante
+                WHERE 1=1""");
+        List<Object> parametri = new ArrayList<>();
+
+        if (filtro.getNomeRistorante() != null) {
+            sql.append(" AND nomeristorante ILIKE ?");
+            parametri.add("%" + filtro.getNomeRistorante() + "%");
+        }
+
+        if (filtro.getCitta() != null) {
+            sql.append(" AND citta ILIKE ?");
+            parametri.add("%" + filtro.getCitta() + "%");
+        }
+
+        if (filtro.getNazione() != null) {
+            sql.append(" AND nazione ILIKE ?");
+            parametri.add("%" + filtro.getNazione() + "%");
+        }
+
+        if (filtro.getFasciaPrezzoMassima() != null) {
+            sql.append(" AND fasciaprezzo <= ?");
+            parametri.add(filtro.getFasciaPrezzoMassima());
+        }
+
+        if (filtro.getDelivery() != null) {
+            sql.append(" AND delivery = ?");
+            parametri.add(filtro.getDelivery() == 1);
+        }
+
+        if (filtro.getPrenotazioneOnline() != null) {
+            sql.append(" AND prenotazioneonline = ?");
+            parametri.add(filtro.getPrenotazioneOnline() == 1);
+        }
+
+        if (filtro.getTipoCucina() != null) {
+            sql.append(" AND idtipocucina = ?");
+            parametri.add(filtro.getTipoCucina());
+        }
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < parametri.size(); i++) {
+                ps.setObject(i + 1, parametri.get(i));
+            }
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -157,26 +221,30 @@ public class RistoranteDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("Errore search: " + e.getMessage());
+            System.out.println("Errore durante la ricerca con filtro: " + e.getMessage());
         }
 
         return risultati;
     }
 
-    //Controllo esistenza ristorante
-    public boolean esisteRistorante(String email) {
+   /*Controllo esistenza ristorante: la combinazione nome + email del ristoratore
+   è il criterio di univocità corretto, dato che uno stesso ristoratore
+   non dovrebbe poter registrare due ristoranti con lo stesso nome,
+   mentre ristoratori diversi possono usare nomi uguali per locali diversi.*/
+    public boolean esisteRistorante(String nomeRistorante, String email) {
 
         String sql = """
             SELECT 1
             FROM ristorante
-            WHERE email = ?
+            WHERE nomeristorante = ? AND email = ?
             LIMIT 1
             """;
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, email);
+            statement.setString(1, nomeRistorante);
+            statement.setString(2, email);
 
             try (ResultSet rs = statement.executeQuery()) {
                 return rs.next();

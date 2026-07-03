@@ -6,9 +6,6 @@ import main.java.shared.enums.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-
 
 public class RistoratoreService {
 
@@ -52,8 +49,8 @@ public class RistoratoreService {
         return ristoranteDAO.aggiornaCampo(idRistorante, campo, valore);
     }
 
-    public boolean eliminaRistorante(String nomeRistorante) {
-        return ristoranteDAO.rimuoviRistorante(nomeRistorante);
+    public boolean eliminaRistorante(int idRistorante) {
+        return ristoranteDAO.rimuoviRistorante(idRistorante);
     }
 
     //Dashboard

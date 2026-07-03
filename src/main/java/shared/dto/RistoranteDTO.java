@@ -2,6 +2,7 @@ package main.java.shared.dto;
 
 import java.io.Serializable;
 
+
 /**
  * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
  * @version 1.1
@@ -17,7 +18,9 @@ public class RistoranteDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private final Integer idRistorante; // null in creazione, valorizzato quando letto dal DB
     private final String nomeRistorante;
+    private final String email;
     private final String citta;
     private final String nazione;
     private final String via;
@@ -40,12 +43,36 @@ public class RistoranteDTO implements Serializable {
      * @param prenotazioneOnline indica se è possibile prenotare online
      * @param tipoCucina identificativo del tipo di cucina offerta
      */
-    public RistoranteDTO(String nomeRistorante, String citta, String nazione,
+    // Costruttore per la CREAZIONE (nessun ID, non ancora assegnato dal DB)
+    public RistoranteDTO(String nomeRistorante, String email, String citta, String nazione,
                          String via, int numeroCivico, int fasciaPrezzo,
                          boolean delivery, boolean prenotazioneOnline,
                          int tipoCucina) {
+        this(null, nomeRistorante, email, citta, nazione, via, numeroCivico,
+                fasciaPrezzo, delivery, prenotazioneOnline, tipoCucina);
+    }
 
+    /**
+     * Costruisce un nuovo DTO di ristorante.
+     * Costruttore completo, usato quando il ristorante viene letto dal DB (con ID)
+     *
+     * @param idRistorante identificativo del ristorante, null se non ancora creato
+     * @param nomeRistorante nome del ristorante
+     * @param citta città in cui si trova il ristorante
+     * @param nazione nazione in cui si trova il ristorante
+     * @param via via dell'indirizzo del ristorante
+     * @param numeroCivico numero civico del ristorante
+     * @param fasciaPrezzo fascia di prezzo del ristorante
+     * @param delivery indica se il ristorante offre servizio di delivery
+     * @param prenotazioneOnline indica se è possibile prenotare online
+     * @param tipoCucina identificativo del tipo di cucina offerta
+     */
+    public RistoranteDTO(Integer idRistorante, String nomeRistorante, String email, String citta,
+                         String nazione, String via, int numeroCivico, int fasciaPrezzo,
+                         boolean delivery, boolean prenotazioneOnline, int tipoCucina) {
+        this.idRistorante = idRistorante;
         this.nomeRistorante = nomeRistorante;
+        this.email = email;
         this.citta = citta;
         this.nazione = nazione;
         this.via = via;
@@ -57,22 +84,35 @@ public class RistoranteDTO implements Serializable {
     }
 
     /**
+     * Restituisce l'id del Ristorante.
+     * @return ID ristorante
+     */
+    public Integer getIdRistorante() { return idRistorante; }
+
+    /**
      * Restituisce il nome del ristorante.
      * @return nome ristorante
      */
-    public String getNomeRistorante() {return nomeRistorante;}
+    public String getNomeRistorante() { return nomeRistorante; }
 
     /**
      * Restituisce la città del ristorante.
      * @return città
      */
-    public String getCitta() {return citta;}
+    public String getEmail() { return email; }
+
+    /**
+     * Restituisce la città del ristorante.
+     * @return città
+     */
+    public String getCitta() { return citta; }
 
     /**
      * Restituisce la nazione del ristorante.
      * @return nazione
      */
-    public String getNazione() {return nazione;}
+    public String getNazione() { return nazione; }
+
 
     /**
      * Restituisce la via dell'indirizzo del ristorante.

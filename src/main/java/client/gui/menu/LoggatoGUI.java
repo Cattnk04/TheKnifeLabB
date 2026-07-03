@@ -33,7 +33,7 @@ public class LoggatoGUI extends TemplateGUI {
         vincoloGriglia.fill = GridBagConstraints.HORIZONTAL;
 
         //popolamento righe e colonne
-        //riga 0    nome ristorante: ....
+        //riga 0 - nome ristorante:...
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 0;
         vincoloGriglia.weightx = 0; //la colonna non si allarga
@@ -43,7 +43,7 @@ public class LoggatoGUI extends TemplateGUI {
         this.campoNomeRitstorante = new JTextField(20);
         pannelloRicerca.add(campoNomeRitstorante, vincoloGriglia);
 
-        //riga 1    città: ...
+        //riga 1 - città:...
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 1;
         vincoloGriglia.weightx = 0;
@@ -53,7 +53,7 @@ public class LoggatoGUI extends TemplateGUI {
         this.campoCitta = new JTextField(20);
         pannelloRicerca.add(campoCitta, vincoloGriglia);
 
-        //riga 2    Nazione: ...
+        //riga 2 - Nazione:...
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 2;
         vincoloGriglia.weightx = 0;
@@ -63,7 +63,7 @@ public class LoggatoGUI extends TemplateGUI {
         this.campoNazione = new JTextField(20);
         pannelloRicerca.add(campoNazione, vincoloGriglia);
 
-        //riga 3    FasciaPrezzo:
+        //riga 3 - FasciaPrezzo:
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 3;
         vincoloGriglia.weightx = 0;
@@ -77,7 +77,7 @@ public class LoggatoGUI extends TemplateGUI {
         }
         pannelloRicerca.add(campoFasciaPrezzo, vincoloGriglia);
 
-        //riga 4    servizio delivery
+        //riga 4 - servizio delivery
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 4;
         vincoloGriglia.weightx = 0;
@@ -103,7 +103,7 @@ public class LoggatoGUI extends TemplateGUI {
         vincoloGriglia.weightx = 0;
         pannelloRicerca.add(pannelloDelivery, vincoloGriglia);
 
-        //riga 5    prenotazione Online
+        //riga 5 - prenotazione Online
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 5;
         vincoloGriglia.weightx = 0;
@@ -129,7 +129,7 @@ public class LoggatoGUI extends TemplateGUI {
         vincoloGriglia.weightx = 0;
         pannelloRicerca.add(pannelloPrenotazione, vincoloGriglia);
 
-        //riga 6    tipo cucina
+        //riga 6 - tipo cucina
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 6;
         vincoloGriglia.weightx = 0;

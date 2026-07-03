@@ -22,4 +22,7 @@ public class TipoCucinaDTO implements Serializable {
         return tipoCucina;
     }
 
+    public int getId() {
+        return 0;
+    }
 }
