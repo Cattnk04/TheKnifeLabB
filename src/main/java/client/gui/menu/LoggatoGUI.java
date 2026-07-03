@@ -159,7 +159,7 @@ public class LoggatoGUI extends TemplateGUI {
         this.frame = frame;
 
         visualizzaProfilo.addActionListener(e ->{
-            frame.setContentPane(new VisualizzaProfiloGUI(frame));
+            frame.setContentPane(new VisualizzaProfiloGUI(frame, utenteService, email));
             frame.revalidate();
             frame.repaint();})
         ;

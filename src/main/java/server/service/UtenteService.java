@@ -106,6 +106,30 @@ public class UtenteService {
         return utenteDAO.registrazione(utente);
     }
 
+    //metodo per recuperare i dati dell'utente per la visualizzazione del profilo
+    public RegistrazioneDTO getUtente(String email){
+        if(!ValidationUtils.isValidEmail(email)){
+            System.out.println("Recupero utente fallito: email non valida");
+            return null;
+        }
+        Optional<Utente> opt = utenteDAO.trovaUtente(email);
+        if(opt.isEmpty()){
+            System.out.println("Recupero utente fallito: utente insesistente con questa email: " + email);
+            return null;
+        }
+
+        Utente utente = opt.get();
+        return new RegistrazioneDTO(
+                utente.getEmail(),
+                utente.getNomeUtente(),
+                utente.getCognomeUtente(),
+                null,
+                utente.getCitta(),
+                utente.getNazione(),
+                utente.getRistoratore()
+        );
+    }
+
     // CANCELLAZIONE
     public boolean cancellaUtente(String email) {
         return ValidationUtils.isValidEmail(email)

@@ -1,16 +1,112 @@
 package main.java.client.gui.azioniLoggato;
 
 import main.java.client.gui.TemplateGUI;
+import main.java.client.gui.menu.LoggatoGUI;
+import main.java.client.network.ClientConnection;
+import main.java.server.service.UtenteService;
+import main.java.shared.communication.Richiesta;
+import main.java.shared.communication.Risposta;
+import main.java.shared.communication.TipoRichieste;
+import main.java.shared.dto.RegistrazioneDTO;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class VisualizzaProfiloGUI extends TemplateGUI {
     JFrame frame;
+    private final UtenteService utenteService;
+    private final String email;
 
-    public VisualizzaProfiloGUI(JFrame frame) {
+    public VisualizzaProfiloGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
         this.frame =frame;
+        this.utenteService = utenteService;
+        this.email = email;
+
+        //caricamento dei dati dell'utente
+        Richiesta richiestaDati = new Richiesta(TipoRichieste.GET_UTENTE, email);
+        Risposta rispostaDati = ClientConnection.inviaRichiesta(richiestaDati);
+
+        if(rispostaDati == null || !rispostaDati.getSuccesso()){
+            JOptionPane.showMessageDialog(
+                    frame,
+                    rispostaDati != null ? rispostaDati.getMsg() : "Impossibile contattare il server",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            frame.setContentPane(new LoggatoGUI(frame, utenteService, email));
+            frame.revalidate();
+            frame.repaint();
+            return;
+        }
+
+        RegistrazioneDTO datiUtente = (RegistrazioneDTO) rispostaDati.getContenuto();
+
+        //composizione griglia
+        JPanel pannelloCentrale = new JPanel(new GridBagLayout());
+        GridBagConstraints vincoloGriglia = new GridBagConstraints();
+        vincoloGriglia.insets = new Insets(12, 15, 12, 15);
+        vincoloGriglia.anchor = GridBagConstraints.WEST;
+        vincoloGriglia.fill = GridBagConstraints.HORIZONTAL;
+
+        //riga 0: email:
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.gridy = 0;
+        pannelloCentrale.add(new JLabel("Email: "), vincoloGriglia);
+        vincoloGriglia.gridx = 1;
+        pannelloCentrale.add(new JLabel(datiUtente.getEmail()), vincoloGriglia);
+
+        //riga 1: nome:
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.gridy = 1;
+        pannelloCentrale.add(new JLabel("Nome: "), vincoloGriglia);
+        vincoloGriglia.gridx = 1;
+        pannelloCentrale.add(new JLabel(datiUtente.getNome()), vincoloGriglia);
+
+        //riga 2: cognome:
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.gridy = 2;
+        pannelloCentrale.add(new JLabel("Cognome: "), vincoloGriglia);
+        vincoloGriglia.gridx = 1;
+        pannelloCentrale.add(new JLabel(datiUtente.getCognome()), vincoloGriglia);
+
+        //riga 3: città:
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.gridy = 3;
+        pannelloCentrale.add(new JLabel("Città: "), vincoloGriglia);
+        vincoloGriglia.gridx = 1;
+        pannelloCentrale.add(new JLabel(datiUtente.getCitta()), vincoloGriglia);
+
+        //riga 4: nazione:
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.gridy = 4;
+        pannelloCentrale.add(new JLabel("Nazione: "), vincoloGriglia);
+        vincoloGriglia.gridx = 1;
+        pannelloCentrale.add(new JLabel(datiUtente.getNazione()), vincoloGriglia);
+
+        //riga 5: modifica dati:
+        //MANCA DA CREARE IL BOTTONE MODIFICA DATI
+
+
+        //centratura del pannello
+        JPanel centroPannello = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        centroPannello.add(pannelloCentrale);
+        add(centroPannello, BorderLayout.CENTER);
+
+
+        //Bottone per tornare a LoggatoGUI
+        JButton home = new JButton("Home");
+        home.setFocusPainted(false);
+        home.setBorder(new LineBorder(Color.WHITE));
+        home.addActionListener(e ->{
+            frame.setContentPane(new LoggatoGUI(frame, utenteService, email));
+            frame.revalidate();
+            frame.repaint();
+        });
+
+        pannello.add(home);
+
 
 
     }

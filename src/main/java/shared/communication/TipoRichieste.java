@@ -16,6 +16,8 @@ public enum TipoRichieste {
     REGISTER,
     LOGOUT,
 
+    GET_UTENTE,
+
     GET_RISTORANTE,
     CREA_RISTORANTE,
     AGGIORNA_RISTORANTE,
