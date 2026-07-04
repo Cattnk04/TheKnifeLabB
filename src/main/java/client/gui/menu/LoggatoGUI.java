@@ -2,11 +2,19 @@ package main.java.client.gui.menu;
 
 import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.azioniLoggato.VisualizzaProfiloGUI;
+import main.java.client.network.ClientConnection;
 import main.java.server.service.UtenteService;
+import main.java.shared.communication.Richiesta;
+import main.java.shared.communication.Risposta;
+import main.java.shared.communication.TipoRichieste;
+import main.java.shared.dto.FiltroRicercaDTO;
+import main.java.shared.dto.RistoranteDTO;
+import main.java.shared.dto.TipoCucinaDTO;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.List;
 
 public class LoggatoGUI extends TemplateGUI {
     private JTextField campoNomeRitstorante;
@@ -20,6 +28,7 @@ public class LoggatoGUI extends TemplateGUI {
     private JRadioButton radioPrenotazioneNo;
     private JRadioButton radioPrenotazioneIndifferente;
     private JComboBox campoTipoCucina;
+    private JButton btnRicerca;
 
 
     private JPanel creaPannelloRicerca(){
@@ -63,7 +72,7 @@ public class LoggatoGUI extends TemplateGUI {
         this.campoNazione = new JTextField(20);
         pannelloRicerca.add(campoNazione, vincoloGriglia);
 
-        //riga 3 - FasciaPrezzo:
+        //riga 3 - FasciaPrezzo
         vincoloGriglia.gridx = 0;
         vincoloGriglia.gridy = 3;
         vincoloGriglia.weightx = 0;
@@ -136,7 +145,7 @@ public class LoggatoGUI extends TemplateGUI {
         pannelloRicerca.add(new JLabel("Tipo di cucina: "), vincoloGriglia);
         this.campoTipoCucina = new JComboBox<>();
         this.campoTipoCucina.addItem("Qualsiasi");
-        //caricaTipiCucina();
+        caricaTipiCucina();
 
         vincoloGriglia.gridx = 1;
         vincoloGriglia.weightx = 0;
@@ -148,10 +157,73 @@ public class LoggatoGUI extends TemplateGUI {
         vincoloGriglia.gridwidth = 2;
         vincoloGriglia.fill = GridBagConstraints.NONE;  //permette di non riempire orizzontalmente
         vincoloGriglia.anchor = GridBagConstraints.CENTER;
-        pannelloRicerca.add(new JButton("Cerca"), vincoloGriglia);
+        this.btnRicerca = new JButton("Ricerca");
+        pannelloRicerca.add(btnRicerca, vincoloGriglia);
         //DA AGGIUNGERE LISTENER AL BOTTONE RICERCA
 
+        btnRicerca.addActionListener(e -> {
+            Object itemFasciaPrezzo = campoFasciaPrezzo.getSelectedItem();
+            Integer fasciaPrezzoMassima = (itemFasciaPrezzo instanceof Integer) ? (Integer) itemFasciaPrezzo : null;
+
+            Integer delivery;
+            if (radioDeliveryIndifferente.isSelected()) delivery = null;
+            else if (radioDeliveryNo.isSelected()) delivery = 0;
+            else delivery = 1;
+
+            Integer prenotazioneOnline;
+            if (radioPrenotazioneIndifferente.isSelected()) prenotazioneOnline = null;
+            else if (radioPrenotazioneNo.isSelected()) prenotazioneOnline = 0;
+            else prenotazioneOnline = 1;
+
+            int indiceSelezionato = campoTipoCucina.getSelectedIndex();
+            Integer tipoCucina;
+            if (indiceSelezionato <= 0) {
+                tipoCucina = null; // "Qualsiasi" -> nessun filtro
+            } else {
+                TipoCucinaDTO tipoSelezionato = (TipoCucinaDTO) campoTipoCucina.getSelectedItem();
+                tipoCucina = tipoSelezionato.getId(); // adatta al metodo reale del DTO
+            }
+
+            String nome = campoNomeRitstorante.getText().isBlank() ? null : campoNomeRitstorante.getText();
+            String citta = campoCitta.getText().isBlank() ? null : campoCitta.getText();
+            String nazione = campoNazione.getText().isBlank() ? null : campoNazione.getText();
+
+            FiltroRicercaDTO filtro = new FiltroRicercaDTO(
+                    nome, citta, nazione, fasciaPrezzoMassima, delivery, prenotazioneOnline, tipoCucina
+            );
+
+            Richiesta richiestaRicerca = new Richiesta(TipoRichieste.CERCA_RISTORANTE, filtro);
+            Risposta rispostaRicerca = ClientConnection.inviaRichiesta(richiestaRicerca);
+
+            if (rispostaRicerca != null && rispostaRicerca.getSuccesso()) {
+                java.util.List<RistoranteDTO> risultati = (java.util.List<RistoranteDTO>) rispostaRicerca.getContenuto();
+                // TODO: passare "risultati" a una GUI/pannello che mostri l'elenco dei ristoranti trovati
+            } else {
+                String messaggioErrore = (rispostaRicerca != null) ? rispostaRicerca.getMsg() : "Impossibile contattare il server";
+                JOptionPane.showMessageDialog(this, messaggioErrore, "Errore", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         return pannelloRicerca;
+    }
+
+    private void caricaTipiCucina(){
+        Richiesta richiesta = new Richiesta(TipoRichieste.GET_TIPO_CUCINA, null);
+        Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
+        if (risposta != null && risposta.getSuccesso()) {
+            java.util.List<TipoCucinaDTO> tipiCucina = (List<TipoCucinaDTO>) risposta.getContenuto();
+            for(TipoCucinaDTO tipo: tipiCucina){
+                campoTipoCucina.addItem(tipo);
+            }
+        } else {
+            String messaggioErrore;
+            if(risposta != null){
+                messaggioErrore = risposta.getMsg();
+            } else {
+                messaggioErrore = "Impossibile contattare il server";
+            }
+            JOptionPane.showMessageDialog(this, messaggioErrore, "Errore", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public LoggatoGUI(JFrame frame, UtenteService utenteService, String email) {
@@ -164,6 +236,10 @@ public class LoggatoGUI extends TemplateGUI {
             frame.repaint();})
         ;
 
-        this.add(creaPannelloRicerca());
+        //Per fare in modo che il bordo con scritto "cerca ristorante" sia vicino ai componenti centrali
+        JPanel contenutoCentrale = new JPanel(new GridBagLayout());
+        contenutoCentrale.add(creaPannelloRicerca());
+
+        this.add(creaPannelloRicerca(), BorderLayout.CENTER);
     }
 }

@@ -92,9 +92,15 @@ public class ClientHandler extends Thread{
             case REGISTER:
                 return gestisciRegistrazione(richiesta.getContenuto());
 
+            //DA CONTROLLARE
             case LOGOUT:
                 return new Risposta(true, null, "Logout effettuato");
-            //Non sono sicura sia giusto
+
+            case GET_UTENTE:
+                return gestisciGetUtente(richiesta.getContenuto());
+
+            case MODIFICA_UTENTE:
+                return gestisciModificaUtente(richiesta.getContenuto());
 
             //RISTORANTE
             case GET_RISTORANTE:
@@ -191,6 +197,41 @@ public class ClientHandler extends Thread{
 
         if (ok) return new Risposta(true, null, "Registrazione effettuata");
         else return new Risposta(false, null, "Registrazione fallita");
+    }
+
+    private Risposta gestisciGetUtente(Object contenuto) {
+        if (!(contenuto instanceof String email)) {
+            return new Risposta(false, null, "Email non valida");
+        }
+        try {
+            RegistrazioneDTO utente = utenteService.getUtente(email);
+            if (utente != null) {
+                return new Risposta(true, utente, "Utente trovato");
+            } else {
+                return new Risposta(false, null, "Utente non trovato");
+            }
+        } catch (Exception e) {
+            return new Risposta(false, null, e.getMessage());
+        }
+    }
+
+    private Risposta gestisciModificaUtente(Object contenuto) {
+        if (!(contenuto instanceof RegistrazioneDTO dto)) {
+            return new Risposta(false, null, "Dati modifica utente non validi");
+        }
+        try {
+            boolean successo = utenteService.modificaUtente(dto);
+
+            return new Risposta(
+                    successo,
+                    null,
+                    successo
+                            ? "Dati utente aggiornati correttamente"
+                            : "Errore durante l'aggiornamento dei dati utente"
+            );
+        } catch (Exception e) {
+            return new Risposta(false, null, e.getMessage());
+        }
     }
 
     //RISTORANTE

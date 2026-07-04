@@ -234,7 +234,7 @@ public class GuestGUI extends TemplateGUI {
             frame.repaint();
         });
 
-        //Per fare in modo che il bordo con scritto "cerca ristorante" sia vicino ai componenti cetnrali
+        //Per fare in modo che il bordo con scritto "cerca ristorante" sia vicino ai componenti centrali
         JPanel contenutoCentrale = new JPanel(new GridBagLayout());
         contenutoCentrale.add(creaPannelloRicerca());
 

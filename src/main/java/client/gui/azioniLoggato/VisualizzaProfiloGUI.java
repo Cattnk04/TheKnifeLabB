@@ -17,6 +17,8 @@ public class VisualizzaProfiloGUI extends TemplateGUI {
     JFrame frame;
     private final UtenteService utenteService;
     private final String email;
+    private JButton btnModificaDati;
+
 
     public VisualizzaProfiloGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
@@ -86,8 +88,20 @@ public class VisualizzaProfiloGUI extends TemplateGUI {
         pannelloCentrale.add(new JLabel(datiUtente.getNazione()), vincoloGriglia);
 
         //riga 5: modifica dati:
-        //MANCA DA CREARE IL BOTTONE MODIFICA DATI
+        JButton modificaDati = new JButton("Modifica Dati");
+        modificaDati.setFocusPainted(false);
+        modificaDati.setBorder(new LineBorder(Color.WHITE));
+        modificaDati.addActionListener(e -> {
+            frame.setContentPane(new ModificaProfiloGUI(frame, utenteService, email, datiUtente));
+            frame.revalidate();
+            frame.repaint();
+        });
 
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.gridy = 5;
+        vincoloGriglia.gridwidth = 2;
+        vincoloGriglia.anchor = GridBagConstraints.CENTER;
+        pannelloCentrale.add(modificaDati, vincoloGriglia);
 
         //centratura del pannello
         JPanel centroPannello = new JPanel(new FlowLayout(FlowLayout.CENTER));

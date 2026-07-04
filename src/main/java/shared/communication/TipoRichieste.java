@@ -12,12 +12,15 @@ package main.java.shared.communication;
  * </p>
  */
 public enum TipoRichieste {
+
+    //UTENTE
     LOGIN,
     REGISTER,
     LOGOUT,
-
     GET_UTENTE,
+    MODIFICA_UTENTE,
 
+    //RISTORANTE
     GET_RISTORANTE,
     CREA_RISTORANTE,
     AGGIORNA_RISTORANTE,
@@ -25,6 +28,7 @@ public enum TipoRichieste {
     CERCA_RISTORANTE,
     ESISTE_RISTORANTE,
 
+    //RECENSIONI
     GET_RECENSIONI_RISTORANTE,
     GET_RECENSIONI_UTENTE,
     GET_RECENSIONI_BYEMAIL,
@@ -35,12 +39,14 @@ public enum TipoRichieste {
     MODIFICA_RISPOSTA,
     RIEPILOGO_RECENSIONE,
 
+    //PREFERITI
     GET_PREFERITI,
     AGGIUNGI_PREFERITO,
     RIMUOVI_PREFERITO,
     ESISTE_PREFERITO,
     TOGGLE_PREFERITO,
 
+    //TIPO CUCINA
     GET_TIPO_CUCINA,
 
     // Richiesta per terminare il server

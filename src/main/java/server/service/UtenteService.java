@@ -6,6 +6,7 @@ import main.java.server.service.ValidationUtils;
 import main.java.shared.domain.Utente;
 import main.java.shared.dto.LoginDTO;
 import main.java.shared.dto.RegistrazioneDTO;
+import main.java.shared.enums.CampoUtente;
 
 import java.util.Optional;
 
@@ -120,14 +121,43 @@ public class UtenteService {
 
         Utente utente = opt.get();
         return new RegistrazioneDTO(
-                utente.getEmail(),
                 utente.getNomeUtente(),
                 utente.getCognomeUtente(),
+                utente.getEmail(),
                 null,
                 utente.getCitta(),
                 utente.getNazione(),
                 utente.getRistoratore()
         );
+    }
+
+    //DA CONTROLLARE
+    // Modifica dati utente (nome, cognome, città, nazione)
+    public boolean modificaUtente(RegistrazioneDTO dto) {
+        if (dto == null || !ValidationUtils.isValidEmail(dto.getEmail())) {
+            System.out.println("Modifica fallita: email non valida");
+            return false;
+        }
+        if (!ValidationUtils.isValidName(dto.getNome()) ||
+                !ValidationUtils.isValidName(dto.getCognome()) ||
+                !ValidationUtils.isValidCitta(dto.getCitta()) ||
+                !ValidationUtils.isValidNazione(dto.getNazione())) {
+            System.out.println("Modifica fallita: dati non validi");
+            return false;
+        }
+
+        String email = dto.getEmail();
+
+        boolean ok = utenteDAO.aggiornamentoUtente(email, CampoUtente.NOMEUTENTE, dto.getNome());
+        ok &= utenteDAO.aggiornamentoUtente(email, CampoUtente.COGNOMEUTENTE, dto.getCognome());
+        ok &= utenteDAO.aggiornamentoUtente(email, CampoUtente.CITTA, dto.getCitta());
+        ok &= utenteDAO.aggiornamentoUtente(email, CampoUtente.NAZIONE, dto.getNazione());
+        //ok &= utenteDAO.aggiornamentoUtente(email, CampoUtente.PASSWORD, dto.getPassword());
+        //ok &= utenteDAO.aggiornamentoUtente(email, CampoUtente.RISTORATORE, dto.isRistoratore());
+        //ok &= utenteDAO.aggiornamentoUtente(email, CampoUtente.EMAIL, dto.getEmail());
+        //DECIDERE SE SERVONO
+
+        return ok;
     }
 
     // CANCELLAZIONE
