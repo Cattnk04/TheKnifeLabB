@@ -1,0 +1,50 @@
+@startuml Client_Class_Menu
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class TemplateGUI <<boundary>> {
+  # frame: JFrame
+  # pannello: JPanel
+  # visualizzaProfilo: JButton
+  + TemplateGUI(frame: JFrame)
+}
+
+class GuestGUI <<boundary>> {
+  - campoNomeRitstorante: JTextField
+  - campoCitta: JTextField
+  - campoNazione: JTextField
+  - campoFasciaPrezzo: JComboBox
+  - campoTipoCucina: JComboBox
+  + GuestGUI(frame: JFrame, utenteService: UtenteService)
+  - creaPannelloRicerca(): JPanel
+}
+
+class LoggatoGUI <<boundary>> {
+  - campoNomeRitstorante: JTextField
+  - campoCitta: JTextField
+  - campoNazione: JTextField
+  - campoFasciaPrezzo: JComboBox
+  - campoTipoCucina: JComboBox
+  + LoggatoGUI(frame: JFrame, utenteService: UtenteService, email: String)
+  - creaPannelloRicerca(): JPanel
+}
+
+class RistoratoreGUI <<boundary>> {
+  + RistoratoreGUI(frame: JFrame, utenteService: UtenteService, email: String)
+}
+
+class UtenteService <<control>> {
+}
+
+GuestGUI --|> TemplateGUI
+LoggatoGUI --|> TemplateGUI
+RistoratoreGUI --|> TemplateGUI
+
+GuestGUI "1" --> "1" UtenteService
+LoggatoGUI "1" --> "1" UtenteService
+RistoratoreGUI "1" --> "1" UtenteService
+
+GuestGUI ..> "autenticazione.LoginGUI" : naviga verso
+LoggatoGUI ..> "azioniLoggato.VisualizzaProfiloGUI" : naviga verso
+
+@enduml

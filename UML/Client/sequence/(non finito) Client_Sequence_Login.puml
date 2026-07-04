@@ -1,0 +1,42 @@
+@startuml Client_Sequence_Login
+actor Utente
+
+participant "loginGUI: LoginGUI" as LoginGUI
+participant "dto: LoginDTO" as LoginDTO
+participant "richiesta: Richiesta" as Richiesta
+participant "ClientConnection" as ClientConnection
+participant "Server" as Server
+
+Utente -> LoginGUI : click "Effettua Login"
+activate LoginGUI
+
+LoginGUI -> LoginDTO : new LoginDTO(email, password)
+activate LoginDTO
+LoginDTO --> LoginGUI
+deactivate LoginDTO
+
+LoginGUI -> Richiesta : new Richiesta(LOGIN, dto)
+activate Richiesta
+Richiesta --> LoginGUI
+deactivate Richiesta
+
+LoginGUI -> ClientConnection : inviaRichiesta(richiesta)
+activate ClientConnection
+
+ClientConnection -> Server : invio Richiesta (socket)
+activate Server
+Server --> ClientConnection : Risposta
+deactivate Server
+
+ClientConnection --> LoginGUI : risposta
+deactivate ClientConnection
+
+alt risposta.successo == true
+    LoginGUI -> LoginGUI : setContentPane(new LoggatoGUI(...))
+    LoginGUI --> Utente : mostra schermata utente loggato
+else risposta.successo == false
+    LoginGUI -> Utente : JOptionPane errore di login
+end
+
+deactivate LoginGUI
+@enduml

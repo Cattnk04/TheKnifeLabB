@@ -1,0 +1,73 @@
+@startuml Client_Overview
+skinparam linetype ortho
+hide members
+
+package "main" {
+  class ClientMain <<boundary>>
+}
+
+package "network" {
+  class ClientConnection <<utility>>
+}
+
+package "autenticazione" {
+  class LoginGUI <<boundary>>
+  class RegistrazioneGUI <<boundary>>
+  class ModificaGUI <<boundary>>
+}
+
+package "menu" {
+  class GuestGUI <<boundary>>
+  class LoggatoGUI <<boundary>>
+  class RistoratoreGUI <<boundary>>
+}
+
+package "azioniLoggato" {
+  class VisualizzaProfiloGUI <<boundary>>
+  class ListaPreferitiGUI <<boundary>>
+  class ScriviRecensioneGUI <<boundary>>
+}
+
+package "azioniRistoratore" {
+  class AggiungiRistoranteGUI <<boundary>>
+  class GestioneRistorantiGUI <<boundary>>
+  class RispondiRecensioneGUI <<boundary>>
+}
+
+package "liste" {
+  class ListaRistorantiGUI <<boundary>>
+  class ListaRecensioniGUI <<boundary>>
+}
+
+package "ricerca" {
+  class FiltriRicercaGUI <<boundary>>
+}
+
+class TemplateGUI <<boundary>>
+class UtenteService <<control>>
+
+autenticazione.LoginGUI --|> TemplateGUI
+autenticazione.RegistrazioneGUI --|> TemplateGUI
+autenticazione.ModificaGUI --|> TemplateGUI
+menu.GuestGUI --|> TemplateGUI
+menu.LoggatoGUI --|> TemplateGUI
+menu.RistoratoreGUI --|> TemplateGUI
+azioniLoggato.VisualizzaProfiloGUI --|> TemplateGUI
+azioniLoggato.ListaPreferitiGUI --|> TemplateGUI
+azioniLoggato.ScriviRecensioneGUI --|> TemplateGUI
+azioniRistoratore.AggiungiRistoranteGUI --|> TemplateGUI
+azioniRistoratore.GestioneRistorantiGUI --|> TemplateGUI
+azioniRistoratore.RispondiRecensioneGUI --|> TemplateGUI
+liste.ListaRistorantiGUI --|> TemplateGUI
+liste.ListaRecensioniGUI --|> TemplateGUI
+ricerca.FiltriRicercaGUI --|> TemplateGUI
+
+ClientMain ..> menu.GuestGUI : crea
+ClientMain ..> ClientConnection : usa
+autenticazione.LoginGUI "1" --> "1" UtenteService
+autenticazione.RegistrazioneGUI "1" --> "1" UtenteService
+menu.GuestGUI "1" --> "1" UtenteService
+menu.LoggatoGUI "1" --> "1" UtenteService
+menu.RistoratoreGUI "1" --> "1" UtenteService
+
+@enduml
