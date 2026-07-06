@@ -1,0 +1,41 @@
+ListaPreferitiGUI:
+- Mostra una lista di preferiti come per i ristoranti
+- Mettere un bottone sotto che quando viene selezionato un preferito nella lista permette di rimuoverlo
+
+ListaRecensioniGUI (package listeUtente):
+- Mostrata una lista di recensioni fatte da me 
+- Sotto mettere un bottone per la modifica della recensione e un bottone per l'eliminazione della recensione selezionata
+
+DettagliRistoranteGUI (da creare):
+- Mostra i dati del ristorante cercato/selezionato
+- Sotto mettere una parte per i bottoni dove posso aggiungere una recensione (controllare se l'utente è loggato e controllare se esiste già una recensione a suo nome)
+
+MenuRistoratoreGUI (ha detto che lo fa Ele (muoviti)):
+- Visualizzare una la lista dei miei ristoranti
+- Mettere il bottone per la modifica del ristorante selezionato
+- Mettere il bottone per visualizzare le recensioni del ristorante selezionato
+- Mettere il bottone per eliminare il ristorante selezionato
+- Mettere un bottone per l'aggiunta di un ristorante
+
+ListaRecensioniGUI (da fare nel package listeRistoratore):
+- Mostrare una lista di recensioni del mio ristorante selezionato in precedenza nel MenuRistoratoreGUI 
+- Mettere un bottone per la risposta alla recensione selezionata
+
+ScriviRecensioneGUI (accessibile dai dettagli di un ristorante dopo la ricerca):
+- Aggiungere un menù a tendina con il numero di stelle date al ristorante
+- Aggiungere un campo di testo per scrivere il testo della recensione
+- Mettere un bottone per l'invio della recensione.
+
+RispostaRecensioneGUI:
+- Aggiungere un campo di testo dove viene visualizzata la recensione alla quale si vuole rispondere (possiamo mettere anche la valutazione se vogliamo) 
+- Aggiungere un campo di testo editabile dove si scrive la risposta alla recensione 
+- Mettere un bottone per l'invio della risposta alla recensione
+
+VisualizzaProfiloGUI: 
+- Mettere un bottone per visualizzare la lista delle mie recensioni (collegarsi a ListaRecensioniGUI)
+- Mettere un bottone per visualizzare la lista dei preferiti (collegarsi a ListaPreferitiGUI)
+
+
+ALTRE TODO: 
+- JAVA DOC
+- ELIMINARE IMPORT INUTILI
