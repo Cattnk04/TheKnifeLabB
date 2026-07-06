@@ -174,17 +174,17 @@ public class RistoranteDAO {
 
         if (filtro.getNomeRistorante() != null) {
             sql.append(" AND nomeristorante ILIKE ?");
-            parametri.add("%" + filtro.getNomeRistorante() + "%");
+            parametri.add("%" + filtro.getNomeRistorante().trim() + "%");
         }
 
         if (filtro.getCitta() != null) {
             sql.append(" AND citta ILIKE ?");
-            parametri.add("%" + filtro.getCitta() + "%");
+            parametri.add("%" + filtro.getCitta().trim() + "%");
         }
 
         if (filtro.getNazione() != null) {
             sql.append(" AND nazione ILIKE ?");
-            parametri.add("%" + filtro.getNazione() + "%");
+            parametri.add("%" + filtro.getNazione().trim() + "%");
         }
 
         if (filtro.getFasciaPrezzoMassima() != null) {

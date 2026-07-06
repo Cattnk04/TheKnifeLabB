@@ -190,9 +190,9 @@ public class PannelloRicercaRistorante extends JPanel {
             tipoCucina = tipoSelezionato.getId(); // adatta al metodo reale del DTO
         }
 
-        String nome = campoNomeRitstorante.getText().isBlank() ? null : campoNomeRitstorante.getText();
-        String citta = campoCitta.getText().isBlank() ? null : campoCitta.getText();
-        String nazione = campoNazione.getText().isBlank() ? null : campoNazione.getText();
+        String citta = campoCitta.getText().trim().isBlank() ? null : campoCitta.getText().trim();
+        String nazione = campoNazione.getText().trim().isBlank() ? null : campoNazione.getText().trim();
+        String nome = campoNomeRitstorante.getText().trim().isBlank() ? null : campoNomeRitstorante.getText().trim();
 
         FiltroRicercaDTO filtro = new FiltroRicercaDTO(
                 nome, citta, nazione, fasciaPrezzoMassima, delivery, prenotazioneOnline, tipoCucina

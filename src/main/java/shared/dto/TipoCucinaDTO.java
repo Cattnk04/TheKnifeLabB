@@ -23,6 +23,6 @@ public class TipoCucinaDTO implements Serializable {
     }
 
     public int getId() {
-        return 0;
+        return idTipoCucina;
     }
 }
