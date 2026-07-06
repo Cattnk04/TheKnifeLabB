@@ -41,6 +41,9 @@ ModificaRistoranteGUI (Tank):
 
 AggiungiRistorantiGUI (Tank):
 - Da finire
+
+IMPELEMENTARE IL LOG OUT
+
 ALTRE TODO: 
 - JAVA DOC
 - ELIMINARE IMPORT INUTILI

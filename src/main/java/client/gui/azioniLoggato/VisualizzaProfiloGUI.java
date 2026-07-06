@@ -1,6 +1,8 @@
 package main.java.client.gui.azioniLoggato;
 
 import main.java.client.gui.TemplateGUI;
+import main.java.client.gui.listeUtente.ListaPreferitiGUI;
+import main.java.client.gui.listeUtente.ListaRecensioniGUI;
 import main.java.client.gui.menu.LoggatoGUI;
 import main.java.client.network.ClientConnection;
 import main.java.server.service.UtenteService;
@@ -25,6 +27,11 @@ public class VisualizzaProfiloGUI extends TemplateGUI {
         this.frame =frame;
         this.utenteService = utenteService;
         this.email = email;
+
+        //rimuovo il bottone "Profilo" dato che siamo già in questa schermata
+        pannello.remove(visualizzaProfilo);
+        pannello.revalidate();
+        pannello.repaint();
 
         //caricamento dei dati dell'utente
         Richiesta richiestaDati = new Richiesta(TipoRichieste.GET_UTENTE, email);
@@ -103,6 +110,38 @@ public class VisualizzaProfiloGUI extends TemplateGUI {
         vincoloGriglia.anchor = GridBagConstraints.CENTER;
         pannelloCentrale.add(modificaDati, vincoloGriglia);
 
+        //riga 6: le mie recensioni
+        JButton leMieRecensioni = new JButton("Le mie recensioni");
+        leMieRecensioni.setFocusPainted(false);
+        leMieRecensioni.setBorder(new LineBorder(Color.WHITE));
+        leMieRecensioni.addActionListener(e -> {
+            frame.setContentPane(new ListaRecensioniGUI(frame, utenteService, email));
+            frame.revalidate();
+            frame.repaint();
+        });
+
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.gridy = 6;
+        vincoloGriglia.gridwidth = 2;
+        vincoloGriglia.anchor = GridBagConstraints.CENTER;
+        pannelloCentrale.add(leMieRecensioni, vincoloGriglia);
+
+        //riga 7: i miei preferiti
+        JButton iMieiPreferiti = new JButton("I miei preferiti");
+        iMieiPreferiti.setFocusPainted(false);
+        iMieiPreferiti.setBorder(new LineBorder(Color.WHITE));
+        iMieiPreferiti.addActionListener(e -> {
+            frame.setContentPane(new ListaPreferitiGUI(frame, utenteService, email));
+            frame.revalidate();
+            frame.repaint();
+        });
+
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.gridy = 7;
+        vincoloGriglia.gridwidth = 2;
+        vincoloGriglia.anchor = GridBagConstraints.CENTER;
+        pannelloCentrale.add(iMieiPreferiti, vincoloGriglia);
+
         //centratura del pannello
         JPanel centroPannello = new JPanel(new FlowLayout(FlowLayout.CENTER));
         centroPannello.add(pannelloCentrale);
@@ -120,8 +159,5 @@ public class VisualizzaProfiloGUI extends TemplateGUI {
         });
 
         pannello.add(home);
-
-
-
     }
 }
