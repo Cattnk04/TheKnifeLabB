@@ -21,5 +21,6 @@ public class RistoratoreGUI extends TemplateGUI {
         });
         // Solo per provare la gui che sto facendo
         pannelloCentrale.add(aggiungiRistorante);
+        this.add(pannelloCentrale);
     }
 }
