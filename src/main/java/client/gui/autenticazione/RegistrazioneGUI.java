@@ -121,15 +121,33 @@ public class RegistrazioneGUI extends TemplateGUI {
             Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
 
 
-            if(risposta != null && risposta.getSuccesso()){
-                if(isRistoratore){
-                    frame.setContentPane(new RistoratoreGUI(frame, utenteService, email));
+            if (risposta != null && risposta.getSuccesso()) {
+
+                // Login riuscito -> ora recuperiamo il ruolo dell'utente
+                Richiesta richiestaUtente = new Richiesta(TipoRichieste.GET_UTENTE, email);
+                Risposta rispostaUtente = ClientConnection.inviaRichiesta(richiestaUtente);
+
+                if (rispostaUtente != null && rispostaUtente.getSuccesso()) {
+                    RegistrazioneDTO datiUtente = (RegistrazioneDTO) rispostaUtente.getContenuto();
+
+                    if (datiUtente.isRistoratore()) {
+                        frame.setContentPane(new RistoratoreGUI(frame, utenteService, email));
+                    } else {
+                        frame.setContentPane(new LoggatoGUI(frame, utenteService, email));
+                    }
+                    frame.revalidate();
+                    frame.repaint();
+
                 } else {
-                    frame.setContentPane(new LoggatoGUI(frame, utenteService, email));
+                    JOptionPane.showMessageDialog(
+                            frame,
+                            "Login riuscito ma impossibile recuperare i dati utente",
+                            "Errore",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                 }
-                frame.revalidate();
-                frame.repaint();
-            } else{
+
+            } else {
                 String messaggioErrore = risposta != null
                         ? risposta.getMsg()
                         : "Impossibile contattare il server";
@@ -137,7 +155,7 @@ public class RegistrazioneGUI extends TemplateGUI {
                 JOptionPane.showMessageDialog(
                         frame,
                         messaggioErrore,
-                        "Errore di registrazione",
+                        "Errore di login",
                         JOptionPane.ERROR_MESSAGE
                 );
             }

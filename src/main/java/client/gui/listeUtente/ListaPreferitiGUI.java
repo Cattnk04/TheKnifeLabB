@@ -1,4 +1,4 @@
-package main.java.client.gui.azioniLoggato;
+package main.java.client.gui.listeUtente;
 
 import main.java.client.gui.TemplateGUI;
 

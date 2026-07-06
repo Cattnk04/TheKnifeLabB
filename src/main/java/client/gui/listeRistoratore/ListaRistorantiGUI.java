@@ -1,4 +1,4 @@
-package main.java.client.gui.liste;
+package main.java.client.gui.listeRistoratore;
 
 import main.java.client.gui.TemplateGUI;
 
