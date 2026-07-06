@@ -1,8 +1,8 @@
-ListaPreferitiGUI:
+ListaPreferitiGUI (Gaia):
 - Mostra una lista di preferiti come per i ristoranti
 - Mettere un bottone sotto che quando viene selezionato un preferito nella lista permette di rimuoverlo
 
-ListaRecensioniGUI (package listeUtente):
+ListaRecensioniGUI (package listeUtente)(Gaia):
 - Mostrata una lista di recensioni fatte da me 
 - Sotto mettere un bottone per la modifica della recensione e un bottone per l'eliminazione della recensione selezionata
 
@@ -31,7 +31,7 @@ RispostaRecensioneGUI:
 - Aggiungere un campo di testo editabile dove si scrive la risposta alla recensione 
 - Mettere un bottone per l'invio della risposta alla recensione
 
-VisualizzaProfiloGUI: 
+VisualizzaProfiloGUI (Gaia):
 - Mettere un bottone per visualizzare la lista delle mie recensioni (collegarsi a ListaRecensioniGUI)
 - Mettere un bottone per visualizzare la lista dei preferiti (collegarsi a ListaPreferitiGUI)
 

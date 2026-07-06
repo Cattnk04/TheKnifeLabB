@@ -70,7 +70,7 @@ public class PannelloRisultatiRicerca extends JPanel {
         add(pannelloBottoni, BorderLayout.SOUTH);
     }
 
-    /**
+    /*
      * Aggiorna la lista con i nuovi risultati di ricerca.
      * Da chiamare nella callback passata a PannelloRicercaRistorante.
      */
