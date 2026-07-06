@@ -1,42 +1,72 @@
 package main.java.client.gui.azioniRistoratore;
 
 import main.java.client.gui.TemplateGUI;
+import main.java.shared.dto.RistoranteDTO;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class AggiungiRistoranteGUI extends TemplateGUI {
+    private final JTextField campoNomeRistorante;
+    private final JTextField campoCitta;
+    private final JTextField campoNazione;
+    private final JTextField campoVia;
+    private final JTextField campoNumeroCivico;
+    private final JTextField campoFasciaPrezzo;
+    private final JComboBox campoTipoCucina;
+    private final JRadioButton campoDelivery;
+    private final JRadioButton campoPrenotazioneOnline;
+    private final JButton aggiungiRistorante;
 
-    public AggiungiRistoranteGUI(JFrame frame) {
+    public AggiungiRistoranteGUI(JFrame frame, String email) {
         super(frame);
         this.frame = frame;
-        JTextField nomeRistorante= new JTextField();
-        nomeRistorante.setEditable(true);
-        JTextField citta = new JTextField();
-        citta.setEditable(true);
-        JTextField nazione = new JTextField();
-        nazione.setEditable(true);
-        JTextField via = new JTextField();
-        via.setEditable(true);
-        JTextField numeroCivico = new JTextField();
-        numeroCivico.setEditable(true);
-        JTextField fasciaPrezzo = new JTextField();
-        fasciaPrezzo.setEditable(true);
-        JRadioButton rbDelivery = new JRadioButton("Servizio delivery");
-        rbDelivery.setSelected(true);
-        JRadioButton rbPrenotazioneOnline = new JRadioButton("Servizio prenotazione online");
-        rbPrenotazioneOnline.setSelected(true);
-        JComboBox cbTipoCucina = new JComboBox();
-        cbTipoCucina.setEditable(true);
-        //AGGIUNGERE QUERY PER PRENDERE I TIPI DI CUCINA
-        this.add(nomeRistorante);
-        this.add(citta);
-        this.add(nazione);
-        this.add(via);
-        this.add(numeroCivico);
-        this.add(rbDelivery);
-        this.add(rbPrenotazioneOnline);
-        this.add(cbTipoCucina);
+        //creazione pannello centrale
+        JPanel pannelloCentrale = new JPanel();
+        pannelloCentrale.setLayout(new BoxLayout(pannelloCentrale, BoxLayout.Y_AXIS));
+        pannelloCentrale.setBorder(BorderFactory.createEmptyBorder(40, 60, 40, 60));
+        Dimension dimensioneCampo = new Dimension(300, 40);
 
+        campoNomeRistorante = new JTextField();
+
+        campoNomeRistorante.setEditable(true);
+        campoCitta = new JTextField();
+        campoCitta.setEditable(true);
+        campoNazione = new JTextField();
+        campoNazione.setEditable(true);
+        campoVia = new JTextField();
+        campoVia.setEditable(true);
+        campoNumeroCivico = new JTextField();
+        campoNumeroCivico.setEditable(true);
+        campoFasciaPrezzo = new JTextField();
+        campoFasciaPrezzo.setEditable(true);
+        campoDelivery = new JRadioButton("Servizio delivery");
+        campoDelivery.setSelected(true);
+        campoPrenotazioneOnline= new JRadioButton("Servizio prenotazione online");
+        campoPrenotazioneOnline.setSelected(true);
+        campoTipoCucina = new JComboBox();
+        campoTipoCucina.setEditable(true);
+        aggiungiRistorante = new JButton("Aggiungi Ristorante");
+        aggiungiRistorante.addActionListener(e ->{
+            //RistoranteDTO ristorante = new RistoranteDTO(campoNomeRistorante.getText(), email, campoCitta.getText(), campoNumeroCivico.getText(), campoFasciaPrezzo.getText(), );
+        });
+        //AGGIUNGERE QUERY PER PRENDERE I TIPI DI CUCINA
+
+
+        pannelloCentrale.add(campoNomeRistorante);
+        pannelloCentrale.add(campoCitta);
+        pannelloCentrale.add(campoNazione);
+        pannelloCentrale.add(campoVia);
+        pannelloCentrale.add(campoNumeroCivico);
+        pannelloCentrale.add(campoFasciaPrezzo);
+        pannelloCentrale.add(campoDelivery);
+        pannelloCentrale.add(campoPrenotazioneOnline);
+        pannelloCentrale.add(campoTipoCucina);
+        pannelloCentrale.add(aggiungiRistorante);
+
+
+
+        this.add(pannelloCentrale, BorderLayout.CENTER);
         JButton button = new JButton("Aggiungi Ristorante");
     }
 }
