@@ -35,7 +35,12 @@ VisualizzaProfiloGUI:
 - Mettere un bottone per visualizzare la lista delle mie recensioni (collegarsi a ListaRecensioniGUI)
 - Mettere un bottone per visualizzare la lista dei preferiti (collegarsi a ListaPreferitiGUI)
 
+ModificaRistoranteGUI (Tank):
+- Come il modifica utente però per il ristorante
+- Prendendo come modello aggiungi ristoranti
 
+AggiungiRistorantiGUI (Tank):
+- Da finire
 ALTRE TODO: 
 - JAVA DOC
 - ELIMINARE IMPORT INUTILI
