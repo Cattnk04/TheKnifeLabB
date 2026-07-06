@@ -1,16 +1,17 @@
-package main.java.client.gui.listeRistoratore;
+package main.java.client.gui.azioniRistoratore;
 
 import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.azioniLoggato.VisualizzaProfiloGUI;
 import main.java.client.gui.menu.RistoratoreGUI;
 import main.java.server.service.UtenteService;
+import main.java.shared.domain.Utente;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ListaRecensioniGUI extends TemplateGUI {
+public class ModificaRistoranteGUI extends TemplateGUI {
 
-    public ListaRecensioniGUI(JFrame frame, UtenteService utenteService, String email){
+    public ModificaRistoranteGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
         this.frame = frame;
 

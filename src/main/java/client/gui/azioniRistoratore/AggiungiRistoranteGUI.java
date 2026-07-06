@@ -1,6 +1,9 @@
 package main.java.client.gui.azioniRistoratore;
 
 import main.java.client.gui.TemplateGUI;
+import main.java.client.gui.azioniLoggato.VisualizzaProfiloGUI;
+import main.java.client.gui.menu.RistoratoreGUI;
+import main.java.server.service.UtenteService;
 import main.java.shared.dto.RistoranteDTO;
 
 import javax.swing.*;
@@ -18,7 +21,7 @@ public class AggiungiRistoranteGUI extends TemplateGUI {
     private final JRadioButton campoPrenotazioneOnline;
     private final JButton aggiungiRistorante;
 
-    public AggiungiRistoranteGUI(JFrame frame, String email) {
+    public AggiungiRistoranteGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
         this.frame = frame;
         //creazione pannello centrale
@@ -68,5 +71,20 @@ public class AggiungiRistoranteGUI extends TemplateGUI {
 
         this.add(pannelloCentrale, BorderLayout.CENTER);
         JButton button = new JButton("Aggiungi Ristorante");
+
+        visualizzaProfilo.addActionListener(e -> {
+            frame.setContentPane(new VisualizzaProfiloGUI(frame, utenteService, email));
+            frame.revalidate();
+            frame.repaint();
+        });
+        pannello.add(visualizzaProfilo);
+
+        JButton home = new JButton("Home");
+        home.addActionListener(e -> {
+            frame.setContentPane(new RistoratoreGUI(frame, utenteService, email));
+            frame.revalidate();
+            frame.repaint();
+        });
+        pannello.add(home);
     }
 }

@@ -149,6 +149,7 @@ public class VisualizzaProfiloGUI extends TemplateGUI {
 
 
         //Bottone per tornare a LoggatoGUI
+        //TODO aggiungere controllo se si è ristoratore --> RistoratoreGUI, mentre se si è Utente --> LoggatoGUI
         JButton home = new JButton("Home");
         home.setFocusPainted(false);
         home.setBorder(new LineBorder(Color.WHITE));
