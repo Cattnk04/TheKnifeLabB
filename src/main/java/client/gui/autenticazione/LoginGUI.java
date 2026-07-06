@@ -4,19 +4,19 @@ import jdk.dynalink.linker.GuardingDynamicLinkerExporter;
 import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.menu.GuestGUI;
 import main.java.client.gui.menu.LoggatoGUI;
+import main.java.client.gui.menu.RistoratoreGUI;
 import main.java.client.network.ClientConnection;
 import main.java.server.service.UtenteService;
 import main.java.shared.communication.Richiesta;
 import main.java.shared.communication.Risposta;
 import main.java.shared.communication.TipoRichieste;
 import main.java.shared.dto.LoginDTO;
+import main.java.shared.dto.RegistrazioneDTO;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
+
 
 public class LoginGUI extends TemplateGUI {
     private JTextField campoEmail;
@@ -80,9 +80,31 @@ public class LoginGUI extends TemplateGUI {
             Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
 
             if (risposta != null && risposta.getSuccesso()) {
-                frame.setContentPane(new LoggatoGUI(frame, utenteService, email));
-                frame.revalidate();
-                frame.repaint();
+
+                // Login riuscito -> ora recuperiamo il ruolo dell'utente
+                Richiesta richiestaUtente = new Richiesta(TipoRichieste.GET_UTENTE, email);
+                Risposta rispostaUtente = ClientConnection.inviaRichiesta(richiestaUtente);
+
+                if (rispostaUtente != null && rispostaUtente.getSuccesso()) {
+                    RegistrazioneDTO datiUtente = (RegistrazioneDTO) rispostaUtente.getContenuto();
+
+                    if (datiUtente.isRistoratore()) {
+                        frame.setContentPane(new RistoratoreGUI(frame, utenteService, email));
+                    } else {
+                        frame.setContentPane(new LoggatoGUI(frame, utenteService, email));
+                    }
+                    frame.revalidate();
+                    frame.repaint();
+
+                } else {
+                    JOptionPane.showMessageDialog(
+                            frame,
+                            "Login riuscito ma impossibile recuperare i dati utente",
+                            "Errore",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+
             } else {
                 String messaggioErrore = risposta != null
                         ? risposta.getMsg()
