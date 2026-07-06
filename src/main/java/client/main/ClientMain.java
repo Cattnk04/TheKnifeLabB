@@ -1,7 +1,6 @@
 package main.java.client.main;
 
 import main.java.client.gui.menu.GuestGUI;
-import main.java.client.gui.ricerca.FiltriRicercaGUI;
 import main.java.client.network.ClientConnection;
 import main.java.server.dao.UtenteDAO;
 import main.java.server.security.PasswordService;
