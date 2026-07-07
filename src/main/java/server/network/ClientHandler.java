@@ -236,14 +236,9 @@ public class ClientHandler extends Thread{
 
     //RISTORANTE
     private Risposta gestisciGetRistorante(Object contenuto) {
-        if(!(contenuto instanceof RistoranteDTO dto)){
-            return new Risposta(false, null, "Dati ricerca non validi");
-        }
-        else{
-            List<RistoranteDTO> ristoranti = ristoranteService.getTuttiRistoranti();
-            if(ristoranti.size() == 1) return new Risposta(true, ristoranti, "Ristoranti trovati");
-            else return new Risposta(false, null, "Nessun ristorante trovato");
-        }
+        List<RistoranteDTO> ristoranti = ristoranteService.getTuttiRistoranti();
+        if (!ristoranti.isEmpty()) return new Risposta(true, ristoranti, "Ristoranti trovati");
+        else return new Risposta(false, null, "Nessun ristorante trovato");
     }
 
     //DA CONTROLLARE

@@ -52,7 +52,6 @@ public class RistoranteService {
     }
 
     // CREATE
-    // CREATE
     public boolean creaRistorante(RistoranteDTO dto) {
 
         if (dto == null) {throw new IllegalArgumentException("DTO nullo");}
@@ -146,6 +145,17 @@ public class RistoranteService {
         return ristoranteDAO.cercaConFiltro(filtro).stream()
                 .map(this::toDTO)
                 .toList();
+    }
+
+    // READ per ID singolo (usato per risolvere i preferiti in RistoranteDTO completi)
+    public RistoranteDTO getRistorante(int idRistorante) {
+        if (idRistorante <= 0) {
+            throw new IllegalArgumentException("ID non valido");
+        }
+        return getTuttiRistoranti().stream()
+                .filter(r -> r.getIdRistorante() == idRistorante)
+                .findFirst()
+                .orElse(null);
     }
 
     // EXISTS (nome + email, coerente col controllo duplicati in creazione)

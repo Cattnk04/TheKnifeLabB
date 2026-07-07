@@ -4,7 +4,10 @@ import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.listeUtente.ListaPreferitiGUI;
 import main.java.client.gui.listeUtente.ListaRecensioniGUI;
 import main.java.client.gui.menu.LoggatoGUI;
+import main.java.client.gui.menu.RistoratoreGUI;
 import main.java.client.network.ClientConnection;
+import main.java.server.service.RistoranteService;
+import main.java.server.service.PreferitiService;
 import main.java.server.service.UtenteService;
 import main.java.shared.communication.Richiesta;
 import main.java.shared.communication.Risposta;
@@ -20,12 +23,15 @@ public class VisualizzaProfiloGUI extends TemplateGUI {
     private final UtenteService utenteService;
     private final String email;
     private JButton btnModificaDati;
+    private JButton btnLeMieRecensioni;
+    private JButton btnIMieiPreferiti;
 
-
+    //Costruttore con i nuovi service
     public VisualizzaProfiloGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
         this.frame =frame;
         this.utenteService = utenteService;
+
         this.email = email;
 
         //rimuovo il bottone "Profilo" dato che siamo già in questa schermata
@@ -148,13 +154,16 @@ public class VisualizzaProfiloGUI extends TemplateGUI {
         add(centroPannello, BorderLayout.CENTER);
 
 
-        //Bottone per tornare a LoggatoGUI
-        //TODO aggiungere controllo se si è ristoratore --> RistoratoreGUI, mentre se si è Utente --> LoggatoGUI
+        //Bottone per tornare alla home corretta in base al ruolo
         JButton home = new JButton("Home");
         home.setFocusPainted(false);
         home.setBorder(new LineBorder(Color.WHITE));
-        home.addActionListener(e ->{
-            frame.setContentPane(new LoggatoGUI(frame, utenteService, email));
+        home.addActionListener(e -> {
+            if (datiUtente.isRistoratore()) {
+                frame.setContentPane(new RistoratoreGUI(frame, utenteService, email));
+            } else {
+                frame.setContentPane(new LoggatoGUI(frame, utenteService, email));
+            }
             frame.revalidate();
             frame.repaint();
         });
