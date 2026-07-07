@@ -100,7 +100,7 @@ public class VisualizzaProfiloGUI extends TemplateGUI {
         vincoloGriglia.gridx = 1;
         pannelloCentrale.add(new JLabel(datiUtente.getNazione()), vincoloGriglia);
 
-        //riga 5: modifica dati:
+        //riga 5: modifica dati (sempre visibile)
         JButton modificaDati = new JButton("Modifica Dati");
         modificaDati.setFocusPainted(false);
         modificaDati.setBorder(new LineBorder(Color.WHITE));
@@ -116,37 +116,41 @@ public class VisualizzaProfiloGUI extends TemplateGUI {
         vincoloGriglia.anchor = GridBagConstraints.CENTER;
         pannelloCentrale.add(modificaDati, vincoloGriglia);
 
-        //riga 6: le mie recensioni
-        JButton leMieRecensioni = new JButton("Le mie recensioni");
-        leMieRecensioni.setFocusPainted(false);
-        leMieRecensioni.setBorder(new LineBorder(Color.WHITE));
-        leMieRecensioni.addActionListener(e -> {
-            frame.setContentPane(new ListaRecensioniGUI(frame, utenteService, email));
-            frame.revalidate();
-            frame.repaint();
-        });
+        int rigaSuccessiva = 6;
 
-        vincoloGriglia.gridx = 0;
-        vincoloGriglia.gridy = 6;
-        vincoloGriglia.gridwidth = 2;
-        vincoloGriglia.anchor = GridBagConstraints.CENTER;
-        pannelloCentrale.add(leMieRecensioni, vincoloGriglia);
+        //riga 6 (solo se NON ristoratore): le mie recensioni
+        if (!datiUtente.isRistoratore()) {
+            JButton leMieRecensioni = new JButton("Le mie recensioni");
+            leMieRecensioni.setFocusPainted(false);
+            leMieRecensioni.setBorder(new LineBorder(Color.WHITE));
+            leMieRecensioni.addActionListener(e -> {
+                frame.setContentPane(new ListaRecensioniGUI(frame, utenteService, email));
+                frame.revalidate();
+                frame.repaint();
+            });
 
-        //riga 7: i miei preferiti
-        JButton iMieiPreferiti = new JButton("I miei preferiti");
-        iMieiPreferiti.setFocusPainted(false);
-        iMieiPreferiti.setBorder(new LineBorder(Color.WHITE));
-        iMieiPreferiti.addActionListener(e -> {
-            frame.setContentPane(new ListaPreferitiGUI(frame, utenteService, email));
-            frame.revalidate();
-            frame.repaint();
-        });
+            vincoloGriglia.gridx = 0;
+            vincoloGriglia.gridy = rigaSuccessiva++;
+            vincoloGriglia.gridwidth = 2;
+            vincoloGriglia.anchor = GridBagConstraints.CENTER;
+            pannelloCentrale.add(leMieRecensioni, vincoloGriglia);
 
-        vincoloGriglia.gridx = 0;
-        vincoloGriglia.gridy = 7;
-        vincoloGriglia.gridwidth = 2;
-        vincoloGriglia.anchor = GridBagConstraints.CENTER;
-        pannelloCentrale.add(iMieiPreferiti, vincoloGriglia);
+            //i miei preferiti
+            JButton iMieiPreferiti = new JButton("I miei preferiti");
+            iMieiPreferiti.setFocusPainted(false);
+            iMieiPreferiti.setBorder(new LineBorder(Color.WHITE));
+            iMieiPreferiti.addActionListener(e -> {
+                frame.setContentPane(new ListaPreferitiGUI(frame, utenteService, email));
+                frame.revalidate();
+                frame.repaint();
+            });
+
+            vincoloGriglia.gridx = 0;
+            vincoloGriglia.gridy = rigaSuccessiva++;
+            vincoloGriglia.gridwidth = 2;
+            vincoloGriglia.anchor = GridBagConstraints.CENTER;
+            pannelloCentrale.add(iMieiPreferiti, vincoloGriglia);
+        }
 
         //centratura del pannello
         JPanel centroPannello = new JPanel(new FlowLayout(FlowLayout.CENTER));

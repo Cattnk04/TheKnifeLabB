@@ -32,6 +32,11 @@ public class ListaPreferitiGUI extends TemplateGUI {
         this.utenteService = utenteService;
         this.email = email;
 
+        //rimuovo il bottone "Profilo" dato che siamo già in questa schermata
+        pannello.remove(visualizzaProfilo);
+        pannello.revalidate();
+        pannello.repaint();
+
         visualizzaProfilo.addActionListener(e -> {
             frame.setContentPane(new VisualizzaProfiloGUI(frame, utenteService, email));
             frame.revalidate();
