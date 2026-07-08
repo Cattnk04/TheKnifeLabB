@@ -2,6 +2,7 @@ package main.java.client.gui.menu;
 
 import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.autenticazione.LoginGUI;
+import main.java.client.gui.utils.DettagliRistoranteGUI;
 import main.java.client.gui.utils.PannelloRicercaRistorante;
 import main.java.client.gui.utils.PannelloRisultatiRicerca;
 import main.java.server.service.UtenteService;
@@ -25,8 +26,9 @@ public class GuestGUI extends TemplateGUI {
 
         // Pannello che mostrerà i risultati della ricerca
         PannelloRisultatiRicerca pannelloRisultati = new PannelloRisultatiRicerca(ristoranteSelezionato -> {
-            // TODO: aprire la GUI di dettaglio ristorante (prenotazione, ordine delivery, recensioni...)
-            // passando "ristoranteSelezionato" e "email" (utile per sapere chi sta prenotando/ordinando)
+            frame.setContentPane(new DettagliRistoranteGUI(frame, utenteService, null, ristoranteSelezionato));
+            frame.revalidate();
+            frame.repaint();
         });
 
         // Pannello di ricerca: quando trova risultati, li passa al pannello dei risultati

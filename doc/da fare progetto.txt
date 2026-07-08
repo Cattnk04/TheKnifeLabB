@@ -6,7 +6,7 @@ ListaRecensioniGUI (package listeUtente)(Gaia): FATTO
 - Mostrata una lista di recensioni fatte da me 
 - Sotto mettere un bottone per la modifica della recensione e un bottone per l'eliminazione della recensione selezionata
 
-DettagliRistoranteGUI (da creare):
+DettagliRistoranteGUI (da creare): FATTO
 - Mostra i dati del ristorante cercato/selezionato
 - Sotto mettere una parte per i bottoni dove posso aggiungere una recensione (controllare se l'utente è loggato e controllare se esiste già una recensione a suo nome)
 
