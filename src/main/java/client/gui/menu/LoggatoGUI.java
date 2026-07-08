@@ -3,7 +3,7 @@ package main.java.client.gui.menu;
 import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.autenticazione.LoginGUI;
 import main.java.client.gui.azioniLoggato.VisualizzaProfiloGUI;
-import main.java.client.gui.ricerca.*;
+import main.java.client.gui.utils.*;
 import main.java.client.network.ClientConnection;
 import main.java.server.service.UtenteService;
 import main.java.shared.communication.*;

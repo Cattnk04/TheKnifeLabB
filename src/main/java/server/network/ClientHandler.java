@@ -537,12 +537,39 @@ public class ClientHandler extends Thread{
         }
     }
 
-    private Risposta gestisciEsistenzaPreferiti(Object contenuto){
-        return new Risposta(true, null, "Metodo non ancora implementato");
+    private Risposta gestisciEsistenzaPreferiti(Object contenuto) {
+        if (!(contenuto instanceof PreferitiDTO dto)) {
+            return new Risposta(false, null, "Dati per verifica preferito non validi");
+        }
+        try {
+            boolean esiste = preferitiService.esistePreferito(dto.getEmail(), dto.getIdRistorante());
+            return new Risposta(true, esiste, esiste ? "Preferito esistente" : "Preferito non esistente");
+        } catch (Exception e) {
+            return new Risposta(false, null, "Errore interno: " + e.getMessage());
+        }
     }
 
-    private Risposta gestisciTogglePreferito(Object contenuto){
-        return new Risposta(true, null, "Metodo non ancora implementato");
+    private Risposta gestisciTogglePreferito(Object contenuto) {
+        if (!(contenuto instanceof PreferitiDTO dto)) {
+            return new Risposta(false, null, "Dati per toggle preferito non validi");
+        }
+        try {
+            // Salvo lo stato precedente per poter calcolare il nuovo stato dopo il toggle
+            boolean eraGiaPreferito = preferitiService.esistePreferito(dto.getEmail(), dto.getIdRistorante());
+
+            boolean successo = preferitiService.togglePreferito(dto);
+
+            if (!successo) {
+                return new Risposta(false, null, "Impossibile aggiornare i preferiti");
+            }
+
+            boolean nuovoStato = !eraGiaPreferito; // true = ora è tra i preferiti
+            String msg = nuovoStato ? "Aggiunto ai preferiti" : "Rimosso dai preferiti";
+            return new Risposta(true, nuovoStato, msg);
+
+        } catch (Exception e) {
+            return new Risposta(false, null, "Errore interno: " + e.getMessage());
+        }
     }
 
     //TIPO CUCINA

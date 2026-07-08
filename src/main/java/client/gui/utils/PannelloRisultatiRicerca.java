@@ -1,4 +1,4 @@
-package main.java.client.gui.ricerca;
+package main.java.client.gui.utils;
 
 import main.java.shared.dto.RistoranteDTO;
 

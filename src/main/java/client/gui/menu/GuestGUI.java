@@ -2,11 +2,9 @@ package main.java.client.gui.menu;
 
 import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.autenticazione.LoginGUI;
-import main.java.client.gui.ricerca.PannelloRicercaRistorante;
-import main.java.client.gui.ricerca.PannelloRisultatiRicerca;
+import main.java.client.gui.utils.PannelloRicercaRistorante;
+import main.java.client.gui.utils.PannelloRisultatiRicerca;
 import main.java.server.service.UtenteService;
-import main.java.shared.communication.*;
-import main.java.shared.dto.*;
 
 import javax.swing.*;
 import java.awt.*;
