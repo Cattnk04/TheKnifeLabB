@@ -36,7 +36,7 @@ public class RistoratoreGUI extends TemplateGUI {
 
         //Pannello per visualizzare i ristoranti del ristoratore
         //doppio click su un ristorante --> stessa azione del bottone modifica dati
-       // pannelloRistoranti = new PannelloRistorantiRistoratore(ristorante -> eseguiModificaRistorante(utenteService, ristorante));
+        //pannelloRistoranti = new PannelloRistorantiRistoratore(ristorante -> eseguiModificaRistorante(utenteService, ristorante));
         this.add(pannelloRistoranti, BorderLayout.CENTER);
         caricaRistoranti(email);
 

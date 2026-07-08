@@ -56,8 +56,6 @@ public class VisualizzaRecensioniGUI extends TemplateGUI {
             });
         }
 
-        setLayout(new BorderLayout(10, 10));
-
         //Lista recensioni
         this.modelloLista = new DefaultListModel<>();
         this.listaRecensioni = new JList<>(modelloLista);
@@ -174,7 +172,6 @@ public class VisualizzaRecensioniGUI extends TemplateGUI {
         public Component getListCellRendererComponent(JList<? extends Recensione> list, Recensione recensione,
                                                       int index, boolean isSelected, boolean cellHasFocus) {
 
-            String autore = recensione.getEmail();
             int voto = recensione.getValutazione();
             String testo = recensione.getRecensione();
 
@@ -185,7 +182,7 @@ public class VisualizzaRecensioniGUI extends TemplateGUI {
             }
 
             labelIntestazione.setText(
-                    autore + "   " + stelle + " (" + voto + "/5)"
+                    "Anonimo" + "   " + stelle + " (" + voto + "/5)"
             );
 
             labelTesto.setText(

@@ -1,11 +1,14 @@
 package main.java.client.gui.azioniLoggato;
 
 import main.java.client.gui.TemplateGUI;
+import main.java.client.gui.utils.DettagliRistoranteGUI;
 import main.java.client.network.ClientConnection;
+import main.java.server.service.UtenteService;
 import main.java.shared.communication.Richiesta;
 import main.java.shared.communication.Risposta;
 import main.java.shared.communication.TipoRichieste;
 import main.java.shared.dto.RecensioneDTO;
+import main.java.shared.dto.RistoranteDTO;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -20,12 +23,23 @@ public class ScriviRecensioneGUI extends TemplateGUI {
     private final int idRistorante;
     private final String nomeRistorante;
     private final JFrame frame;
+    private final String email;
+    private final UtenteService utenteService;
+    private final RistoranteDTO ristorante;
 
-    public ScriviRecensioneGUI(JFrame frame, int idRistorante, String nomeRistorante) {
+    public ScriviRecensioneGUI(JFrame frame,
+                               UtenteService utenteService,
+                               String email,
+                               RistoranteDTO ristorante) {
+
         super(frame);
         this.frame = frame;
-        this.idRistorante = idRistorante;
-        this.nomeRistorante = nomeRistorante;
+        this.utenteService = utenteService;
+        this.email = email;
+        this.ristorante = ristorante;
+        this.idRistorante = ristorante.getIdRistorante();
+        this.nomeRistorante = ristorante.getNomeRistorante();
+
         costruisciInterfaccia();
     }
 
@@ -88,6 +102,20 @@ public class ScriviRecensioneGUI extends TemplateGUI {
         vincolo.anchor = GridBagConstraints.CENTER;
         vincolo.insets = new Insets(20, 10, 8, 10);
         contenuto.add(bottoneInvia, vincolo);
+
+        JButton indietro = new JButton("← Indietro");
+        indietro.setFocusPainted(false);
+        indietro.setBorder(new LineBorder(Color.WHITE));
+        indietro.addActionListener(e -> {
+            frame.setContentPane(new DettagliRistoranteGUI(frame, utenteService, email, ristorante));
+            frame.revalidate();
+            frame.repaint();
+
+        });
+
+        vincolo.gridy = 5;
+        vincolo.insets = new Insets(10, 10, 10, 10);
+        contenuto.add(indietro, vincolo);
 
         // Centra il form nella pagina, coerente con lo stile delle altre GUI
         JPanel centro = new JPanel(new GridBagLayout());

@@ -189,8 +189,9 @@ public class DettagliRistoranteGUI extends TemplateGUI{
                         frame.setContentPane(
                                 new ScriviRecensioneGUI(
                                         frame,
-                                        ristorante.getIdRistorante(),
-                                        ristorante.getNomeRistorante()
+                                        utenteService,
+                                        email,
+                                        ristorante
                                 )
                         );
                         frame.revalidate();
