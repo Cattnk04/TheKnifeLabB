@@ -1,15 +1,3 @@
-ListaPreferitiGUI (Gaia): FATTO
-- Mostra una lista di preferiti come per i ristoranti
-- Mettere un bottone sotto che quando viene selezionato un preferito nella lista permette di rimuoverlo
-
-ListaRecensioniGUI (package listeUtente)(Gaia): FATTO
-- Mostrata una lista di recensioni fatte da me 
-- Sotto mettere un bottone per la modifica della recensione e un bottone per l'eliminazione della recensione selezionata
-
-DettagliRistoranteGUI (da creare): FATTO
-- Mostra i dati del ristorante cercato/selezionato
-- Sotto mettere una parte per i bottoni dove posso aggiungere una recensione (controllare se l'utente è loggato e controllare se esiste già una recensione a suo nome)
-
 MenuRistoratoreGUI (ha detto che lo fa Ele (muoviti)):
 - Visualizzare una la lista dei miei ristoranti
 - Mettere il bottone per la modifica del ristorante selezionato
@@ -21,19 +9,10 @@ ListaRecensioniGUI (da fare nel package listeRistoratore):
 - Mostrare una lista di recensioni del mio ristorante selezionato in precedenza nel MenuRistoratoreGUI 
 - Mettere un bottone per la risposta alla recensione selezionata
 
-ScriviRecensioneGUI (accessibile dai dettagli di un ristorante dopo la ricerca): FATTO
-- Aggiungere un menù a tendina con il numero di stelle date al ristorante
-- Aggiungere un campo di testo per scrivere il testo della recensione
-- Mettere un bottone per l'invio della recensione.
-
 RispostaRecensioneGUI:
 - Aggiungere un campo di testo dove viene visualizzata la recensione alla quale si vuole rispondere (possiamo mettere anche la valutazione se vogliamo) 
 - Aggiungere un campo di testo editabile dove si scrive la risposta alla recensione 
 - Mettere un bottone per l'invio della risposta alla recensione
-
-VisualizzaProfiloGUI (Gaia): FATTO
-- Mettere un bottone per visualizzare la lista delle mie recensioni (collegarsi a ListaRecensioniGUI)
-- Mettere un bottone per visualizzare la lista dei preferiti (collegarsi a ListaPreferitiGUI)
 
 ModificaRistoranteGUI (Tank):
 - Come il modifica utente però per il ristorante
@@ -42,8 +21,26 @@ ModificaRistoranteGUI (Tank):
 AggiungiRistorantiGUI (Tank):
 - Da finire
 
-IMPELEMENTARE IL LOG OUT: FATTO
-
-ALTRE TODO: 
-- JAVA DOC
-- ELIMINARE IMPORT INUTILI
+COSA FARE PRE CONSEGNA:
+- Aprire applicazione e provare funzionalità per funzionalità.
+    - Segnarsi gli accessi per fare le prove durante l'esame
+    - Fare prima l'accesso utente e usarne le funzionalità
+    - Fare l'accesso risotratore e usarne le funzionalità
+    - Usare funzionalità per il guest
+    - Segnarsi la grafica brutta (ma funzionante) (i bottoni soprattutto)
+- Aprire file per file
+    - Creare il file .img del logo e metterlo in src
+    - Mettere immagine al posto di logo
+    - Controllare i commenti in ogni file
+    - Controllare le cose con scritto "da controllare"
+    - Mettere a posto la grafica brutta segnata prima (dimensioni e stili uniformi per tutti)
+    - Fare la JavaDOC
+    - Eliminare i vari import inutili
+    - Cercare in ogni file la parola to do
+    - Controllare i metodi non usati (e in caso eliminarli e capire perché prima di balzare delle funzionalità)
+- Controllare se tutta la documentazione messa su GIT nel progetto è presente all'interno dei manuali
+- Controllare i manuali (tecnico e utente)
+    - Nel manuale utente guardare se sono presenti tutte le GUI che possono essere visualizzate (esempi)
+    - Nel manuale tecnico vedere che siano presenti tutti gli schemi (UML)
+- Eliminare tutti i file della cartella doc
+- Fare una cartella dove mettere una specie di checklist di cosa far vedere al prof all'esame (per farlo in modo efficiente)
