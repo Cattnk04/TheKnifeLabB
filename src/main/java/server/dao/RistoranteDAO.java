@@ -3,6 +3,7 @@ package main.java.server.dao;
 import main.java.server.db.DatabaseConnection;
 import main.java.shared.domain.Ristorante;
 import main.java.shared.dto.FiltroRicercaDTO;
+import main.java.shared.dto.RistoranteDTO;
 import main.java.shared.enums.CampoRistorante;
 
 import java.sql.*;
@@ -103,6 +104,40 @@ public class RistoranteDAO {
         } catch (SQLException e) {
             System.out.println("Errore durante l'eliminazione del ristorante: " + e.getMessage());
             return false;
+        }
+    }
+
+    //aggiorna tutti i campi
+    public boolean aggiornaRistorante(RistoranteDTO dto){
+        String sql = """
+                UPDATE ristorante
+                SET nomeRistorante = ?,
+                citta = ?,
+                nazione = ?,
+                via = ?,
+                numeroCivico = ?,
+                fasciaPrezzo = ?,
+                delivery = ?,
+                prenotazioneOnline = ?,
+                idtipoCucina = ?
+                WHERE idristorante = ?
+                """;
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, dto.getNomeRistorante());
+            statement.setString(2, dto.getCitta());
+            statement.setString(3, dto.getNazione());
+            statement.setString(4, dto.getVia());
+            statement.setInt(5, dto.getNumeroCivico());
+            statement.setInt(6, dto.getFasciaPrezzo());
+            statement.setBoolean(7, dto.isDelivery());
+            statement.setBoolean(8, dto.isPrenotazioneOnline());
+            statement.setInt(9, dto.getTipoCucina());
+            statement.setInt(10, dto.getIdRistorante());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.out.println("Errore aggiornamento ristorante: " + e.getMessage());
+        return false;
         }
     }
 
