@@ -281,9 +281,21 @@ public class ClientHandler extends Thread{
         if(!(contenuto instanceof RistoranteDTO dto)){
             return new Risposta(false, null, "Dati per modificare il ristorante non validi");
         }
-        else {
+
+        try {
+            boolean successo = ristoranteService.aggiornaRistorante(dto);
+            return new Risposta(
+                    successo,
+                    null,
+                    successo ? "Ristorante aggiornato correttamente" : "Errore durante l'aggiornamento dei dati utente"
+            );
+        } catch(Exception e){
+            return new Risposta(
+                    false,
+                    null,
+                    e.getMessage()
+            );
         }
-        return new Risposta(true, null, "Metodo non ancora implementato");
     }
 
     //DA CONTROLLARE

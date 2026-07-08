@@ -51,6 +51,10 @@ public class RistoranteService {
         );
     }
 
+    public boolean aggiornaRistorante(RistoranteDTO dto){
+        return ristoranteDAO.aggiornaRistorante(dto);
+    }
+
     // CREATE
     public boolean creaRistorante(RistoranteDTO dto) {
 

@@ -36,7 +36,7 @@ public class RistoratoreGUI extends TemplateGUI {
 
         //Pannello per visualizzare i ristoranti del ristoratore
         //doppio click su un ristorante --> stessa azione del bottone modifica dati
-        //pannelloRistoranti = new PannelloRistorantiRistoratore(ristorante -> eseguiModificaRistorante(utenteService, ristorante));
+        pannelloRistoranti = new PannelloRistorantiRistoratore(ristorante -> eseguiModificaRistorante(utenteService, ristorante, email));
         this.add(pannelloRistoranti, BorderLayout.CENTER);
         caricaRistoranti(email);
 
@@ -51,16 +51,16 @@ public class RistoratoreGUI extends TemplateGUI {
         pannelloBottoni.add(aggiungiRistorante);
 
         JButton modificaRistorante = new JButton("Modifica dati");
-        /*modificaRistorante.addActionListener(e -> {
+        modificaRistorante.addActionListener(e -> {
             RistoranteDTO selezionato = pannelloRistoranti.getRistoranteSelezionato();
             if(selezionato == null) {
                 JOptionPane.showMessageDialog(frame, "Seleziona prima un ristorante dalla lista.");
                 return;
             }
-            eseguiModificaRistorante(utenteService, selezionato);
+            eseguiModificaRistorante(utenteService, selezionato, email);
         });
 
-         */
+
         pannelloBottoni.add(modificaRistorante);
 
         JButton visualizzaRecensioniRistorante = new JButton("Visualizza recensioni");
@@ -70,10 +70,11 @@ public class RistoratoreGUI extends TemplateGUI {
                 JOptionPane.showMessageDialog(frame, "Seleziona prima un ristorante dalla lista.");
                 return;
             }
-            frame.setContentPane(new ListaRecensioniGUI(frame, utenteService, email));
+            frame.setContentPane(new ListaRecensioniGUI(frame, utenteService, email, selezionato));
             frame.revalidate();
             frame.repaint();
         });
+
         pannelloBottoni.add(visualizzaRecensioniRistorante);
 
         JButton eliminaRistorante = new JButton("Elimina");
@@ -81,6 +82,7 @@ public class RistoratoreGUI extends TemplateGUI {
             RistoranteDTO selezionato = pannelloRistoranti.getRistoranteSelezionato();
             if (selezionato == null){
                 JOptionPane.showMessageDialog(frame, "Seleziona prima un ristorante.");
+                return; //Evita la NullPointerException sotto
             }
             int conferma = JOptionPane.showConfirmDialog(frame, "Eliminare \"" + selezionato.getNomeRistorante() + "\"? L'operazione è irreversibile!",
                     "Conferma eliminazione", JOptionPane.YES_NO_OPTION);
@@ -105,14 +107,14 @@ public class RistoratoreGUI extends TemplateGUI {
         });
 
     }
+
     //metodo dell'azione condivisa tra il bottone "modifica dati" e doppio click sulla lista
-    /*private void eseguiModificaRistorante(UtenteService utenteService, RistoranteDTO ristorante) {
-        frame.setContentPane(new ModificaRistoranteGUI(frame, utenteService, ristorante));
+    private void eseguiModificaRistorante(UtenteService utenteService, RistoranteDTO ristorante, String email) {
+        frame.setContentPane(new ModificaRistoranteGUI(frame, utenteService, email, ristorante));
         frame.revalidate();
         frame.repaint();
     }
 
-     */
 
     //metodo per caricare i ristoranti
     private void caricaRistoranti(String email){

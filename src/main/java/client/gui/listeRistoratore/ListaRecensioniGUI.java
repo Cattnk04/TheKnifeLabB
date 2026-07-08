@@ -4,13 +4,14 @@ import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.azioniLoggato.VisualizzaProfiloGUI;
 import main.java.client.gui.menu.RistoratoreGUI;
 import main.java.server.service.UtenteService;
+import main.java.shared.dto.RistoranteDTO;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ListaRecensioniGUI extends TemplateGUI {
 
-    public ListaRecensioniGUI(JFrame frame, UtenteService utenteService, String email){
+    public ListaRecensioniGUI(JFrame frame, UtenteService utenteService, String email, RistoranteDTO ristorante){
         super(frame);
         this.frame = frame;
 
