@@ -42,7 +42,7 @@ ModificaRistoranteGUI (Tank):
 AggiungiRistorantiGUI (Tank):
 - Da finire
 
-IMPELEMENTARE IL LOG OUT
+IMPELEMENTARE IL LOG OUT: FATTO
 
 ALTRE TODO: 
 - JAVA DOC

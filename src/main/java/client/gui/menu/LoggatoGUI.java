@@ -1,10 +1,12 @@
 package main.java.client.gui.menu;
 
 import main.java.client.gui.TemplateGUI;
+import main.java.client.gui.autenticazione.LoginGUI;
 import main.java.client.gui.azioniLoggato.VisualizzaProfiloGUI;
-import main.java.client.gui.ricerca.PannelloRicercaRistorante;
-import main.java.client.gui.ricerca.PannelloRisultatiRicerca;
+import main.java.client.gui.ricerca.*;
+import main.java.client.network.ClientConnection;
 import main.java.server.service.UtenteService;
+import main.java.shared.communication.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,9 +17,20 @@ public class LoggatoGUI extends TemplateGUI {
         super(frame);
         this.frame = frame;
 
+        visualizzaProfilo.setVisible(true);
         // Collega il bottone "profilo" (ereditato da TemplateGUI) alla GUI del profilo
         visualizzaProfilo.addActionListener(e -> {
             frame.setContentPane(new VisualizzaProfiloGUI(frame, utenteService, email));
+            frame.revalidate();
+            frame.repaint();
+        });
+
+        logout.setVisible(true);
+        logout.addActionListener(e -> {
+            Richiesta richiesta = new Richiesta(TipoRichieste.LOGOUT, email);
+            ClientConnection.inviaRichiesta(richiesta);
+
+            frame.setContentPane(new LoginGUI(frame, utenteService));
             frame.revalidate();
             frame.repaint();
         });
