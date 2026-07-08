@@ -1,11 +1,13 @@
 package main.java.client.gui.menu;
 
 import main.java.client.gui.TemplateGUI;
+import main.java.client.gui.autenticazione.LoginGUI;
 import main.java.client.gui.azioniLoggato.VisualizzaProfiloGUI;
-import main.java.client.gui.azioniRistoratore.AggiungiRistoranteGUI;
-import main.java.client.gui.azioniRistoratore.ModificaRistoranteGUI;
+import main.java.client.gui.azioniRistoratore.*;
 import main.java.client.gui.listeRistoratore.ListaRecensioniGUI;
+import main.java.client.network.ClientConnection;
 import main.java.server.service.UtenteService;
+import main.java.shared.communication.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,17 @@ public class RistoratoreGUI extends TemplateGUI {
     public RistoratoreGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
         this.frame = frame;
+
+        visualizzaProfilo.setVisible(true);
+        logout.setVisible(true);
+        logout.addActionListener(e -> {
+            Richiesta richiesta = new Richiesta(TipoRichieste.LOGOUT, email);
+            ClientConnection.inviaRichiesta(richiesta);
+
+            frame.setContentPane(new LoginGUI(frame, utenteService));
+            frame.revalidate();
+            frame.repaint();
+        });
 
         //TODO creare pannello per visualizzare i propri ristoranti
 

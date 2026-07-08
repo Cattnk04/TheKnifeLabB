@@ -94,7 +94,7 @@ public class ClientHandler extends Thread{
 
             //DA CONTROLLARE
             case LOGOUT:
-                return new Risposta(true, null, "Logout effettuato");
+                return gestisciLogout(richiesta.getContenuto());
 
             case GET_UTENTE:
                 return gestisciGetUtente(richiesta.getContenuto());
@@ -197,6 +197,12 @@ public class ClientHandler extends Thread{
 
         if (ok) return new Risposta(true, null, "Registrazione effettuata");
         else return new Risposta(false, null, "Registrazione fallita");
+    }
+
+    private Risposta gestisciLogout(Object contenuto) {
+        String email = (contenuto instanceof String e) ? e : "sconosciuto";
+        System.out.println("Logout effettuato per l'utente: " + email);
+        return new Risposta(true, null, "Logout effettuato");
     }
 
     private Risposta gestisciGetUtente(Object contenuto) {

@@ -1,6 +1,7 @@
 package main.java.client.gui.azioniLoggato;
 
 import main.java.client.gui.TemplateGUI;
+import main.java.client.gui.autenticazione.LoginGUI;
 import main.java.client.network.ClientConnection;
 import main.java.server.service.UtenteService;
 import main.java.shared.communication.Richiesta;
@@ -30,8 +31,21 @@ public class ModificaProfiloGUI extends TemplateGUI {
         this.email = email;
         this.datiUtente = datiUtente;
 
+        //visualizzaProfilo
+        visualizzaProfilo.setVisible(true);
         visualizzaProfilo.addActionListener(e -> {
             frame.setContentPane(new VisualizzaProfiloGUI(frame, utenteService, email));
+            frame.revalidate();
+            frame.repaint();
+        });
+
+        //logout
+        logout.setVisible(true);
+        logout.addActionListener(e -> {
+            Richiesta richiesta = new Richiesta(TipoRichieste.LOGOUT, email);
+            ClientConnection.inviaRichiesta(richiesta);
+
+            frame.setContentPane(new LoginGUI(frame, utenteService));
             frame.revalidate();
             frame.repaint();
         });

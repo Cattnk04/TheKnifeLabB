@@ -1,6 +1,7 @@
 package main.java.client.gui.azioniLoggato;
 
 import main.java.client.gui.TemplateGUI;
+import main.java.client.gui.autenticazione.LoginGUI;
 import main.java.client.gui.listeUtente.ListaPreferitiGUI;
 import main.java.client.gui.listeUtente.ListaRecensioniGUI;
 import main.java.client.gui.menu.LoggatoGUI;
@@ -38,6 +39,17 @@ public class VisualizzaProfiloGUI extends TemplateGUI {
         pannello.remove(visualizzaProfilo);
         pannello.revalidate();
         pannello.repaint();
+
+        //aggiungo il bottone logout
+        logout.setVisible(true);
+        logout.addActionListener(e -> {
+            Richiesta richiesta = new Richiesta(TipoRichieste.LOGOUT, email);
+            ClientConnection.inviaRichiesta(richiesta);
+
+            frame.setContentPane(new LoginGUI(frame, utenteService));
+            frame.revalidate();
+            frame.repaint();
+        });
 
         //caricamento dei dati dell'utente
         Richiesta richiestaDati = new Richiesta(TipoRichieste.GET_UTENTE, email);

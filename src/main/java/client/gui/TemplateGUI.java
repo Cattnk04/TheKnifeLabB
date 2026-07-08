@@ -17,6 +17,8 @@ public class TemplateGUI extends JPanel {
      */
     protected JPanel pannello;
     protected JButton visualizzaProfilo;
+    protected JButton logout;
+
     public TemplateGUI(JFrame frame) {
         this.frame = frame;
         setLayout(new BorderLayout());
@@ -29,9 +31,14 @@ public class TemplateGUI extends JPanel {
 
         //Creazione bottone profilo
         visualizzaProfilo = new JButton("Profilo");
-        logo.setPreferredSize(new Dimension(150,60 ));
         visualizzaProfilo.setFocusable(false);
         visualizzaProfilo.setBorder(new LineBorder(Color.WHITE));
+
+        //Creazione bottone logout
+        logout = new JButton("Logout");
+        logout.setFocusable(false);
+        logout.setBorder(new LineBorder(Color.WHITE));
+        logout.setVisible(false); // visibile solo nelle GUI di utenti loggati
 
         //creazione pannello colorato
         pannello = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15)){ //centra il logo nel pannello
@@ -45,6 +52,7 @@ public class TemplateGUI extends JPanel {
         pannello.setOpaque(false);
         pannello.add(logo);
         pannello.add(visualizzaProfilo);
+        pannello.add(logout);
         add(pannello, BorderLayout.NORTH);
 
 
