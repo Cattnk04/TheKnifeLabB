@@ -192,7 +192,7 @@ public class ModificaRistoranteGUI extends TemplateGUI {
         pannelloCentrale.add(salva, vincoloGriglia);
         salva.addActionListener(e -> salvaModifiche());
 
-
+        this.add(pannelloCentrale, BorderLayout.CENTER);
 
         JButton home = new JButton("Home");
         home.addActionListener(e -> {

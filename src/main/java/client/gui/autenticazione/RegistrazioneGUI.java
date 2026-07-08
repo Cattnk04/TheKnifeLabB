@@ -92,6 +92,14 @@ public class RegistrazioneGUI extends TemplateGUI {
         campoPassword.setMinimumSize(dimensioneCampo);
         campoPassword.setMaximumSize(dimensioneCampo);
 
+        JLayeredPane pannelloPassword = creaCampoPasswordConOcchio(campoPassword, dimensioneCampo);
+
+        /*campoPassword = new JPasswordField();
+        campoPassword.setPreferredSize(dimensioneCampo);
+        campoPassword.setMinimumSize(dimensioneCampo);
+        campoPassword.setMaximumSize(dimensioneCampo);*/
+
+
         JButton registrazione = new JButton("Registrati");
         registrazione.setPreferredSize(dimensioneCampo);
         registrazione.setMinimumSize(dimensioneCampo);
@@ -222,7 +230,8 @@ public class RegistrazioneGUI extends TemplateGUI {
         pannelloCentrale.add(passwordLabel, vincoloGriglia);
         vincoloGriglia.gridx = 1;
         vincoloGriglia.gridy = 7;
-        pannelloCentrale.add(campoPassword, vincoloGriglia);
+        pannelloCentrale.add(pannelloPassword, vincoloGriglia);
+        //pannelloCentrale.add(campoPassword, vincoloGriglia);
 
         //bottone login
         vincoloGriglia.gridx = 0;
@@ -251,7 +260,46 @@ public class RegistrazioneGUI extends TemplateGUI {
 
         pannello.add(home);
 
+    }
 
+    //METODO HELPER PER IL CAMPO PASSWORD CON OCCHIO
+    private JLayeredPane creaCampoPasswordConOcchio(JPasswordField campoPassword, Dimension dimensioneCampo) {
+        char echoCharDefault = campoPassword.getEchoChar();
 
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(dimensioneCampo);
+        layeredPane.setMinimumSize(dimensioneCampo);
+        layeredPane.setMaximumSize(dimensioneCampo);
+
+        campoPassword.setBounds(0, 0, dimensioneCampo.width, dimensioneCampo.height);
+
+        JButton bottoneOcchio = new JButton("\uD83D\uDC41"); // 👁
+        bottoneOcchio.setFocusPainted(false);
+        bottoneOcchio.setBorderPainted(false);
+        bottoneOcchio.setContentAreaFilled(false);
+        bottoneOcchio.setMargin(new Insets(0, 0, 0, 0));
+
+        int dimBottone = dimensioneCampo.height - 10;
+        bottoneOcchio.setBounds(
+                dimensioneCampo.width - dimBottone - 5,
+                (dimensioneCampo.height - dimBottone) / 2,
+                dimBottone,
+                dimBottone
+        );
+
+        bottoneOcchio.addActionListener(e -> {
+            if (campoPassword.getEchoChar() != 0) {
+                campoPassword.setEchoChar((char) 0); // mostra il testo
+                bottoneOcchio.setText("\uD83D\uDE48"); // 🙈
+            } else {
+                campoPassword.setEchoChar(echoCharDefault); // nasconde di nuovo
+                bottoneOcchio.setText("\uD83D\uDC41"); // 👁
+            }
+        });
+
+        layeredPane.add(campoPassword, JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(bottoneOcchio, JLayeredPane.PALETTE_LAYER);
+
+        return layeredPane;
     }
 }
