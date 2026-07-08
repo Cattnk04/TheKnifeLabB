@@ -106,6 +106,9 @@ public class ClientHandler extends Thread{
             case GET_RISTORANTE:
                 return gestisciGetRistorante(richiesta.getContenuto());
 
+            case GET_RISTORANTI_BYEMAIL:
+                return gestisciGetRistoranteByEmail(richiesta.getContenuto());
+
             case CREA_RISTORANTE:
                 return gestisciCreaRistorante(richiesta.getContenuto());
 
@@ -245,6 +248,18 @@ public class ClientHandler extends Thread{
         List<RistoranteDTO> ristoranti = ristoranteService.getTuttiRistoranti();
         if (!ristoranti.isEmpty()) return new Risposta(true, ristoranti, "Ristoranti trovati");
         else return new Risposta(false, null, "Nessun ristorante trovato");
+    }
+
+    private Risposta gestisciGetRistoranteByEmail(Object contenuto){
+        if(!(contenuto instanceof String email)){
+            return new Risposta(false, null, "Email non valida");
+        }
+        List<RistoranteDTO> ristoranti = ristoranteService.getRistorantiDiRistoratore(email);
+        if(!ristoranti.isEmpty()){
+            return new Risposta(true, ristoranti, "Ristoranti trovati");
+        } else {
+            return new Risposta(false, null, "Nessun ristorante trovato per questa emil");
+        }
     }
 
     //DA CONTROLLARE
