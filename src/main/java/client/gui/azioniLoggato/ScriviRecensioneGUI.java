@@ -135,7 +135,7 @@ public class ScriviRecensioneGUI extends TemplateGUI {
             return;
         }
 
-        RecensioneDTO dto = new RecensioneDTO(idRistorante, valutazione, testo);
+        RecensioneDTO dto = new RecensioneDTO(email, idRistorante, valutazione, testo, null);
         Richiesta richiesta = new Richiesta(TipoRichieste.SCRIVI_RECENSIONE, dto);
 
         Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
