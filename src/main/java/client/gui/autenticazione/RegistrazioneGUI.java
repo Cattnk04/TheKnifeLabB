@@ -131,7 +131,7 @@ public class RegistrazioneGUI extends TemplateGUI {
             if (!radioSi.isSelected() && !radioNo.isSelected()) {
                 JOptionPane.showMessageDialog(
                         frame,
-                        "Devi specificare se si un ristoratore oppure no!",
+                        "Devi specificare se sei un ristoratore oppure no!",
                         "Campo obbligatorio",
                         JOptionPane.WARNING_MESSAGE
                 );
