@@ -7,18 +7,22 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- *
+ * Punto di ingresso del server applicativo.
+ * <p>
+ * Apre una {@link ServerSocket} sulla porta 10000 e accetta connessioni
+ * in ingresso, delegando ogni client a un nuovo {@link ClientHandler}.
  */
 public class ServerMain {
 
     /**
-     *
-      */
+     * Socket di ascolto del server.
+     */
     private static ServerSocket serverSocket;
 
     /**
+     * Avvia il server e resta in ascolto di nuove connessioni client.
      *
-     * @param args
+     * @param args argomenti da riga di comando, non utilizzati
      */
     public static void main(String[] args) {
 
@@ -44,8 +48,9 @@ public class ServerMain {
     }
 
     /**
-     *
-      */
+     * Chiude la socket di ascolto del server, interrompendo l'accettazione
+     * di nuove connessioni.
+     */
     public static void stopServer() {
         try {
             if (serverSocket != null && !serverSocket.isClosed()) {

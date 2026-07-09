@@ -14,7 +14,10 @@ import java.net.Socket;
 import java.util.List;
 
 /**
- *
+ * Gestisce una singola connessione client lato server.
+ * <p>
+ * Ogni istanza vive in un thread dedicato, legge le richieste serializzate
+ * dal client, le smista ai service applicativi e restituisce la risposta.
  */
 public class ClientHandler extends Thread{
     private Socket clientSocket;
@@ -27,8 +30,9 @@ public class ClientHandler extends Thread{
     private PreferitiService preferitiService;
 
     /**
+     * Crea un nuovo handler per il socket del client appena accettato.
      *
-     * @param clientSocket
+     * @param clientSocket socket della connessione client
      */
     public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -40,8 +44,11 @@ public class ClientHandler extends Thread{
     }
 
     /**
-     *
-      */
+     * Esegue il ciclo di lettura e risposta per il client associato.
+     * <p>
+     * Il metodo termina quando il client disconnette la sessione o si verifica
+     * un errore irreversibile nella comunicazione.
+     */
     @Override
     public void run() {
         try {
@@ -69,8 +76,8 @@ public class ClientHandler extends Thread{
     }
 
     /**
-     *
-      */
+     * Chiude stream e socket associati alla connessione corrente.
+     */
     private void chiudiConnessione() {
         try {
             if (in != null) {
@@ -90,9 +97,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Smista una richiesta al gestore specifico in base al tipo comando.
      *
-      * @param richiesta
-     * @return
+     * @param richiesta richiesta serializzata ricevuta dal client
+     * @return risposta da inviare al client
      */
     public Risposta gestisciRichiesta(Richiesta richiesta) {
         if (richiesta == null || richiesta.getTipoRichiesta() == null) {
@@ -196,9 +204,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Gestisce il login dell'utente.
      *
-      * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link LoginDTO}
+     * @return esito dell'operazione
      */
     private Risposta gestisciLogin(Object contenuto) {
         if (!(contenuto instanceof LoginDTO loginDTO))
@@ -211,9 +220,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Gestisce la registrazione di un nuovo utente.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link RegistrazioneDTO}
+     * @return esito dell'operazione
      */
     private Risposta gestisciRegistrazione(Object contenuto) {
         if (!(contenuto instanceof RegistrazioneDTO registrazioneDTO))
@@ -226,9 +236,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Gestisce la chiusura logica della sessione client.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload opzionale con l'email dell'utente
+     * @return esito dell'operazione
      */
     private Risposta gestisciLogout(Object contenuto) {
         String email = (contenuto instanceof String e) ? e : "sconosciuto";
@@ -237,9 +248,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Recupera i dati di un utente a partire dalla sua email.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto email dell'utente
+     * @return dati utente oppure errore
      */
     private Risposta gestisciGetUtente(Object contenuto) {
         if (!(contenuto instanceof String email)) {
@@ -258,9 +270,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Aggiorna i dati anagrafici di un utente.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link RegistrazioneDTO}
+     * @return esito dell'operazione
      */
     private Risposta gestisciModificaUtente(Object contenuto) {
         if (!(contenuto instanceof RegistrazioneDTO dto)) {
@@ -282,9 +295,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Restituisce l'elenco di tutti i ristoranti disponibili.
      *
-      * @param contenuto
-     * @return
+     * @param contenuto non utilizzato
+     * @return lista ristoranti o errore
      */
     private Risposta gestisciGetRistorante(Object contenuto) {
         List<RistoranteDTO> ristoranti = ristoranteService.getTuttiRistoranti();
@@ -293,9 +307,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Restituisce i ristoranti associati all'email di un ristoratore.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto email del ristoratore
+     * @return lista ristoranti o errore
      */
     private Risposta gestisciGetRistoranteByEmail(Object contenuto){
         if(!(contenuto instanceof String email)){
@@ -310,9 +325,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Crea un nuovo ristorante.
      *
-      * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link RistoranteDTO}
+     * @return esito dell'operazione
      */
     public Risposta gestisciCreaRistorante(Object contenuto) {
         if(!(contenuto instanceof RistoranteDTO dto)){
@@ -326,9 +342,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Aggiorna i dati di un ristorante.
      *
-      * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link RistoranteDTO}
+     * @return esito dell'operazione
      */
     public Risposta gestisciModificaRistorante(Object contenuto) {
         if(!(contenuto instanceof RistoranteDTO dto)){
@@ -352,9 +369,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Elimina un ristorante.
      *
-      * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link RistoranteDTO}
+     * @return esito dell'operazione
      */
     public Risposta gestisciEliminaRistorante(Object contenuto) {
         if(!(contenuto instanceof RistoranteDTO dto)){
@@ -368,9 +386,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Cerca ristoranti usando i filtri specificati.
      *
-      * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link FiltroRicercaDTO}
+     * @return risultati della ricerca o errore
      */
     public Risposta gestisciCercaRistorante(Object contenuto) {
         if (!(contenuto instanceof FiltroRicercaDTO filtro)) {
@@ -382,9 +401,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Verifica se un ristorante esiste.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link RistoranteDTO}
+     * @return esito della verifica
      */
     public Risposta gestisciEsistenzaRistorante(Object contenuto) {
         if (!(contenuto instanceof RistoranteDTO dto)) {
@@ -395,9 +415,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Recupera le recensioni associate a un ristorante.
      *
-      * @param contenuto
-     * @return
+     * @param contenuto id del ristorante
+     * @return lista recensioni o errore
      */
     private Risposta gestisciGetRecensioniRistorante(Object contenuto) {
         if(!(contenuto instanceof Integer idRistorante)){
@@ -410,9 +431,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Recupera le recensioni di un utente.
      *
-      * @param contenuto
-     * @return
+     * @param contenuto id del ristorante
+     * @return lista recensioni o errore
      */
     public Risposta gestisciGetRecensioniUtente(Object contenuto) {
         if(!(contenuto instanceof Integer idRistorante)){
@@ -425,9 +447,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Recupera le recensioni scritte da un utente tramite email.
      *
-      * @param contenuto
-     * @return
+     * @param contenuto email dell'utente
+     * @return lista recensioni o errore
      */
     public Risposta gestisciGetRecensioniEmail(Object contenuto) {
         if(!(contenuto instanceof String email)){
@@ -440,9 +463,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Crea una nuova recensione.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link RecensioneDTO}
+     * @return esito dell'operazione
      */
     private Risposta gestisciScriviRecensione(Object contenuto) {
         if(!(contenuto instanceof RecensioneDTO dto)){
@@ -476,9 +500,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Modifica il testo e la valutazione di una recensione.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link RecensioneDTO}
+     * @return esito dell'operazione
      */
     private Risposta gestisciModificaRecensione(Object contenuto) {
         if (!(contenuto instanceof RecensioneDTO dto)) {
@@ -516,9 +541,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Elimina una recensione.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link RecensioneDTO}
+     * @return esito dell'operazione
      */
     private Risposta gestisciEliminaRecensione(Object contenuto) {
         if(!(contenuto instanceof RecensioneDTO dto)){
@@ -548,9 +574,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Inserisce o aggiorna la risposta del ristoratore a una recensione.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link RecensioneDTO}
+     * @return esito dell'operazione
      */
     private Risposta gestisciRispondiRecensione(Object contenuto) {
         if(!(contenuto instanceof RecensioneDTO dto)){
@@ -576,9 +603,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Aggiorna la risposta gia presente su una recensione.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link RecensioneDTO}
+     * @return esito dell'operazione
      */
     public Risposta gestisciModificaRisposta(Object contenuto) {
         if(!(contenuto instanceof RecensioneDTO dto)){
@@ -601,9 +629,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Restituisce un riepilogo aggregato delle recensioni di un ristorante.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto id del ristorante
+     * @return riepilogo o errore
      */
     public Risposta gestisciRiepilogoRecensioni(Object contenuto) {
         if (!(contenuto instanceof Integer idRistorante)) {
@@ -625,9 +654,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Recupera la lista dei ristoranti preferiti di un utente.
      *
-      * @param contenuto
-     * @return
+     * @param contenuto email dell'utente
+     * @return lista preferiti o errore
      */
     private Risposta gestisciGetPreferiti(Object contenuto){
         if(!(contenuto instanceof String email)){
@@ -640,9 +670,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Aggiunge un ristorante ai preferiti.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link PreferitiDTO}
+     * @return esito dell'operazione
      */
     private Risposta gestisciAggiungiPreferito(Object contenuto){
         if(!(contenuto instanceof PreferitiDTO dto)){
@@ -661,9 +692,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Rimuove un ristorante dai preferiti.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link PreferitiDTO}
+     * @return esito dell'operazione
      */
     private Risposta gestisciRimuoviPreferito(Object contenuto) {
         if (!(contenuto instanceof PreferitiDTO dto)) {
@@ -684,9 +716,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Verifica se un ristorante e gia presente tra i preferiti.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link PreferitiDTO}
+     * @return esito della verifica
      */
     private Risposta gestisciEsistenzaPreferiti(Object contenuto) {
         if (!(contenuto instanceof PreferitiDTO dto)) {
@@ -701,9 +734,10 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Inverte lo stato dei preferiti per un ristorante.
      *
-     * @param contenuto
-     * @return
+     * @param contenuto payload atteso come {@link PreferitiDTO}
+     * @return esito dell'operazione e nuovo stato
      */
     private Risposta gestisciTogglePreferito(Object contenuto) {
         if (!(contenuto instanceof PreferitiDTO dto)) {
@@ -729,8 +763,9 @@ public class ClientHandler extends Thread{
     }
 
     /**
+     * Recupera l'elenco dei tipi di cucina disponibili.
      *
-      * @return
+     * @return lista tipi cucina o errore
      */
     public Risposta gestisciGetTipoCucina() {
         if (tipoCucinaService == null) {
@@ -744,9 +779,10 @@ public class ClientHandler extends Thread{
         }
     }
 
-    /***
+    /**
+     * Richiede la chiusura del server.
      *
-     * @return
+     * @return risposta di conferma della chiusura
      */
     private Risposta gestisciShutdown() {
 

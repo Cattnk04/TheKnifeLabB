@@ -10,15 +10,22 @@ import java.sql.*;
 import java.util.*;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * DAO (Data Access Object) per l'accesso ai dati dei ristoranti,
+ * memorizzati nella tabella {@code ristorante} del database.
+ * Ogni operazione apre e chiude una propria connessione al database
+ * (connection-per-operation).
  */
 public class RistoranteDAO {
 
     /**
+     * Converte la riga corrente di un {@link ResultSet} in un oggetto {@link Ristorante}.
      *
-      * @param rs
-     * @return
-     * @throws SQLException
+     * @param rs il ResultSet posizionato sulla riga da convertire
+     * @return il {@link Ristorante} corrispondente alla riga corrente
+     * @throws SQLException se si verifica un errore durante la lettura del ResultSet
      */
     private Ristorante map(ResultSet rs) throws SQLException {
         return new Ristorante(
@@ -37,9 +44,10 @@ public class RistoranteDAO {
     }
 
     /**
+     * Inserisce un nuovo ristorante nel database.
      *
-      * @param ristorante
-     * @return
+     * @param ristorante l'oggetto {@link Ristorante} da salvare
+     * @return true se l'inserimento va a buon fine, false in caso di errore
      */
     public boolean inserisciRistorante(Ristorante ristorante){
         String sql = """
@@ -50,7 +58,7 @@ public class RistoranteDAO {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
         try (Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, ristorante.getNomeRistorante());
             statement.setString(2, ristorante.getEmail());
@@ -72,11 +80,14 @@ public class RistoranteDAO {
     }
 
     /**
+     * Aggiorna un singolo campo di un ristorante esistente. Il campo da aggiornare
+     * viene selezionato dinamicamente tramite {@link CampoRistorante}.
      *
-      * @param idRistorante
-     * @param campo
-     * @param valore
-     * @return
+     * @param idRistorante id del ristorante da aggiornare
+     * @param campo il campo da aggiornare ({@code NOME}, {@code CITTA}, {@code NAZIONE}, {@code VIA} o {@code FASCIA_PREZZO})
+     * @param valore il nuovo valore da impostare per il campo indicato
+     * @return true se l'aggiornamento va a buon fine, false in caso di errore
+     * @throws IllegalArgumentException se il campo indicato non è valido
      */
     public boolean aggiornaCampo(int idRistorante, CampoRistorante campo, Object valore) {
 
@@ -108,9 +119,10 @@ public class RistoranteDAO {
     }
 
     /**
+     * Elimina un ristorante esistente dal database.
      *
-      * @param idRistorante
-     * @return
+     * @param idRistorante id del ristorante da eliminare
+     * @return true se l'eliminazione va a buon fine, false in caso di errore
      */
     public boolean rimuoviRistorante(int idRistorante) {
         String sql = "DELETE FROM ristorante WHERE idristorante = ?";
@@ -129,9 +141,10 @@ public class RistoranteDAO {
     }
 
     /**
+     * Aggiorna tutti i dati di un ristorante esistente con i valori forniti nel DTO.
      *
-      * @param dto
-     * @return
+     * @param dto il {@link RistoranteDTO} con i nuovi dati del ristorante (deve contenere l'id)
+     * @return true se l'aggiornamento va a buon fine, false in caso di errore
      */
     public boolean aggiornaRistorante(RistoranteDTO dto){
         String sql = """
@@ -162,13 +175,14 @@ public class RistoranteDAO {
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Errore aggiornamento ristorante: " + e.getMessage());
-        return false;
+            return false;
         }
     }
 
     /**
+     * Recupera tutti i ristoranti presenti nel database, ordinati alfabeticamente per nome.
      *
-      * @return
+     * @return la lista di tutti i ristoranti; una lista vuota se non ce ne sono o in caso di errore
      */
     public List<Ristorante> trovaTutti() {
 
@@ -196,9 +210,10 @@ public class RistoranteDAO {
     }
 
     /**
+     * Recupera tutti i ristoranti associati a un ristoratore, a partire dalla sua email.
      *
-      * @param email
-     * @return
+     * @param email email del ristoratore
+     * @return la lista dei ristoranti del ristoratore; una lista vuota se non ce ne sono o in caso di errore
      */
     public List<Ristorante> trovaPerRistoratore(String email) {
 
@@ -228,9 +243,12 @@ public class RistoranteDAO {
     }
 
     /**
+     * Ricerca i ristoranti che soddisfano i criteri specificati nel filtro, costruendo
+     * dinamicamente la query SQL in base ai soli criteri non nulli presenti nel DTO.
      *
-      * @param filtro
-     * @return
+     * @param filtro il {@link FiltroRicercaDTO} con i criteri di ricerca da applicare
+     * @return la lista dei ristoranti che soddisfano i criteri; una lista vuota se non ce ne
+     * sono o in caso di errore
      */
     public List<Ristorante> cercaConFiltro(FiltroRicercaDTO filtro) {
 
@@ -299,10 +317,12 @@ public class RistoranteDAO {
     }
 
     /**
+     * Verifica se esiste già un ristorante con lo stesso nome associato allo stesso
+     * ristoratore (email).
      *
-      * @param nomeRistorante
-     * @param email
-     * @return
+     * @param nomeRistorante nome del ristorante da verificare
+     * @param email email del ristoratore proprietario
+     * @return true se il ristorante esiste già, false altrimenti o in caso di errore
      */
     public boolean esisteRistorante(String nomeRistorante, String email) {
 

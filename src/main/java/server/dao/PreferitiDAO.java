@@ -8,15 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * DAO (Data Access Object) per l'accesso ai dati dei preferiti degli utenti,
+ * memorizzati nella tabella {@code preferiti} del database.
+ * Ogni operazione apre e chiude una propria connessione al database
+ * (connection-per-operation).
  */
 public class PreferitiDAO {
 
     /**
+     * Inserisce un nuovo preferito nel database, associando un utente a un ristorante.
      *
-     * @param email
-     * @param idRistorante
-     * @return
+     * @param email email dell'utente che aggiunge il preferito
+     * @param idRistorante id del ristorante da aggiungere ai preferiti
+     * @return true se l'inserimento va a buon fine, false in caso di errore
      */
     public boolean salvaPreferiti(String email, int idRistorante) {
 
@@ -40,10 +47,11 @@ public class PreferitiDAO {
     }
 
     /**
+     * Elimina un preferito esistente dal database.
      *
-      * @param email
-     * @param idRistorante
-     * @return
+     * @param email email dell'utente proprietario del preferito
+     * @param idRistorante id del ristorante da rimuovere dai preferiti
+     * @return true se la cancellazione va a buon fine, false in caso di errore
      */
     public boolean cancellaPreferiti(String email, int idRistorante) {
 
@@ -67,10 +75,11 @@ public class PreferitiDAO {
     }
 
     /**
+     * Verifica se un dato ristorante è già presente tra i preferiti di un utente.
      *
-      * @param email
-     * @param idRistorante
-     * @return
+     * @param email email dell'utente
+     * @param idRistorante id del ristorante da verificare
+     * @return true se il preferito esiste, false altrimenti o in caso di errore
      */
     public boolean esistePreferito(String email, int idRistorante) {
 
@@ -98,9 +107,10 @@ public class PreferitiDAO {
     }
 
     /**
+     * Recupera tutti i preferiti associati a un utente, a partire dalla sua email.
      *
-      * @param email
-     * @return
+     * @param email email dell'utente di cui recuperare i preferiti
+     * @return la lista dei preferiti dell'utente; una lista vuota se non ce ne sono o in caso di errore
      */
     public List<Preferito> getPreferitiByEmail(String email) {
 

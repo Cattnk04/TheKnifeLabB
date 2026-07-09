@@ -9,14 +9,21 @@ import java.sql.*;
 import java.util.*;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * DAO (Data Access Object) per l'accesso ai dati delle recensioni,
+ * memorizzate nella tabella {@code recensioni} del database.
+ * Ogni operazione apre e chiude una propria connessione al database
+ * (connection-per-operation).
  */
 public class RecensioneDAO {
 
     /**
+     * Inserisce una nuova recensione nel database.
      *
-      * @param recensione
-     * @return
+     * @param recensione l'oggetto {@link Recensione} da salvare
+     * @return true se l'inserimento va a buon fine, false in caso di errore
      */
     public boolean salvaRecensioni (Recensione recensione){
         String sql = """
@@ -41,12 +48,15 @@ public class RecensioneDAO {
     }
 
     /**
+     * Aggiorna un singolo campo di una recensione esistente, identificata da ristorante ed
+     * email dell'autore. Il campo da aggiornare viene selezionato dinamicamente tramite
+     * {@link CampoRecensione}.
      *
-      * @param idRistorante
-     * @param email
-     * @param campo
-     * @param valore
-     * @return
+     * @param idRistorante id del ristorante recensito
+     * @param email email dell'autore della recensione
+     * @param campo il campo della recensione da aggiornare ({@code RECENSIONE}, {@code VALUTAZIONE} o {@code RISPOSTA})
+     * @param valore il nuovo valore da impostare per il campo indicato
+     * @return true se l'aggiornamento va a buon fine, false in caso di errore
      */
     public boolean aggiornaRecensione(int idRistorante, String email, CampoRecensione campo, Object valore) {
 
@@ -72,10 +82,11 @@ public class RecensioneDAO {
     }
 
     /**
+     * Elimina una recensione esistente, identificata da ristorante ed email dell'autore.
      *
-      * @param idRistorante
-     * @param email
-     * @return
+     * @param idRistorante id del ristorante recensito
+     * @param email email dell'autore della recensione da eliminare
+     * @return true se la cancellazione va a buon fine, false in caso di errore
      */
     public boolean cancellaRecensioni (int idRistorante, String email){
         String sql = """
@@ -83,12 +94,12 @@ public class RecensioneDAO {
                 WHERE idristorante = ? AND email = ?
                 """;
         try (Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)){
+             PreparedStatement statement = connection.prepareStatement(sql)){
 
-                statement.setInt(1, idRistorante);
-                statement.setString(2, email);
+            statement.setInt(1, idRistorante);
+            statement.setString(2, email);
 
-                return statement.executeUpdate() == 1;
+            return statement.executeUpdate() == 1;
 
         } catch (SQLException e){
             System.out.println("Errore durante la cancellazione delle recensioni: " + e.getMessage());
@@ -97,8 +108,9 @@ public class RecensioneDAO {
     }
 
     /**
+     * Recupera tutte le recensioni presenti nel database.
      *
-      * @return
+     * @return la lista di tutte le recensioni; una lista vuota se non ce ne sono o in caso di errore
      */
     public List<Recensione> getRecensioni() {
 
@@ -132,9 +144,11 @@ public class RecensioneDAO {
     }
 
     /**
+     * Recupera tutte le recensioni relative a un determinato ristorante, ordinate per
+     * email in ordine decrescente.
      *
-      * @param idRistorante
-     * @return
+     * @param idRistorante id del ristorante di cui recuperare le recensioni
+     * @return la lista delle recensioni del ristorante; una lista vuota se non ce ne sono o in caso di errore
      */
     public List<Recensione> getRecensioniByRistorante(int idRistorante) {
 
@@ -173,9 +187,10 @@ public class RecensioneDAO {
     }
 
     /**
+     * Recupera tutte le recensioni scritte da un determinato utente.
      *
-      * @param email
-     * @return
+     * @param email email dell'utente autore delle recensioni
+     * @return la lista delle recensioni scritte dall'utente; una lista vuota se non ce ne sono o in caso di errore
      */
     public List<Recensione> getRecensioniByEmail(String email) {
 
@@ -189,7 +204,7 @@ public class RecensioneDAO {
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)){
 
-                statement.setString(1, email);
+            statement.setString(1, email);
 
             try (ResultSet rs = statement.executeQuery()) {
 
@@ -212,9 +227,12 @@ public class RecensioneDAO {
     }
 
     /**
+     * Calcola il riepilogo delle recensioni di un ristorante, ovvero il numero totale
+     * di recensioni e la media delle valutazioni.
      *
-      * @param idRistorante
-     * @return
+     * @param idRistorante id del ristorante di cui calcolare il riepilogo
+     * @return il {@link RiepilogoRecensioniDTO} calcolato; se il ristorante non ha recensioni o si
+     * verifica un errore, viene restituito un riepilogo con 0 recensioni e media 0.0
      */
     public RiepilogoRecensioniDTO getRiepilogo(int idRistorante) {
         String sql = """
@@ -224,7 +242,7 @@ public class RecensioneDAO {
                 WHERE idristorante = ?
                 """;
         try (Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)){
+             PreparedStatement statement = connection.prepareStatement(sql)){
 
             statement.setInt(1, idRistorante);
             try (ResultSet rs = statement.executeQuery()) {
@@ -245,11 +263,14 @@ public class RecensioneDAO {
     }
 
     /**
+     * Inserisce la risposta del ristoratore a una recensione, ma solo se questa non ha
+     * già una risposta (il campo {@code risposta} deve essere nullo o vuoto).
      *
-      * @param idRistorante
-     * @param email
-     * @param risposta
-     * @return
+     * @param idRistorante id del ristorante recensito
+     * @param email email dell'autore della recensione
+     * @param risposta testo della risposta da inserire
+     * @return true se la risposta viene inserita correttamente, false se la recensione ha già
+     * una risposta o in caso di errore
      */
     public boolean rispostaRecensione (int idRistorante, String email, String risposta){
 

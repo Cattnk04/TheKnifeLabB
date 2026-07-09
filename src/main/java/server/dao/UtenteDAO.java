@@ -9,15 +9,21 @@ import java.sql.*;
 import java.util.*;
 
 /**
- *
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
+ * DAO (Data Access Object) per l'accesso ai dati degli utenti,
+ * memorizzati nella tabella {@code utente} del database.
+ * Ogni operazione apre e chiude una propria connessione al database
+ * (connection-per-operation).
  */
 public class UtenteDAO {
 
     /**
+     * Converte la riga corrente di un {@link ResultSet} in un oggetto {@link Utente}.
      *
-      * @param rs
-     * @return
-     * @throws SQLException
+     * @param rs il ResultSet posizionato sulla riga da convertire
+     * @return l'{@link Utente} corrispondente alla riga corrente
+     * @throws SQLException se si verifica un errore durante la lettura del ResultSet
      */
     private Utente map(ResultSet rs) throws SQLException {
         return new Utente(
@@ -32,9 +38,13 @@ public class UtenteDAO {
     }
 
     /**
+     * Inserisce un nuovo utente nel database, dopo aver verificato che i campi
+     * obbligatori (email e password) siano valorizzati.
      *
-      * @param utente
-     * @return
+     * @param utente l'oggetto {@link Utente} da registrare
+     * @return true se l'inserimento va a buon fine, false se l'operazione non modifica alcuna riga
+     * @throws UtenteException se {@code utente} è {@code null}, se l'email o la password non
+     * sono valorizzate, oppure se si verifica un errore durante il salvataggio
      */
     public boolean registrazione(Utente utente) {
 
@@ -77,9 +87,11 @@ public class UtenteDAO {
     }
 
     /**
+     * Cerca un utente nel database a partire dalla sua email.
      *
-      * @param email
-     * @return
+     * @param email email dell'utente da cercare
+     * @return un {@link Optional} contenente l'{@link Utente} trovato, oppure {@link Optional#empty()}
+     * se non esiste o si verifica un errore
      */
     public Optional<Utente> trovaUtente(String email) {
         String sql = """
@@ -106,10 +118,12 @@ public class UtenteDAO {
     }
 
     /**
+     * Aggiorna l'hash della password di un utente, identificato dalla sua email.
+     * Utilizzato anche per la migrazione degli hash legacy a BCrypt.
      *
-      * @param email
-     * @param hashpwd
-     * @return
+     * @param email email dell'utente di cui aggiornare la password
+     * @param hashpwd il nuovo hash della password
+     * @return true se l'aggiornamento va a buon fine, false in caso di errore
      */
     public boolean aggiornaPasswordHash(String email, String hashpwd) {
         String sql = """
@@ -132,9 +146,10 @@ public class UtenteDAO {
     }
 
     /**
+     * Elimina un utente esistente dal database, a partire dalla sua email.
      *
-      * @param email
-     * @return
+     * @param email email dell'utente da eliminare
+     * @return true se la cancellazione va a buon fine, false in caso di errore
      */
     public boolean cancellaUtente (String email){
         String sql = """
@@ -155,9 +170,10 @@ public class UtenteDAO {
     }
 
     /**
+     * Verifica se esiste già un utente registrato con la data email.
      *
-      * @param email
-     * @return
+     * @param email email da verificare
+     * @return true se l'utente esiste, false altrimenti o in caso di errore
      */
     public boolean esisteUtente(String email) {
         String sql = """
@@ -183,8 +199,9 @@ public class UtenteDAO {
     }
 
     /**
+     * Recupera tutti gli utenti presenti nel database.
      *
-      * @return
+     * @return la lista di tutti gli utenti; una lista vuota se non ce ne sono o in caso di errore
      */
     public List<Utente> trovaTutti() {
 
@@ -211,11 +228,15 @@ public class UtenteDAO {
     }
 
     /**
+     * Aggiorna un singolo campo di un utente esistente, identificato dalla sua email.
+     * Il campo da aggiornare viene selezionato dinamicamente tramite {@link CampoUtente}.
      *
-      * @param email
-     * @param campo
-     * @param valore
-     * @return
+     * @param email email dell'utente da aggiornare
+     * @param campo il campo da aggiornare ({@code NOMEUTENTE}, {@code COGNOMEUTENTE}, {@code CITTA},
+     * {@code NAZIONE}, {@code PASSWORD} o {@code RISTORATORE})
+     * @param valore il nuovo valore da impostare per il campo indicato
+     * @return true se l'aggiornamento va a buon fine, false in caso di errore
+     * @throws IllegalArgumentException se il campo indicato non è valido
      */
     public boolean aggiornamentoUtente(String email, CampoUtente campo, Object valore){
         String sql = switch (campo){
