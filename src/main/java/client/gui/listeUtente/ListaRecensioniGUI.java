@@ -17,7 +17,16 @@ import java.awt.*;
 import java.util.List;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * Schermata che mostra a un utente cliente autenticato l'elenco delle
+ * proprie recensioni.
+ * <p>
+ * Permette di modificare o eliminare una recensione selezionata, e mostra
+ * per ciascuna recensione il nome del ristorante recensito (recuperato
+ * incrociando gli id dei ristoranti con quelli delle recensioni).
+ * </p>
  */
 public class ListaRecensioniGUI extends TemplateGUI {
     JFrame frame;
@@ -30,10 +39,14 @@ public class ListaRecensioniGUI extends TemplateGUI {
     private List<RistoranteDTO> tuttiRistoranti = new java.util.ArrayList<>();
 
     /**
+     * Costruisce la schermata con l'elenco delle recensioni dell'utente,
+     * caricandole dal server insieme all'elenco dei ristoranti (necessario
+     * per mostrarne il nome) e predisponendo i pulsanti per modificare o
+     * eliminare la recensione selezionata.
      *
-     * @param frame
-     * @param utenteService
-     * @param email
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param email l'email dell'utente di cui visualizzare le recensioni
      */
     public ListaRecensioniGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
@@ -111,7 +124,9 @@ public class ListaRecensioniGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Richiede al server l'elenco delle recensioni scritte dall'utente,
+     * quindi carica anche l'elenco dei ristoranti (per poterne mostrare il
+     * nome) e aggiorna la lista visualizzata.
      */
     @SuppressWarnings("unchecked")
     private void caricaRecensioni() {
@@ -129,7 +144,9 @@ public class ListaRecensioniGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Richiede al server l'elenco di tutti i ristoranti e lo memorizza,
+     * per poter successivamente risalire al nome del ristorante a partire
+     * dal suo id (vedi {@link #trovaNomeRistorante(int)}).
      */
     @SuppressWarnings("unchecked")
     private void caricaNomiRistoranti() {
@@ -143,9 +160,12 @@ public class ListaRecensioniGUI extends TemplateGUI {
     }
 
     /**
+     * Cerca il nome di un ristorante a partire dal suo id, scorrendo
+     * l'elenco dei ristoranti caricato in precedenza.
      *
-     * @param idRistorante
-     * @return
+     * @param idRistorante id del ristorante da cercare
+     * @return il nome del ristorante, oppure una stringa segnaposto
+     * ("Ristorante #idRistorante") se non viene trovato
      */
     private String trovaNomeRistorante(int idRistorante) {
         for (RistoranteDTO r : tuttiRistoranti) {
@@ -157,8 +177,11 @@ public class ListaRecensioniGUI extends TemplateGUI {
     }
 
     /**
+     * Aggiorna la lista visualizzata con i risultati forniti e aggiorna
+     * l'etichetta con il conteggio delle recensioni trovate.
      *
-     * @param risultati
+     * @param risultati la lista di recensioni da mostrare, o {@code null}/vuota
+     * se non ci sono risultati
      */
     private void aggiornaRisultati(List<Recensione> risultati) {
         modelloLista.clear();
@@ -173,7 +196,8 @@ public class ListaRecensioniGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Mostra un messaggio quando l'utente tenta di modificare o eliminare
+     * una recensione senza averne selezionata una dalla lista.
      */
     private void mostraNessunaSelezione() {
         JOptionPane.showMessageDialog(this,
@@ -183,8 +207,11 @@ public class ListaRecensioniGUI extends TemplateGUI {
     }
 
     /**
+     * Apre una finestra di dialogo che permette di modificare il testo e la
+     * valutazione di una recensione esistente, inviando la richiesta di
+     * aggiornamento al server in caso di conferma.
      *
-     * @param recensione
+     * @param recensione la {@link Recensione} da modificare
      */
     private void apriModificaRecensione (Recensione recensione){
         JTextArea areaTesto = new JTextArea(recensione.getRecensione(),5,30);
@@ -233,8 +260,10 @@ public class ListaRecensioniGUI extends TemplateGUI {
     }
 
     /**
+     * Chiede conferma all'utente e, in caso affermativo, invia al server la
+     * richiesta di eliminazione della recensione.
      *
-     * @param recensione
+     * @param recensione la {@link Recensione} da eliminare
      */
     private void eliminaRecensione(Recensione recensione) {
         int conferma = JOptionPane.showConfirmDialog(this,
@@ -268,7 +297,9 @@ public class ListaRecensioniGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Renderer personalizzato per visualizzare ciascuna cella della lista
+     * delle recensioni, mostrando il nome del ristorante e un'anteprima
+     * (voto e testo troncato) della recensione.
      */
     private class RecensioneCellRenderer extends JPanel implements ListCellRenderer<Recensione> {
 
@@ -276,7 +307,8 @@ public class ListaRecensioniGUI extends TemplateGUI {
         private final JLabel labelInfo = new JLabel();
 
         /**
-         *
+         * Costruisce il renderer, impostando il layout e lo stile delle
+         * etichette che mostrano il nome del ristorante e i dettagli della recensione.
          */
         public RecensioneCellRenderer() {
             setLayout(new GridLayout(2, 1));
@@ -289,13 +321,17 @@ public class ListaRecensioniGUI extends TemplateGUI {
         }
 
         /**
+         * Costruisce e restituisce il componente grafico utilizzato per
+         * visualizzare una singola cella della lista, mostrando il nome del
+         * ristorante e un'anteprima della recensione (voto e testo troncato
+         * a 60 caratteri).
          *
          * @param list The JList we're painting.
          * @param recensione The value returned by list.getModel().getElementAt(index).
          * @param index The cells index.
          * @param isSelected True if the specified cell was selected.
          * @param cellHasFocus True if the specified cell has the focus.
-         * @return
+         * @return il componente grafico da visualizzare per la cella
          */
         @Override
         public Component getListCellRendererComponent(JList<? extends Recensione> list, Recensione recensione,

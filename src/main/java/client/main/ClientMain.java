@@ -13,12 +13,25 @@ import java.awt.event.WindowEvent;
 import javax.swing.*;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * Classe di avvio dell'applicazione client TheKnife.
+ * <p>
+ * Crea la finestra principale dell'applicazione (basata su Swing) mostrando
+ * la schermata iniziale per l'utente non autenticato ({@link GuestGUI}), e
+ * gestisce la chiusura dell'applicazione inviando al server una richiesta
+ * di arresto tramite {@link ClientConnection}.
+ * </p>
  */
 public class ClientMain {
     /**
+     * Punto di ingresso dell'applicazione client: inizializza la finestra
+     * principale in modalità massimizzata, mostra la {@link GuestGUI} e
+     * registra un listener per intercettare la chiusura della finestra,
+     * inviando al server la richiesta di arresto prima di terminare il processo.
      *
-     * @param args
+     * @param args argomenti da riga di comando (non utilizzati)
      */
     public static void main(String args[]) {
         UtenteDAO utenteDAO = new UtenteDAO();
@@ -50,3 +63,5 @@ public class ClientMain {
         });
     }
 }
+
+// //

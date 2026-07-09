@@ -18,7 +18,16 @@ import java.awt.*;
 import java.util.List;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * Schermata che mostra a un ristoratore l'elenco delle recensioni ricevute
+ * da un suo ristorante.
+ * <p>
+ * Mostra per ciascuna recensione il voto, il testo e lo stato (già risposta
+ * o in attesa di risposta), e permette di aprire la schermata di risposta
+ * ({@link RispondiRecensioneGUI}) per la recensione selezionata.
+ * </p>
  */
 public class ListaRecensioniGUI extends TemplateGUI {
     JFrame frame;
@@ -28,11 +37,14 @@ public class ListaRecensioniGUI extends TemplateGUI {
     private final JLabel labelContatore;
 
     /**
+     * Costruisce la schermata con l'elenco delle recensioni del ristorante,
+     * caricandole dal server e predisponendo la lista con renderer personalizzato
+     * e il pulsante per rispondere alla recensione selezionata.
      *
-     * @param frame
-     * @param utenteService
-     * @param email
-     * @param ristorante
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param email l'email del ristoratore proprietario del ristorante
+     * @param ristorante il {@link RistoranteDTO} di cui visualizzare le recensioni
      */
     public ListaRecensioniGUI(JFrame frame, UtenteService utenteService, String email, RistoranteDTO ristorante){
         super(frame);
@@ -130,8 +142,10 @@ public class ListaRecensioniGUI extends TemplateGUI {
     }
 
     /**
+     * Richiede al server l'elenco delle recensioni relative al ristorante e
+     * popola la lista, aggiornando anche l'etichetta con il conteggio dei risultati.
      *
-     * @param ristorante
+     * @param ristorante il {@link RistoranteDTO} di cui caricare le recensioni
      */
     @SuppressWarnings("unchecked")
     private void caricaRecensioni(RistoranteDTO ristorante) {
@@ -158,7 +172,8 @@ public class ListaRecensioniGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Mostra un messaggio quando l'utente tenta di rispondere senza aver
+     * selezionato una recensione dalla lista.
      */
     private void mostraNessunaSelezione() {
         JOptionPane.showMessageDialog(this,
@@ -168,7 +183,8 @@ public class ListaRecensioniGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Mostra un messaggio quando l'utente tenta di rispondere a una recensione
+     * che ha già ricevuto una risposta.
      */
     private void mostraGiaRisposta() {
         JOptionPane.showMessageDialog(this,
@@ -178,9 +194,10 @@ public class ListaRecensioniGUI extends TemplateGUI {
     }
 
     /**
+     * Converte un'entità di dominio {@link Recensione} nel corrispondente {@link RecensioneDTO}.
      *
-     * @param r
-     * @return
+     * @param r l'entità da convertire
+     * @return il {@link RecensioneDTO} corrispondente
      */
     private RecensioneDTO convertiInDTO(Recensione r) {
         // Adatta i campi ai getter effettivi della tua classe Recensione/RecensioneDTO

@@ -17,16 +17,30 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * Schermata di autenticazione dell'applicazione client.
+ * <p>
+ * Permette all'utente di inserire email e password ed effettuare il login;
+ * in caso di successo, recupera i dati dell'utente per determinarne il ruolo
+ * (cliente o ristoratore) e reindirizza alla schermata corrispondente
+ * ({@link LoggatoGUI} o {@link RistoratoreGUI}). Offre inoltre i collegamenti
+ * alla schermata di registrazione ({@link RegistrazioneGUI}) e alla home
+ * per gli ospiti ({@link GuestGUI}).
+ * </p>
  */
 public class LoginGUI extends TemplateGUI {
     private JTextField campoEmail;
     private JPasswordField campoPassword;
 
     /**
+     * Costruisce la schermata di login, con i campi per email e password,
+     * il pulsante per effettuare l'accesso e i collegamenti alla schermata
+     * di registrazione e alla home.
      *
-     * @param frame
-     * @param utenteService
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
      */
     public LoginGUI(JFrame frame, UtenteService utenteService) {
         super(frame);
@@ -53,6 +67,8 @@ public class LoginGUI extends TemplateGUI {
         campoEmail.setMinimumSize(dimensioneCampo);
         campoEmail.setMaximumSize(dimensioneCampo);
         campoEmail.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // //
 
 
         JLabel passwordLabel = new JLabel("Password: ");
@@ -176,9 +192,13 @@ public class LoginGUI extends TemplateGUI {
     // ---- METODO HELPER PER IL CAMPO PASSWORD CON OCCHIO ----
 
     /**
-     * @param campoPassword
-     * @param dimensioneCampo
-     * @return
+     * Crea un campo password sovrapponendo un pulsante "occhio" che permette
+     * di mostrare o nascondere il testo digitato, utilizzando un
+     * {@link JLayeredPane} per posizionare il pulsante sopra il campo.
+     *
+     * @param campoPassword il campo password a cui aggiungere il pulsante
+     * @param dimensioneCampo dimensione da applicare al campo e al pannello risultante
+     * @return il {@link JLayeredPane} contenente il campo password e il pulsante occhio sovrapposto
      */
     private JLayeredPane creaCampoPasswordConOcchio(JPasswordField campoPassword, Dimension dimensioneCampo) {
         char echoCharDefault = campoPassword.getEchoChar();

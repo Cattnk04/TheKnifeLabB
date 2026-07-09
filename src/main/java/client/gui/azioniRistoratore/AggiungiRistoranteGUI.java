@@ -17,7 +17,15 @@ import java.awt.*;
 import java.util.List;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * Schermata che permette a un ristoratore di registrare un nuovo ristorante.
+ * <p>
+ * Raccoglie nome, città, nazione, via, numero civico, fascia di prezzo,
+ * disponibilità di delivery e prenotazione online, e tipo di cucina (caricato
+ * dinamicamente dal server), inviando la richiesta di creazione al server.
+ * </p>
  */
 public class AggiungiRistoranteGUI extends TemplateGUI {
     private final JTextField campoNomeRistorante;
@@ -34,10 +42,12 @@ public class AggiungiRistoranteGUI extends TemplateGUI {
     private final JButton btnCrea;
 
     /**
+     * Costruisce la schermata per l'aggiunta di un nuovo ristorante, con
+     * tutti i campi del form e il pulsante per confermare la creazione.
      *
-     * @param frame
-     * @param utenteService
-     * @param email
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param email l'email del ristoratore che sta creando il ristorante
      */
     public AggiungiRistoranteGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
@@ -202,9 +212,13 @@ public class AggiungiRistoranteGUI extends TemplateGUI {
     }
 
     /**
+     * Raccoglie i valori inseriti nel form, costruisce il {@link RistoranteDTO}
+     * corrispondente e invia al server la richiesta di creazione del ristorante.
+     * In caso di successo torna alla schermata principale del ristoratore,
+     * altrimenti mostra il messaggio di errore ricevuto.
      *
-     * @param email
-     * @param utenteService
+     * @param email l'email del ristoratore che crea il ristorante
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
      */
     private void eseguiCreazioneRistorante(String email, UtenteService utenteService) {
         //creazione dei dati per il DTO da dare al service per effettuare la query sul DB
@@ -237,7 +251,8 @@ public class AggiungiRistoranteGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Richiede al server l'elenco dei tipi di cucina disponibili e popola
+     * il menu a tendina {@code campoTipoCucina} con i risultati ricevuti.
      */
     private void caricaTipiCucina() {
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_TIPO_CUCINA, null);

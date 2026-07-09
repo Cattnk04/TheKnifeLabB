@@ -18,18 +18,20 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.List;
 
-/*
+/**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
+ *
  * GUI di dettaglio di un ristorante.
  * Mostra i dati del ristorante e, sotto, un pannello di azioni che varia in base
  * allo stato dell'utente:
- *  - ospite (email == null) -> nessuna azione di scrittura, solo invito al login
+ *  - ospite (email == null) -&gt; nessuna azione di scrittura, solo invito al login
  *                               + possibilità di visualizzare le recensioni esistenti
- *  - utente cliente senza recensione -> bottone "Scrivi una recensione"
- *  - utente cliente con recensione già scritta -> messaggio informativo
- *  - utente ristoratore -> nessuna azione recensione (la GUI
+ *  - utente cliente senza recensione -&gt; bottone "Scrivi una recensione"
+ *  - utente cliente con recensione già scritta -&gt; messaggio informativo
+ *  - utente ristoratore -&gt; nessuna azione recensione (la GUI
  *                                            è condivisa anche per il ristoratore,
  *                                            che vede solo i dati del locale)
- *
  * In alto è presente un tasto "Indietro" che riporta l'utente alla schermata
  * precedente (LoggatoGUI se loggato, GuestGUI se ospite).
  */
@@ -40,6 +42,16 @@ public class DettagliRistoranteGUI extends TemplateGUI{
     private final RistoranteDTO ristorante;
     private final String email; //null se utente ospite
 
+    /**
+     * Costruisce la schermata di dettaglio del ristorante, mostrando i suoi
+     * dati e componendo il pannello delle azioni disponibili in base allo
+     * stato dell'utente (ospite, cliente o ristoratore).
+     *
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param email l'email dell'utente autenticato, oppure {@code null} se ospite
+     * @param ristorante il {@link RistoranteDTO} di cui mostrare i dettagli
+     */
     public DettagliRistoranteGUI(JFrame frame, UtenteService utenteService,
                                  String email, RistoranteDTO ristorante) {
         super(frame);
@@ -299,7 +311,17 @@ public class DettagliRistoranteGUI extends TemplateGUI{
         add(centro, BorderLayout.CENTER);
     }
 
-    //Helper per aggiungere una riga al pannello dati
+    /**
+     * Aggiunge al pannello dei dati una riga composta da un'etichetta e dal
+     * relativo valore, posizionati su due colonne alla riga indicata.
+     *
+     * @param pannello il pannello a cui aggiungere la riga
+     * @param gbc i vincoli {@link GridBagConstraints} da riutilizzare per il posizionamento
+     * @param riga indice della riga della griglia in cui inserire la coppia etichetta/valore
+     * @param label testo dell'etichetta (es. "Nome: ")
+     * @param valore testo del valore da mostrare accanto all'etichetta
+     * @return l'indice della riga successiva, da usare per la prossima chiamata
+     */
     private int aggiungiRiga(JPanel pannello, GridBagConstraints gbc,
                              int riga, String label, String valore) {
 
@@ -316,7 +338,14 @@ public class DettagliRistoranteGUI extends TemplateGUI{
         return riga + 1;
     }
 
-    // Verifica se l'utente loggato è un ristoratore, interrogando il server (come in VisualizzaProfiloGUI)
+    /**
+     * Verifica se l'utente loggato è un ristoratore, interrogando il server
+     * (come in {@code VisualizzaProfiloGUI}).
+     *
+     * @param email l'email dell'utente da verificare
+     * @return true se l'utente è un ristoratore, false altrimenti (anche in
+     * caso di mancata risposta dal server, per cui si assume utente cliente)
+     */
     private boolean recuperaFlagRistoratore(String email) {
         Richiesta richiestaDati = new Richiesta(TipoRichieste.GET_UTENTE, email);
         Risposta rispostaDati = ClientConnection.inviaRichiesta(richiestaDati);
@@ -329,7 +358,14 @@ public class DettagliRistoranteGUI extends TemplateGUI{
         return datiUtente.isRistoratore();
     }
 
-    // Verifica se l'utente ha già scritto una recensione per questo ristorante
+    /**
+     * Verifica se l'utente ha già scritto una recensione per questo ristorante.
+     *
+     * @param email l'email dell'utente
+     * @param idRistorante l'id del ristorante da verificare
+     * @return true se l'utente ha già recensito il ristorante, false altrimenti
+     * (anche se {@code idRistorante} è {@code null} o se la richiesta al server fallisce)
+     */
     private boolean haGiaRecensito(String email, Integer idRistorante) {
         if (idRistorante == null) return false;
 
@@ -347,7 +383,14 @@ public class DettagliRistoranteGUI extends TemplateGUI{
                 .anyMatch(r -> r.getIdRistorante() == idRistorante);
     }
 
-    // Verifica se il ristorante è già tra i preferiti dell'utente
+    /**
+     * Verifica se il ristorante è già tra i preferiti dell'utente.
+     *
+     * @param email l'email dell'utente
+     * @param idRistorante l'id del ristorante da verificare
+     * @return true se il ristorante è tra i preferiti, false altrimenti
+     * (anche se {@code idRistorante} è {@code null} o la richiesta al server fallisce)
+     */
     private boolean isPreferito(String email, Integer idRistorante) {
         if (idRistorante == null) return false;
 
@@ -358,7 +401,14 @@ public class DettagliRistoranteGUI extends TemplateGUI{
         return risposta != null && risposta.getSuccesso() && (boolean) risposta.getContenuto();
     }
 
-    // Recupera il nome del tipo di cucina dato l'id, interrogando il server
+    /**
+     * Recupera il nome del tipo di cucina dato l'id, interrogando il server.
+     *
+     * @param idTipoCucina l'id del tipo di cucina da cercare
+     * @return il nome del tipo di cucina corrispondente; "Sconosciuto" se non
+     * viene trovato tra quelli restituiti dal server, "Non disponibile" se la
+     * richiesta al server fallisce
+     */
     private String recuperaNomeTipoCucina(int idTipoCucina) {
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_TIPO_CUCINA, null);
         Risposta risposta = ClientConnection.inviaRichiesta(richiesta);

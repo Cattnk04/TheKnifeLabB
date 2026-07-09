@@ -16,17 +16,30 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * Schermata che permette a un ristoratore di rispondere a una recensione
+ * ricevuta da un cliente.
+ * <p>
+ * Mostra il testo della recensione (in sola lettura) e un campo per
+ * inserire la risposta, inviando la richiesta al server al momento della
+ * conferma. Dopo l'invio, l'utente torna alla lista delle recensioni del
+ * ristorante ({@link ListaRecensioniGUI}).
+ * </p>
  */
 public class RispondiRecensioneGUI extends TemplateGUI {
 
     /**
+     * Costruisce la schermata per rispondere a una recensione, mostrando
+     * il nome del ristorante, il testo della recensione e il campo per
+     * scrivere la risposta.
      *
-     * @param frame
-     * @param utenteService
-     * @param email
-     * @param ristorante
-     * @param recensione
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param email l'email del ristoratore che risponde alla recensione
+     * @param ristorante il {@link RistoranteDTO} del ristorante recensito
+     * @param recensione la {@link RecensioneDTO} a cui rispondere
      */
     public RispondiRecensioneGUI(JFrame frame, UtenteService utenteService, String email, RistoranteDTO ristorante, RecensioneDTO recensione) {
         super(frame);
@@ -147,7 +160,8 @@ public class RispondiRecensioneGUI extends TemplateGUI {
 
 
     /**
-     *
+     * Mostra un messaggio di avviso quando l'utente tenta di inviare una
+     * risposta con testo vuoto.
      */
     private void mostraTestoNonValido() {
         JOptionPane.showMessageDialog(this,
@@ -157,7 +171,7 @@ public class RispondiRecensioneGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Mostra un messaggio di errore quando l'invio della risposta al server fallisce.
      */
     private void mostraRispostaErrata() {
         JOptionPane.showMessageDialog(this,

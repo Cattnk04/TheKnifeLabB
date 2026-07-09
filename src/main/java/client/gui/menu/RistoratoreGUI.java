@@ -16,20 +16,34 @@ import java.awt.*;
 import java.util.List;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * Schermata principale mostrata a un utente ristoratore autenticato.
+ * <p>
+ * Estende {@link TemplateGUI} mostrando l'elenco dei ristoranti del
+ * ristoratore ({@link PannelloRistorantiRistoratore}) e i pulsanti per
+ * aggiungere, modificare, eliminare un ristorante o visualizzarne le
+ * recensioni. Abilita inoltre il pulsante "Logout" (nascosto di default
+ * nel template).
+ * </p>
  */
 public class RistoratoreGUI extends TemplateGUI {
 
     /**
-     *
+     * Pannello che mostra l'elenco dei ristoranti appartenenti al ristoratore.
      */
     private PannelloRistorantiRistoratore pannelloRistoranti;
 
     /**
+     * Costruisce la schermata per il ristoratore autenticato, inizializzando
+     * il pannello con i suoi ristoranti e i pulsanti per aggiungere, modificare,
+     * eliminare un ristorante o visualizzarne le recensioni. Collega inoltre
+     * i pulsanti "Profilo" e "Logout" ereditati dal template.
      *
-     * @param frame
-     * @param utenteService
-     * @param email
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param email l'email del ristoratore attualmente autenticato
      */
     public RistoratoreGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
@@ -121,10 +135,11 @@ public class RistoratoreGUI extends TemplateGUI {
     }
 
     /**
+     * Apre la schermata di modifica di un ristorante selezionato.
      *
-     * @param utenteService
-     * @param ristorante
-     * @param email
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param ristorante il {@link RistoranteDTO} del ristorante da modificare
+     * @param email l'email del ristoratore proprietario
      */
     private void eseguiModificaRistorante(UtenteService utenteService, RistoranteDTO ristorante, String email) {
         frame.setContentPane(new ModificaRistoranteGUI(frame, utenteService, email, ristorante));
@@ -133,8 +148,10 @@ public class RistoratoreGUI extends TemplateGUI {
     }
 
     /**
+     * Richiede al server l'elenco dei ristoranti appartenenti al ristoratore
+     * e aggiorna il pannello dei risultati con i dati ricevuti.
      *
-     * @param email
+     * @param email l'email del ristoratore di cui caricare i ristoranti
      */
     private void caricaRistoranti(String email){
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_RISTORANTI_BYEMAIL, email);

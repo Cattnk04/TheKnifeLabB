@@ -18,7 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * Schermata che mostra a un utente cliente autenticato l'elenco dei
+ * ristoranti aggiunti ai preferiti.
+ * <p>
+ * Permette di visualizzarne i dettagli (con doppio click o tramite
+ * pulsante) e di rimuovere un ristorante dai preferiti.
+ * </p>
  */
 public class ListaPreferitiGUI extends TemplateGUI {
     JFrame frame;
@@ -30,10 +38,13 @@ public class ListaPreferitiGUI extends TemplateGUI {
     private final JLabel labelContatore;
 
     /**
+     * Costruisce la schermata con l'elenco dei ristoranti preferiti
+     * dell'utente, caricandoli dal server e predisponendo i pulsanti per
+     * visualizzarne i dettagli o rimuoverli dai preferiti.
      *
-     * @param frame
-     * @param utenteService
-     * @param email
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param email l'email dell'utente di cui visualizzare i preferiti
      */
     public ListaPreferitiGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
@@ -134,7 +145,10 @@ public class ListaPreferitiGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Richiede al server l'elenco dei preferiti dell'utente e, se non è
+     * vuoto, recupera anche l'elenco completo dei ristoranti per poter
+     * ricostruire i dati completi dei ristoranti preferiti, aggiornando
+     * infine la lista visualizzata.
      */
     @SuppressWarnings("unchecked")
     private void caricaPreferiti() {
@@ -176,8 +190,11 @@ public class ListaPreferitiGUI extends TemplateGUI {
     }
 
     /**
+     * Aggiorna la lista visualizzata con i risultati forniti e aggiorna
+     * l'etichetta con il conteggio dei ristoranti preferiti trovati.
      *
-     * @param risultati
+     * @param risultati la lista di ristoranti preferiti da mostrare, o
+     * {@code null}/vuota se non ce ne sono
      */
     private void aggiornaRisultati(List<RistoranteDTO> risultati) {
         modelloLista.clear();
@@ -192,7 +209,8 @@ public class ListaPreferitiGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Mostra un messaggio quando l'utente tenta di visualizzare i dettagli
+     * o rimuovere un preferito senza aver selezionato un ristorante dalla lista.
      */
     private void mostraNessunaSelezione() {
         JOptionPane.showMessageDialog(this,
@@ -202,8 +220,10 @@ public class ListaPreferitiGUI extends TemplateGUI {
     }
 
     /**
+     * Apre (o, allo stato attuale, mostra un messaggio segnaposto per) la
+     * schermata di dettaglio di un ristorante preferito.
      *
-     * @param ristorante
+     * @param ristorante il {@link RistoranteDTO} di cui mostrare i dettagli
      */
     private void apriDettaglioRistorante(RistoranteDTO ristorante) {
         JOptionPane.showMessageDialog(this,
@@ -216,7 +236,9 @@ public class ListaPreferitiGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Renderer personalizzato per visualizzare ciascuna cella della lista
+     * dei ristoranti preferiti, mostrando il nome del ristorante e alcune
+     * informazioni sintetiche (città, nazione, delivery, prenotazione online).
      */
     private static class RistoranteCellRenderer extends JPanel implements ListCellRenderer<RistoranteDTO> {
 
@@ -224,7 +246,8 @@ public class ListaPreferitiGUI extends TemplateGUI {
         private final JLabel labelInfo = new JLabel();
 
         /**
-         *
+         * Costruisce il renderer, impostando il layout e lo stile delle
+         * etichette che mostrano il nome del ristorante e le sue informazioni sintetiche.
          */
         public RistoranteCellRenderer() {
             setLayout(new GridLayout(2, 1));
@@ -237,13 +260,17 @@ public class ListaPreferitiGUI extends TemplateGUI {
         }
 
         /**
+         * Costruisce e restituisce il componente grafico utilizzato per
+         * visualizzare una singola cella della lista, mostrando il nome del
+         * ristorante e le informazioni sintetiche (città, nazione, delivery,
+         * prenotazione online).
          *
          * @param list The JList we're painting.
          * @param ristorante The value returned by list.getModel().getElementAt(index).
          * @param index The cells index.
          * @param isSelected True if the specified cell was selected.
          * @param cellHasFocus True if the specified cell has the focus.
-         * @return
+         * @return il componente grafico da visualizzare per la cella
          */
         @Override
         public Component getListCellRendererComponent(JList<? extends RistoranteDTO> list, RistoranteDTO ristorante,

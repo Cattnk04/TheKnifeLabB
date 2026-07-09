@@ -11,7 +11,18 @@ import java.awt.FlowLayout;
 import java.util.Objects;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * Pannello base (template) da cui derivano tutte le schermate principali
+ * dell'interfaccia grafica del client TheKnife.
+ * <p>
+ * Fornisce la barra superiore comune a tutte le schermate, contenente il
+ * logo dell'applicazione e i pulsanti "Profilo" e "Logout" (quest'ultimo
+ * visibile solo nelle schermate riservate agli utenti autenticati). Le
+ * sottoclassi aggiungono il proprio contenuto specifico nella zona centrale
+ * del layout {@link BorderLayout}.
+ * </p>
  */
 public class TemplateGUI extends JPanel {
     protected JFrame frame;
@@ -20,8 +31,12 @@ public class TemplateGUI extends JPanel {
     protected JButton logout;
 
     /**
+     * Costruisce il template grafico comune, inizializzando la finestra
+     * principale, il logo dell'applicazione e i pulsanti "Profilo" e "Logout"
+     * nella barra superiore.
      *
-     * @param frame
+     * @param frame la finestra principale ({@link JFrame}) dell'applicazione,
+     *              a cui viene impostata anche l'icona del logo
      */
     public TemplateGUI(JFrame frame) {
         this.frame = frame;

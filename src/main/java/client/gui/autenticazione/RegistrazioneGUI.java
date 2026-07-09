@@ -16,7 +16,17 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * Schermata di registrazione di un nuovo utente.
+ * <p>
+ * Raccoglie nome, cognome, città, nazione, ruolo (cliente o ristoratore),
+ * email e password, e invia la richiesta di registrazione al server. In
+ * caso di successo, effettua automaticamente il recupero dei dati utente
+ * e reindirizza alla schermata corrispondente al ruolo scelto
+ * ({@link LoggatoGUI} o {@link RistoratoreGUI}).
+ * </p>
  */
 public class RegistrazioneGUI extends TemplateGUI {
     JFrame frame;
@@ -31,9 +41,12 @@ public class RegistrazioneGUI extends TemplateGUI {
     private final JPasswordField campoPassword;
 
     /**
+     * Costruisce la schermata di registrazione, con tutti i campi anagrafici,
+     * la scelta del ruolo (cliente/ristoratore), le credenziali di accesso
+     * e il pulsante per completare la registrazione.
      *
-     * @param frame
-     * @param utenteService
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
      */
     public RegistrazioneGUI(JFrame frame, UtenteService utenteService) {
         super(frame);
@@ -273,10 +286,13 @@ public class RegistrazioneGUI extends TemplateGUI {
     //METODO HELPER PER IL CAMPO PASSWORD CON OCCHIO
 
     /**
+     * Crea un campo password sovrapponendo un pulsante "occhio" che permette
+     * di mostrare o nascondere il testo digitato, utilizzando un
+     * {@link JLayeredPane} per posizionare il pulsante sopra il campo.
      *
-     * @param campoPassword
-     * @param dimensioneCampo
-     * @return
+     * @param campoPassword il campo password a cui aggiungere il pulsante
+     * @param dimensioneCampo dimensione da applicare al campo e al pannello risultante
+     * @return il {@link JLayeredPane} contenente il campo password e il pulsante occhio sovrapposto
      */
     private JLayeredPane creaCampoPasswordConOcchio(JPasswordField campoPassword, Dimension dimensioneCampo) {
         char echoCharDefault = campoPassword.getEchoChar();
@@ -318,3 +334,5 @@ public class RegistrazioneGUI extends TemplateGUI {
         return layeredPane;
     }
 }
+
+// //

@@ -14,7 +14,16 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * Schermata di modifica dei dati anagrafici del profilo di un utente autenticato.
+ * <p>
+ * Permette di modificare nome, cognome, città e nazione (l'email non è
+ * modificabile), inviando la richiesta di aggiornamento al server. In caso
+ * di successo o di annullamento, l'utente viene riportato alla schermata di
+ * visualizzazione del profilo ({@link VisualizzaProfiloGUI}).
+ * </p>
  */
 public class ModificaProfiloGUI extends TemplateGUI {
     JFrame frame;
@@ -28,11 +37,14 @@ public class ModificaProfiloGUI extends TemplateGUI {
     private JTextField campoNazione;
 
     /**
+     * Costruisce la schermata di modifica del profilo, precompilando i campi
+     * con i dati attuali dell'utente e predisponendo i pulsanti "Salva" e
+     * "Annulla".
      *
-     * @param frame
-     * @param utenteService
-     * @param email
-     * @param datiUtente
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param email l'email dell'utente il cui profilo viene modificato
+     * @param datiUtente i dati attuali dell'utente, utilizzati per precompilare i campi
      */
     public ModificaProfiloGUI(JFrame frame, UtenteService utenteService, String email, RegistrazioneDTO datiUtente) {
         super(frame);
@@ -139,7 +151,11 @@ public class ModificaProfiloGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Convalida i campi del form (verificando che nessuno sia vuoto) e invia
+     * al server la richiesta di aggiornamento dei dati anagrafici dell'utente.
+     * In caso di successo, mostra un messaggio di conferma e torna alla
+     * schermata di visualizzazione del profilo; altrimenti mostra il messaggio
+     * di errore ricevuto dal server.
      */
     private void salvaModifiche() {
         String nome = campoNome.getText().trim();

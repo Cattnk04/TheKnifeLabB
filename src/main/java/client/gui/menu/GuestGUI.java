@@ -11,14 +11,23 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * GUI principale mostrata agli utenti non autenticati (ospiti), che permette
+ * di cercare ristoranti tramite l'apposito pannello di ricerca e di visualizzarne
+ * i risultati, accedendo ai dettagli di un ristorante selezionato. Offre inoltre
+ * la possibilità di accedere alla schermata di login.
  *
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  */
 public class GuestGUI extends TemplateGUI {
 
     /**
+     * Costruisce la schermata principale per gli utenti ospiti, collegando il
+     * pannello di ricerca dei ristoranti al pannello dei risultati e predisponendo
+     * l'accesso alla schermata di login.
      *
-     * @param frame
-     * @param utenteService
+     * @param frame la finestra principale dell'applicazione su cui viene mostrata la GUI
+     * @param utenteService il servizio utilizzato per la gestione delle operazioni sugli utenti
      */
     public GuestGUI(JFrame frame, UtenteService utenteService) {
         super(frame);

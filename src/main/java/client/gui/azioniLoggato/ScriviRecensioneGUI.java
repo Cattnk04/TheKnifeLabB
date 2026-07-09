@@ -15,7 +15,16 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  *
+ * Schermata che permette a un utente autenticato di scrivere una nuova
+ * recensione per un ristorante.
+ * <p>
+ * Mostra un form con la valutazione (1-5 stelle) e il testo della recensione,
+ * inviando la richiesta al server al momento della conferma. Consente inoltre
+ * di tornare alla schermata di dettaglio del ristorante ({@link DettagliRistoranteGUI}).
+ * </p>
  */
 public class ScriviRecensioneGUI extends TemplateGUI {
     private JSpinner spinnerStelle;
@@ -30,11 +39,14 @@ public class ScriviRecensioneGUI extends TemplateGUI {
     private final RistoranteDTO ristorante;
 
     /**
+     * Costruisce la schermata per scrivere una recensione, memorizzando i
+     * riferimenti al ristorante e all'utente e predisponendo l'interfaccia
+     * del form.
      *
-     * @param frame
-     * @param utenteService
-     * @param email
-     * @param ristorante
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param email l'email dell'utente che scrive la recensione
+     * @param ristorante il {@link RistoranteDTO} del ristorante da recensire
      */
     public ScriviRecensioneGUI(JFrame frame, UtenteService utenteService, String email, RistoranteDTO ristorante) {
         super(frame);
@@ -49,7 +61,9 @@ public class ScriviRecensioneGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Costruisce e assembla i componenti grafici del form: titolo, selettore
+     * della valutazione, area di testo per la recensione e i pulsanti "Invia
+     * recensione" e "Indietro".
      */
     private void costruisciInterfaccia() {
         JPanel contenuto = new JPanel(new GridBagLayout());
@@ -132,7 +146,10 @@ public class ScriviRecensioneGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Convalida il testo della recensione (verificando che non sia vuoto) e
+     * invia al server la richiesta di creazione della recensione con la
+     * valutazione e il testo inseriti. Mostra un messaggio di esito e, in
+     * caso di successo, svuota il campo di testo.
      */
     private void inviaRecensione() {
         int valutazione = (int) spinnerStelle.getValue();

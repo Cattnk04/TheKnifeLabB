@@ -10,7 +10,10 @@ import java.awt.*;
 import java.util.List;
 import java.util.function.Consumer;
 
-/*
+/**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
+ *
  * Pannello riusabile che contiene il form di ricerca dei ristoranti.
  * Utilizzabile sia da utenti Guest che da Clienti loggati.
  */
@@ -32,6 +35,14 @@ public class PannelloRicercaRistorante extends JPanel {
     // Callback invocata quando la ricerca ha successo, con la lista dei risultati
     private final Consumer<List<RistoranteDTO>> onRisultatiTrovati;
 
+    /**
+     * Costruisce il pannello di ricerca, con tutti i campi filtro (nome,
+     * città, nazione, fascia di prezzo, delivery, prenotazione online, tipo
+     * di cucina) e il pulsante per avviare la ricerca.
+     *
+     * @param onRisultatiTrovati callback invocata con la lista dei ristoranti
+     * trovati quando la ricerca ha successo
+     */
     public PannelloRicercaRistorante(Consumer<List<RistoranteDTO>> onRisultatiTrovati) {
         this.onRisultatiTrovati = onRisultatiTrovati;
 
@@ -167,6 +178,13 @@ public class PannelloRicercaRistorante extends JPanel {
         btnRicerca.addActionListener(e -> eseguiRicerca());
     }
 
+    /**
+     * Raccoglie i valori impostati nei campi filtro, costruisce il
+     * {@link FiltroRicercaDTO} corrispondente e invia al server la richiesta
+     * di ricerca. In caso di successo invoca la callback
+     * {@code onRisultatiTrovati} con i risultati ricevuti, altrimenti mostra
+     * un messaggio di errore.
+     */
     private void eseguiRicerca() {
         Object itemFasciaPrezzo = campoFasciaPrezzo.getSelectedItem();
         Integer fasciaPrezzoMassima = (itemFasciaPrezzo instanceof Integer) ? (Integer) itemFasciaPrezzo : null;
@@ -211,6 +229,11 @@ public class PannelloRicercaRistorante extends JPanel {
         }
     }
 
+    /**
+     * Richiede al server l'elenco dei tipi di cucina disponibili e popola
+     * il menu a tendina {@code campoTipoCucina} con i risultati ricevuti,
+     * aggiungendoli all'opzione "Qualsiasi" già presente.
+     */
     private void caricaTipiCucina() {
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_TIPO_CUCINA, null);
         Risposta risposta = ClientConnection.inviaRichiesta(richiesta);

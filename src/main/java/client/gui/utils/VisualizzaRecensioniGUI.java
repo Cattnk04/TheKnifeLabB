@@ -12,11 +12,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-/*
+/**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
+ *
  * GUI di sola visualizzazione delle recensioni di un ristorante.
  * Accessibile sia da utente ospite che da utente loggato (cliente o ristoratore):
  * mostra l'elenco delle recensioni esistenti, senza possibilità di scriverne.
- *
  * Il tasto "Indietro" riporta a DettagliRistoranteGUI dello stesso ristorante.
  */
 public class VisualizzaRecensioniGUI extends TemplateGUI {
@@ -30,6 +32,16 @@ public class VisualizzaRecensioniGUI extends TemplateGUI {
     private final JList<Recensione> listaRecensioni;
     private final JLabel labelContatore;
 
+    /**
+     * Costruisce la schermata di sola visualizzazione delle recensioni di
+     * un ristorante, caricandole dal server e mostrando il pulsante "Logout"
+     * solo se l'utente è autenticato (email non nulla).
+     *
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param email l'email dell'utente autenticato, oppure {@code null} se ospite
+     * @param ristorante il {@link RistoranteDTO} di cui visualizzare le recensioni
+     */
     public VisualizzaRecensioniGUI(JFrame frame, UtenteService utenteService,
                                    String email, RistoranteDTO ristorante) {
         super(frame);
@@ -111,7 +123,11 @@ public class VisualizzaRecensioniGUI extends TemplateGUI {
         caricaRecensioni();
     }
 
-    // Recupera dal server le recensioni relative a questo ristorante
+    /**
+     * Recupera dal server le recensioni relative a questo ristorante e
+     * aggiorna la lista visualizzata, mostrando un messaggio appropriato in
+     * caso di errore di comunicazione, esito negativo o assenza di recensioni.
+     */
     private void caricaRecensioni() {
 
         Richiesta richiesta = new Richiesta(
@@ -147,17 +163,19 @@ public class VisualizzaRecensioniGUI extends TemplateGUI {
         );
     }
 
-    /*
-     * Renderer personalizzato per mostrare le informazioni principali di ogni recensione.
-     *
-     * NOTA: adatta i nomi dei metodi getter (getVoto, getCommento, getEmailUtente, getData)
-     * a quelli effettivamente presenti nella tua classe Recensione.
+    /**
+     * Renderer personalizzato per mostrare le informazioni principali di
+     * ogni recensione (valutazione in stelle e testo), in forma anonima.
      */
     private static class RecensioneCellRenderer extends JPanel implements ListCellRenderer<Recensione> {
 
         private final JLabel labelIntestazione = new JLabel();
         private final JLabel labelTesto = new JLabel();
 
+        /**
+         * Costruisce il renderer, impostando il layout e lo stile delle
+         * etichette che mostrano l'intestazione (voto in stelle) e il testo della recensione.
+         */
         public RecensioneCellRenderer() {
             setLayout(new GridLayout(2, 1));
             setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
@@ -168,6 +186,18 @@ public class VisualizzaRecensioniGUI extends TemplateGUI {
             add(labelTesto);
         }
 
+        /**
+         * Costruisce e restituisce il componente grafico utilizzato per
+         * visualizzare una singola cella della lista, mostrando la
+         * valutazione in stelle e il testo della recensione (in forma anonima).
+         *
+         * @param list il {@link JList} in fase di rendering
+         * @param recensione la {@link Recensione} da visualizzare per questa cella
+         * @param index indice della cella nella lista
+         * @param isSelected true se la cella è attualmente selezionata
+         * @param cellHasFocus true se la cella ha il focus
+         * @return il componente grafico da visualizzare per la cella
+         */
         @Override
         public Component getListCellRendererComponent(JList<? extends Recensione> list, Recensione recensione,
                                                       int index, boolean isSelected, boolean cellHasFocus) {

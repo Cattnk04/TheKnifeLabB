@@ -13,15 +13,24 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * GUI principale mostrata all'utente autenticato non ristoratore, che permette
+ * di cercare ristoranti e visualizzarne i risultati, accedendo ai dettagli di
+ * un ristorante selezionato. Offre inoltre i pulsanti per visualizzare il profilo
+ * e per effettuare il logout.
  *
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
  */
 public class LoggatoGUI extends TemplateGUI {
 
     /**
+     * Costruisce la schermata principale per l'utente loggato, collegando i pulsanti
+     * per la visualizzazione del profilo e il logout, e predisponendo il pannello
+     * di ricerca dei ristoranti collegato al pannello dei risultati.
      *
-     * @param frame
-     * @param utenteService
-     * @param email
+     * @param frame la finestra principale dell'applicazione su cui viene mostrata la GUI
+     * @param utenteService il servizio utilizzato per la gestione delle operazioni sugli utenti
+     * @param email l'email dell'utente attualmente autenticato
      */
     public LoggatoGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);

@@ -17,6 +17,19 @@ import java.awt.*;
 import java.text.NumberFormat;
 import java.util.List;
 
+/**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
+ *
+ * Schermata che permette a un ristoratore di modificare i dati di un
+ * ristorante esistente.
+ * <p>
+ * Precompila il form con i dati attuali del ristorante (nome, città,
+ * nazione, via, numero civico, fascia di prezzo, delivery, prenotazione
+ * online e tipo di cucina) e invia al server la richiesta di aggiornamento
+ * al momento del salvataggio.
+ * </p>
+ */
 public class ModificaRistoranteGUI extends TemplateGUI {
     JFrame frame;
     private final UtenteService utenteService;
@@ -39,11 +52,14 @@ public class ModificaRistoranteGUI extends TemplateGUI {
     private JComboBox<TipoCucinaDTO> campoTipoCucina;
 
     /**
+     * Costruisce la schermata di modifica del ristorante, precompilando
+     * tutti i campi del form con i dati attuali del ristorante passato
+     * come parametro.
      *
-     * @param frame
-     * @param utenteService
-     * @param email
-     * @param ristorante
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param email l'email del ristoratore proprietario del ristorante
+     * @param ristorante il {@link RistoranteDTO} con i dati attuali del ristorante da modificare
      */
     public ModificaRistoranteGUI(JFrame frame, UtenteService utenteService, String email, RistoranteDTO ristorante) {
         super(frame);
@@ -210,7 +226,9 @@ public class ModificaRistoranteGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Richiede al server l'elenco dei tipi di cucina disponibili, popola il
+     * menu a tendina {@code campoTipoCucina} con i risultati e preseleziona
+     * il tipo di cucina attualmente associato al ristorante.
      */
     private void caricaTipiCucina() {
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_TIPO_CUCINA, null);
@@ -236,7 +254,11 @@ public class ModificaRistoranteGUI extends TemplateGUI {
     }
 
     /**
-     *
+     * Raccoglie i valori inseriti nel form, costruisce il {@link RistoranteDTO}
+     * aggiornato e invia al server la richiesta di aggiornamento del ristorante.
+     * In caso di successo torna alla schermata principale del ristoratore,
+     * altrimenti mostra un messaggio di errore (inclusa la gestione di valori
+     * numerici non validi).
      */
     private void salvaModifiche() {
         try{

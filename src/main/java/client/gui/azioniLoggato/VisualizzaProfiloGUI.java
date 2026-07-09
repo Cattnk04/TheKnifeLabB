@@ -17,16 +17,31 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+/**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
+ *
+ * Schermata di visualizzazione del profilo di un utente autenticato.
+ * <p>
+ * Recupera dal server i dati dell'utente e li mostra in sola lettura,
+ * offrendo l'accesso alla modifica dei dati ({@link ModificaProfiloGUI})
+ * e, per gli utenti non ristoratori, alle proprie recensioni
+ * ({@link ListaRecensioniGUI}) e ai propri preferiti ({@link ListaPreferitiGUI}).
+ * </p>
+ */
 public class VisualizzaProfiloGUI extends TemplateGUI {
     JFrame frame;
     private final UtenteService utenteService;
     private final String email;
 
     /**
+     * Costruisce la schermata di visualizzazione del profilo, recuperando
+     * dal server i dati dell'utente e mostrandoli insieme ai pulsanti di
+     * navigazione appropriati in base al ruolo dell'utente.
      *
-     * @param frame
-     * @param utenteService
-     * @param email
+     * @param frame la finestra principale dell'applicazione
+     * @param utenteService il service utilizzato per le operazioni sugli utenti
+     * @param email l'email dell'utente il cui profilo viene visualizzato
      */
     public VisualizzaProfiloGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
