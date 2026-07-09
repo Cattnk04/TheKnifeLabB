@@ -24,6 +24,7 @@ public class RecensioneDTO implements Serializable {
     private String recensione;
     private String risposta;
 
+    public RecensioneDTO() {}
     /**
      * Costruisce una recensione completa.
      *
@@ -113,5 +114,11 @@ public class RecensioneDTO implements Serializable {
 
     public void setRisposta(String risposta) {
         this.risposta = risposta;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setRecensione(String recensione) {
+        this.recensione = recensione;
     }
 }
