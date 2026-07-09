@@ -13,14 +13,13 @@ COSA FARE PRE CONSEGNA:
     - Usare funzionalità per il guest: PROVATO
     - Segnarsi la grafica brutta (ma funzionante) (i bottoni soprattutto): SI POTREBBE ZIPPARE, MANDARE A CHAT E AUTOMATIZZARLO
 - Aprire file per file
-    - Creare il file .img del logo e metterlo in src
-    - Mettere immagine al posto di logo
+    - Creare il file .img del logo e metterlo in src: FATTO
+    - Mettere immagine al posto di logo: FATTO
     - Controllare i commenti in ogni file
     - Controllare le cose con scritto "da controllare"
-    - Mettere a posto la grafica brutta segnata prima (dimensioni e stili uniformi per tutti)
     - Fare la JavaDOC
-    - Eliminare i vari import inutili
-    - Cercare in ogni file la parola to do
+    - Eliminare i vari import inutili: FATTO
+    - Cercare in ogni file la parola to do: FATTO
     - Controllare i metodi non usati (e in caso eliminarli e capire perché prima di balzare delle funzionalità)
 - Controllare se tutta la documentazione messa su GIT nel progetto è presente all'interno dei manuali
 - Controllare i manuali (tecnico e utente)
@@ -32,21 +31,3 @@ COSA FARE PRE CONSEGNA:
 
 utenteristoratore@gmail.it
 UtenteRistoratore1
-
-PROVE FATTE DA TANK:
-giuseppe.neri@email.com
-GiuseppeNeri1
-ristoratore
-Da Giuseppe monza italia via cadorna 15
-prezzo max 32
-no delivery
-si online
-pesce
-
-mario
-pantani
-italia
-roma
-cliente
-mariopantani@email.it
-MarioPantani1

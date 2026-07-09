@@ -13,7 +13,6 @@ import java.io.Serializable;
  * Viene utilizzato nella fase di creazione di un nuovo account.
  * </p>
  */
-
 public class RegistrazioneDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

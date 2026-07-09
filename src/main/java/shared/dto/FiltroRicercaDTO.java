@@ -8,7 +8,6 @@ import java.io.Serializable;
  *
  * DTO utilizzato per rappresentare i criteri di ricerca di un ristorante.
  * <p>
- * A differenza di {@link RistoranteDTOprova}, ogni campo è opzionale: un valore
  * {@code null} indica che il relativo criterio non è stato specificato
  * dall'utente e quindi non deve essere applicato come filtro.
  * </p>
@@ -48,11 +47,45 @@ public class FiltroRicercaDTO implements Serializable {
         this.tipoCucina = tipoCucina;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNomeRistorante() { return nomeRistorante; }
+
+    /**
+     *
+     * @return
+     */
     public String getCitta() { return citta; }
+
+    /**
+     *
+     * @return
+     */
     public String getNazione() { return nazione; }
+
+    /**
+     *
+     * @return
+     */
     public Integer getFasciaPrezzoMassima() { return fasciaPrezzoMassima; }
+
+    /**
+     *
+     * @return
+     */
     public Integer getDelivery() { return delivery; }
+
+    /**
+     *
+     * @return
+     */
     public Integer getPrenotazioneOnline() { return prenotazioneOnline; }
+
+    /**
+     *
+     * @return
+     */
     public Integer getTipoCucina() { return tipoCucina; }
 }

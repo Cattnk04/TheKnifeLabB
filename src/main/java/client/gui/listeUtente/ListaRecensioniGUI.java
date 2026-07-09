@@ -16,6 +16,9 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.List;
 
+/**
+ *
+ */
 public class ListaRecensioniGUI extends TemplateGUI {
     JFrame frame;
     private final UtenteService utenteService;
@@ -26,7 +29,12 @@ public class ListaRecensioniGUI extends TemplateGUI {
     private final JLabel labelContatore;
     private List<RistoranteDTO> tuttiRistoranti = new java.util.ArrayList<>();
 
-
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     * @param email
+     */
     public ListaRecensioniGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
         this.frame = frame;
@@ -102,9 +110,8 @@ public class ListaRecensioniGUI extends TemplateGUI {
         caricaRecensioni();
     }
 
-    /*
-     * Recupera le recensioni dell'utente dal server, poi (best-effort) i nomi
-     * dei ristoranti corrispondenti per mostrarli invece del solo id.
+    /**
+     *
      */
     @SuppressWarnings("unchecked")
     private void caricaRecensioni() {
@@ -121,6 +128,9 @@ public class ListaRecensioniGUI extends TemplateGUI {
         aggiornaRisultati(recensioni);
     }
 
+    /**
+     *
+     */
     @SuppressWarnings("unchecked")
     private void caricaNomiRistoranti() {
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_RISTORANTE, null);
@@ -132,6 +142,11 @@ public class ListaRecensioniGUI extends TemplateGUI {
         }
     }
 
+    /**
+     *
+     * @param idRistorante
+     * @return
+     */
     private String trovaNomeRistorante(int idRistorante) {
         for (RistoranteDTO r : tuttiRistoranti) {
             if (r.getIdRistorante() == idRistorante) {
@@ -141,6 +156,10 @@ public class ListaRecensioniGUI extends TemplateGUI {
         return "Ristorante #" + idRistorante;
     }
 
+    /**
+     *
+     * @param risultati
+     */
     private void aggiornaRisultati(List<Recensione> risultati) {
         modelloLista.clear();
         if(risultati == null || risultati.isEmpty()){
@@ -153,6 +172,9 @@ public class ListaRecensioniGUI extends TemplateGUI {
         labelContatore.setText(risultati.size() + " recension" + (risultati.size() == 1 ? "e scritta" : "i scritte"));
     }
 
+    /**
+     *
+     */
     private void mostraNessunaSelezione() {
         JOptionPane.showMessageDialog(this,
                 "Seleziona prima una recensione dalla lista.",
@@ -160,9 +182,9 @@ public class ListaRecensioniGUI extends TemplateGUI {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    /*
-     * Apre un dialog semplice per modificare testo e valutazione della recensione,
-     * poi invia la richiesta MODIFICA_RECENSIONE al server.
+    /**
+     *
+     * @param recensione
      */
     private void apriModificaRecensione (Recensione recensione){
         JTextArea areaTesto = new JTextArea(recensione.getRecensione(),5,30);
@@ -210,6 +232,10 @@ public class ListaRecensioniGUI extends TemplateGUI {
         }
     }
 
+    /**
+     *
+     * @param recensione
+     */
     private void eliminaRecensione(Recensione recensione) {
         int conferma = JOptionPane.showConfirmDialog(this,
                 "Sei sicuro di voler eliminare questa recensione?",
@@ -241,14 +267,17 @@ public class ListaRecensioniGUI extends TemplateGUI {
         }
     }
 
-    /*
-     * Renderer per mostrare ristorante, valutazione e testo della recensione.
+    /**
+     *
      */
     private class RecensioneCellRenderer extends JPanel implements ListCellRenderer<Recensione> {
 
         private final JLabel labelRistorante = new JLabel();
         private final JLabel labelInfo = new JLabel();
 
+        /**
+         *
+         */
         public RecensioneCellRenderer() {
             setLayout(new GridLayout(2, 1));
             setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
@@ -259,6 +288,15 @@ public class ListaRecensioniGUI extends TemplateGUI {
             add(labelInfo);
         }
 
+        /**
+         *
+         * @param list The JList we're painting.
+         * @param recensione The value returned by list.getModel().getElementAt(index).
+         * @param index The cells index.
+         * @param isSelected True if the specified cell was selected.
+         * @param cellHasFocus True if the specified cell has the focus.
+         * @return
+         */
         @Override
         public Component getListCellRendererComponent(JList<? extends Recensione> list, Recensione recensione,
                                                       int index, boolean isSelected, boolean cellHasFocus) {
@@ -287,5 +325,4 @@ public class ListaRecensioniGUI extends TemplateGUI {
             return this;
         }
     }
-
 }

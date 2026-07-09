@@ -43,7 +43,6 @@ public class RistoranteDTO implements Serializable {
      * @param prenotazioneOnline indica se è possibile prenotare online
      * @param tipoCucina identificativo del tipo di cucina offerta
      */
-    // Costruttore per la CREAZIONE (nessun ID, non ancora assegnato dal DB)
     public RistoranteDTO(String nomeRistorante, String email, String citta, String nazione,
                          String via, int numeroCivico, int fasciaPrezzo,
                          boolean delivery, boolean prenotazioneOnline,
@@ -112,7 +111,6 @@ public class RistoranteDTO implements Serializable {
      * @return nazione
      */
     public String getNazione() { return nazione; }
-
 
     /**
      * Restituisce la via dell'indirizzo del ristorante.

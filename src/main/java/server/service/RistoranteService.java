@@ -8,15 +8,26 @@ import main.java.shared.dto.RistoranteDTO;
 
 import java.util.List;
 
+/**
+ *
+ */
 public class RistoranteService {
 
     private final RistoranteDAO ristoranteDAO;
 
+    /**
+     *
+     * @param ristoranteDAO
+     */
     public RistoranteService(RistoranteDAO ristoranteDAO) {
         this.ristoranteDAO = ristoranteDAO;
     }
 
-    // MAPPING DTO -> ENTITY (creazione: idRistorante ignorato, lo assegna il DB)
+    /**
+     *
+      * @param dto
+     * @return
+     */
     private Ristorante toEntity(RistoranteDTO dto) {
         Ristorante r = new Ristorante();
 
@@ -34,7 +45,11 @@ public class RistoranteService {
         return r;
     }
 
-    // MAPPING ENTITY -> DTO (lettura: include l'ID assegnato dal DB)
+    /**
+     *
+      * @param r
+     * @return
+     */
     private RistoranteDTO toDTO(Ristorante r) {
         return new RistoranteDTO(
                 r.getIdRistorante(),
@@ -51,11 +66,20 @@ public class RistoranteService {
         );
     }
 
+    /**
+     *
+     * @param dto
+     * @return
+     */
     public boolean aggiornaRistorante(RistoranteDTO dto){
         return ristoranteDAO.aggiornaRistorante(dto);
     }
 
-    // CREATE
+    /**
+     *
+      * @param dto
+     * @return
+     */
     public boolean creaRistorante(RistoranteDTO dto) {
 
         if (dto == null) {throw new IllegalArgumentException("DTO nullo");}
@@ -84,7 +108,13 @@ public class RistoranteService {
         return ristoranteDAO.inserisciRistorante(entity);
     }
 
-    // UPDATE CAMPO SINGOLO
+    /**
+     *
+      * @param idRistorante
+     * @param campo
+     * @param valore
+     * @return
+     */
     public boolean aggiornaCampo(int idRistorante, CampoRistorante campo, Object valore) {
 
         if (idRistorante <= 0) {throw new IllegalArgumentException("ID non valido");}
@@ -116,7 +146,11 @@ public class RistoranteService {
         return ristoranteDAO.aggiornaCampo(idRistorante, campo, valore);
     }
 
-    // DELETE (per ID, univoco anche con più ristoranti per ristoratore)
+    /**
+     *
+      * @param idRistorante
+     * @return
+     */
     public boolean cancellaRistorante(int idRistorante) {
         if (idRistorante <= 0) {
             throw new IllegalArgumentException("ID non valido");
@@ -124,14 +158,21 @@ public class RistoranteService {
         return ristoranteDAO.rimuoviRistorante(idRistorante);
     }
 
-    // READ ALL
+    /**
+     *
+      * @return
+     */
     public List<RistoranteDTO> getTuttiRistoranti() {
         return ristoranteDAO.trovaTutti().stream()
                 .map(this::toDTO)
                 .toList();
     }
 
-    // READ per ristoratore (utile per "i miei ristoranti")
+    /**
+     *
+      * @param email
+     * @return
+     */
     public List<RistoranteDTO> getRistorantiDiRistoratore(String email) {
         if (!ValidationUtils.isNotBlank(email)) {
             throw new IllegalArgumentException("Email non valida");
@@ -141,7 +182,11 @@ public class RistoranteService {
                 .toList();
     }
 
-    // SEARCH (filtro multi-criterio, usato dalla ricerca guest)
+    /**
+     *
+      * @param filtro
+     * @return
+     */
     public List<RistoranteDTO> cercaRistoranti(FiltroRicercaDTO filtro) {
         if (filtro == null) {
             throw new IllegalArgumentException("Filtro di ricerca nullo");
@@ -151,7 +196,11 @@ public class RistoranteService {
                 .toList();
     }
 
-    // READ per ID singolo (usato per risolvere i preferiti in RistoranteDTO completi)
+    /**
+     *
+      * @param idRistorante
+     * @return
+     */
     public RistoranteDTO getRistorante(int idRistorante) {
         if (idRistorante <= 0) {
             throw new IllegalArgumentException("ID non valido");
@@ -162,7 +211,12 @@ public class RistoranteService {
                 .orElse(null);
     }
 
-    // EXISTS (nome + email, coerente col controllo duplicati in creazione)
+    /**
+     *
+      * @param nomeRistorante
+     * @param email
+     * @return
+     */
     public boolean esiste(String nomeRistorante, String email) {
         if (!ValidationUtils.isValidName(nomeRistorante) || !ValidationUtils.isNotBlank(email)) {
             return false;

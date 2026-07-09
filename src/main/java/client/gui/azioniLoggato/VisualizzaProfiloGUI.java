@@ -7,8 +7,6 @@ import main.java.client.gui.listeUtente.ListaRecensioniGUI;
 import main.java.client.gui.menu.LoggatoGUI;
 import main.java.client.gui.menu.RistoratoreGUI;
 import main.java.client.network.ClientConnection;
-import main.java.server.service.RistoranteService;
-import main.java.server.service.PreferitiService;
 import main.java.server.service.UtenteService;
 import main.java.shared.communication.Richiesta;
 import main.java.shared.communication.Risposta;
@@ -23,11 +21,13 @@ public class VisualizzaProfiloGUI extends TemplateGUI {
     JFrame frame;
     private final UtenteService utenteService;
     private final String email;
-    private JButton btnModificaDati;
-    private JButton btnLeMieRecensioni;
-    private JButton btnIMieiPreferiti;
 
-    //Costruttore con i nuovi service
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     * @param email
+     */
     public VisualizzaProfiloGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
         this.frame =frame;

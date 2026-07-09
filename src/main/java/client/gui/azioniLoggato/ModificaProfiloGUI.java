@@ -13,6 +13,9 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+/**
+ *
+ */
 public class ModificaProfiloGUI extends TemplateGUI {
     JFrame frame;
     private final UtenteService utenteService;
@@ -24,6 +27,13 @@ public class ModificaProfiloGUI extends TemplateGUI {
     private JTextField campoCitta;
     private JTextField campoNazione;
 
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     * @param email
+     * @param datiUtente
+     */
     public ModificaProfiloGUI(JFrame frame, UtenteService utenteService, String email, RegistrazioneDTO datiUtente) {
         super(frame);
         this.frame = frame;
@@ -128,6 +138,9 @@ public class ModificaProfiloGUI extends TemplateGUI {
         add(centroPannello, BorderLayout.CENTER);
     }
 
+    /**
+     *
+     */
     private void salvaModifiche() {
         String nome = campoNome.getText().trim();
         String cognome = campoCognome.getText().trim();

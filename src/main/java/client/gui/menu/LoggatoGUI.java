@@ -12,8 +12,17 @@ import main.java.shared.communication.*;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ *
+ */
 public class LoggatoGUI extends TemplateGUI {
 
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     * @param email
+     */
     public LoggatoGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
         this.frame = frame;

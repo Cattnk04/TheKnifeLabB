@@ -15,8 +15,19 @@ import main.java.shared.dto.RistoranteDTO;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ *
+ */
 public class RispondiRecensioneGUI extends TemplateGUI {
 
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     * @param email
+     * @param ristorante
+     * @param recensione
+     */
     public RispondiRecensioneGUI(JFrame frame, UtenteService utenteService, String email, RistoranteDTO ristorante, RecensioneDTO recensione) {
         super(frame);
         this.frame = frame;
@@ -133,12 +144,21 @@ public class RispondiRecensioneGUI extends TemplateGUI {
         });
 
     }
+
+
+    /**
+     *
+     */
     private void mostraTestoNonValido() {
         JOptionPane.showMessageDialog(this,
                 "Il testo della risposta alla recensione è vuoto",
                 "Devi scrivere qualcosa",
                 JOptionPane.INFORMATION_MESSAGE);
     }
+
+    /**
+     *
+     */
     private void mostraRispostaErrata() {
         JOptionPane.showMessageDialog(this,
                 "L'inserimento della risposta non è andato a buon fine",

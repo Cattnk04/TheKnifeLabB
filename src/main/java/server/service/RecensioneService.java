@@ -7,19 +7,29 @@ import main.java.shared.enums.CampoRecensione;
 
 import java.util.List;
 
+/**
+ *
+ */
 public class RecensioneService {
 
     private final RecensioneDAO dao;
 
+    /* --------
+    UTENTE
+    -------- */
+    /**
+     *
+     * @param dao
+     */
     public RecensioneService(RecensioneDAO dao) {
         this.dao = dao;
     }
 
-    /* --------
-    UTENTE
-    -------- */
-
-    //Crea recensione
+    /**
+     *
+      * @param r
+     * @return
+     */
     public boolean creaRecensione(Recensione r) {
 
         if (r == null) return false;
@@ -31,26 +41,52 @@ public class RecensioneService {
         return dao.salvaRecensioni(r);
     }
 
-    //Modifica recensione
+    /**
+     *
+      * @param idRistorante
+     * @param email
+     * @param testo
+     * @return
+     */
     public boolean modificaRecensione(int idRistorante, String email, String testo) {
         return dao.aggiornaRecensione(idRistorante, email, CampoRecensione.RECENSIONE, testo);
     }
 
+    /**
+     *
+     * @param idRistorante
+     * @param email
+     * @param valutazione
+     * @return
+     */
     public boolean modificaValutazione(int idRistorante, String email, int valutazione) {
         return dao.aggiornaRecensione(idRistorante, email, CampoRecensione.VALUTAZIONE, valutazione);
     }
 
-    //Cancella recensione
+    /**
+     *
+      * @param idRistorante
+     * @param email
+     * @return
+     */
     public boolean cancellaRecensione(int idRistorante, String email) {
         return dao.cancellaRecensioni(idRistorante, email);
     }
 
-    //Lista recensioni utente
+    /**
+     *
+      * @param email
+     * @return
+     */
     public List<Recensione> getRecensioniUtente(String email) {
         return dao.getRecensioniByEmail(email);
     }
 
-    //Lista recensioni ristorante (quelli che visualliza l'utente)
+    /**
+     *
+      * @param idRistorante
+     * @return
+     */
     public List<Recensione> getRecensioniRistorante(int idRistorante) {
         return dao.getRecensioniByRistorante(idRistorante);
     }
@@ -58,12 +94,22 @@ public class RecensioneService {
     /* --------
     RISTORATORE
     -------- */
-    //Vedere tutte le recensioni
+    /**
+     *
+      * @param idRistorante
+     * @return
+     */
     public List<Recensione> getRecensioni (int idRistorante) {
         return dao.getRecensioniByRistorante(idRistorante);
     }
 
-    //Risposta recensioni
+    /**
+     *
+      * @param idRistorante
+     * @param email
+     * @param risposta
+     * @return
+     */
     public boolean rispostaRecensione(int idRistorante, String email, String risposta) {
 
         System.out.println("id"+ idRistorante);
@@ -81,14 +127,24 @@ public class RecensioneService {
         return dao.rispostaRecensione(idRistorante, email, risposta);
     }
 
-    //Aggiorna risposta (overide)
+    /**
+     *
+      * @param idRistorante
+     * @param email
+     * @param risposta
+     * @return
+     */
     public boolean aggiornaRisposta(int idRistorante, String email, String risposta) {
         return dao.aggiornaRecensione(idRistorante, email,
                 CampoRecensione.RISPOSTA,
                 risposta);
     }
 
-    //Riepilogo recensioni
+    /**
+     *
+      * @param idRistorante
+     * @return
+     */
     public RiepilogoRecensioniDTO getRiepilogo(int idRistorante) {
         return dao.getRiepilogo(idRistorante);
     }

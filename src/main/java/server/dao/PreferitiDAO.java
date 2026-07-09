@@ -7,9 +7,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class PreferitiDAO {
 
-    // INSERT
+    /**
+     *
+     * @param email
+     * @param idRistorante
+     * @return
+     */
     public boolean salvaPreferiti(String email, int idRistorante) {
 
         String sql = """
@@ -31,7 +39,12 @@ public class PreferitiDAO {
         }
     }
 
-    // DELETE
+    /**
+     *
+      * @param email
+     * @param idRistorante
+     * @return
+     */
     public boolean cancellaPreferiti(String email, int idRistorante) {
 
         String sql = """
@@ -53,7 +66,12 @@ public class PreferitiDAO {
         }
     }
 
-    // EXISTS
+    /**
+     *
+      * @param email
+     * @param idRistorante
+     * @return
+     */
     public boolean esistePreferito(String email, int idRistorante) {
 
         String sql = """
@@ -79,7 +97,11 @@ public class PreferitiDAO {
         }
     }
 
-    // LISTA
+    /**
+     *
+      * @param email
+     * @return
+     */
     public List<Preferito> getPreferitiByEmail(String email) {
 
         String sql = """

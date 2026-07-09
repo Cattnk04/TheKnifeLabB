@@ -9,9 +9,17 @@ import main.java.shared.enums.CampoRistorante;
 import java.sql.*;
 import java.util.*;
 
+/**
+ *
+ */
 public class RistoranteDAO {
 
-    //Mapping centralizzato
+    /**
+     *
+      * @param rs
+     * @return
+     * @throws SQLException
+     */
     private Ristorante map(ResultSet rs) throws SQLException {
         return new Ristorante(
                 rs.getInt("idristorante"),
@@ -28,7 +36,11 @@ public class RistoranteDAO {
         );
     }
 
-    //Inserimento
+    /**
+     *
+      * @param ristorante
+     * @return
+     */
     public boolean inserisciRistorante(Ristorante ristorante){
         String sql = """
                 INSERT INTO ristorante (
@@ -59,7 +71,13 @@ public class RistoranteDAO {
         }
     }
 
-    //Aggiornamento campo singolo (per ID, univoco anche con più ristoranti per ristoratore)
+    /**
+     *
+      * @param idRistorante
+     * @param campo
+     * @param valore
+     * @return
+     */
     public boolean aggiornaCampo(int idRistorante, CampoRistorante campo, Object valore) {
 
         String sql = switch (campo) {
@@ -89,8 +107,11 @@ public class RistoranteDAO {
         }
     }
 
-    //Cancellazione per ID (il nome da solo non è più un identificatore affidabile:
-    //un ristoratore può avere più ristoranti, e nomi uguali possono ripetersi tra ristoratori diversi)
+    /**
+     *
+      * @param idRistorante
+     * @return
+     */
     public boolean rimuoviRistorante(int idRistorante) {
         String sql = "DELETE FROM ristorante WHERE idristorante = ?";
 
@@ -107,7 +128,11 @@ public class RistoranteDAO {
         }
     }
 
-    //aggiorna tutti i campi
+    /**
+     *
+      * @param dto
+     * @return
+     */
     public boolean aggiornaRistorante(RistoranteDTO dto){
         String sql = """
                 UPDATE ristorante
@@ -141,7 +166,10 @@ public class RistoranteDAO {
         }
     }
 
-    //Ricerca di tutti i ristoranti
+    /**
+     *
+      * @return
+     */
     public List<Ristorante> trovaTutti() {
 
         List<Ristorante> list = new ArrayList<>();
@@ -167,7 +195,11 @@ public class RistoranteDAO {
         return list;
     }
 
-    //Tutti i ristoranti di un determinato ristoratore (identificato per email)
+    /**
+     *
+      * @param email
+     * @return
+     */
     public List<Ristorante> trovaPerRistoratore(String email) {
 
         List<Ristorante> list = new ArrayList<>();
@@ -195,7 +227,11 @@ public class RistoranteDAO {
         return list;
     }
 
-    //Ricerca con filtro multi-criterio (usata dalla ricerca guest)
+    /**
+     *
+      * @param filtro
+     * @return
+     */
     public List<Ristorante> cercaConFiltro(FiltroRicercaDTO filtro) {
 
         List<Ristorante> risultati = new ArrayList<>();
@@ -262,10 +298,12 @@ public class RistoranteDAO {
         return risultati;
     }
 
-   /*Controllo esistenza ristorante: la combinazione nome + email del ristoratore
-   è il criterio di univocità corretto, dato che uno stesso ristoratore
-   non dovrebbe poter registrare due ristoranti con lo stesso nome,
-   mentre ristoratori diversi possono usare nomi uguali per locali diversi.*/
+    /**
+     *
+      * @param nomeRistorante
+     * @param email
+     * @return
+     */
     public boolean esisteRistorante(String nomeRistorante, String email) {
 
         String sql = """

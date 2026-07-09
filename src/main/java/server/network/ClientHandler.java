@@ -13,6 +13,9 @@ import java.io.*;
 import java.net.Socket;
 import java.util.List;
 
+/**
+ *
+ */
 public class ClientHandler extends Thread{
     private Socket clientSocket;
     private ObjectOutputStream out;
@@ -23,6 +26,10 @@ public class ClientHandler extends Thread{
     private RecensioneService recensioneService;
     private PreferitiService preferitiService;
 
+    /**
+     *
+     * @param clientSocket
+     */
     public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
         this.utenteService = new UtenteService(new UtenteDAO(), new PasswordService());
@@ -32,7 +39,9 @@ public class ClientHandler extends Thread{
         this.preferitiService = new PreferitiService(new PreferitiDAO());
     }
 
-    //Metodo per gestire le richieste in arrivo dal client
+    /**
+     *
+      */
     @Override
     public void run() {
         try {
@@ -59,7 +68,9 @@ public class ClientHandler extends Thread{
         }
     }
 
-    //Metodo per chiudere la connessione con il client
+    /**
+     *
+      */
     private void chiudiConnessione() {
         try {
             if (in != null) {
@@ -78,7 +89,11 @@ public class ClientHandler extends Thread{
         }
     }
 
-    //Metodo per gestire le richieste in arrivo dal client
+    /**
+     *
+      * @param richiesta
+     * @return
+     */
     public Risposta gestisciRichiesta(Richiesta richiesta) {
         if (richiesta == null || richiesta.getTipoRichiesta() == null) {
             return new Risposta(false, null, "Richiesta non valida");
@@ -180,8 +195,11 @@ public class ClientHandler extends Thread{
         }
     }
 
-    //Metodi per gestire le richieste
-    //UTENTE
+    /**
+     *
+      * @param contenuto
+     * @return
+     */
     private Risposta gestisciLogin(Object contenuto) {
         if (!(contenuto instanceof LoginDTO loginDTO))
             return new Risposta(false, null, "Dati login non validi");
@@ -192,6 +210,11 @@ public class ClientHandler extends Thread{
         else return new Risposta(ok, null, "Email o password errati");
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciRegistrazione(Object contenuto) {
         if (!(contenuto instanceof RegistrazioneDTO registrazioneDTO))
             return new Risposta(false, null, "Dati registrazione non validi");
@@ -202,12 +225,22 @@ public class ClientHandler extends Thread{
         else return new Risposta(false, null, "Registrazione fallita");
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciLogout(Object contenuto) {
         String email = (contenuto instanceof String e) ? e : "sconosciuto";
         System.out.println("Logout effettuato per l'utente: " + email);
         return new Risposta(true, null, "Logout effettuato");
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciGetUtente(Object contenuto) {
         if (!(contenuto instanceof String email)) {
             return new Risposta(false, null, "Email non valida");
@@ -224,6 +257,11 @@ public class ClientHandler extends Thread{
         }
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciModificaUtente(Object contenuto) {
         if (!(contenuto instanceof RegistrazioneDTO dto)) {
             return new Risposta(false, null, "Dati modifica utente non validi");
@@ -243,13 +281,22 @@ public class ClientHandler extends Thread{
         }
     }
 
-    //RISTORANTE
+    /**
+     *
+      * @param contenuto
+     * @return
+     */
     private Risposta gestisciGetRistorante(Object contenuto) {
         List<RistoranteDTO> ristoranti = ristoranteService.getTuttiRistoranti();
         if (!ristoranti.isEmpty()) return new Risposta(true, ristoranti, "Ristoranti trovati");
         else return new Risposta(false, null, "Nessun ristorante trovato");
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciGetRistoranteByEmail(Object contenuto){
         if(!(contenuto instanceof String email)){
             return new Risposta(false, null, "Email non valida");
@@ -262,7 +309,11 @@ public class ClientHandler extends Thread{
         }
     }
 
-    //DA CONTROLLARE
+    /**
+     *
+      * @param contenuto
+     * @return
+     */
     public Risposta gestisciCreaRistorante(Object contenuto) {
         if(!(contenuto instanceof RistoranteDTO dto)){
             return new Risposta(false, null, "Dati creazione ristorante non validi");
@@ -274,9 +325,11 @@ public class ClientHandler extends Thread{
         }
     }
 
-    //DA CONTROLLARE
-    //bisogna capire come passare con il DTO il campo da modificare altrimenti si crea un metodo che
-    // modifichi tutti i campi del ristorante come se lo creasse se vogliamo usare il DTO che abbiamo già creato
+    /**
+     *
+      * @param contenuto
+     * @return
+     */
     public Risposta gestisciModificaRistorante(Object contenuto) {
         if(!(contenuto instanceof RistoranteDTO dto)){
             return new Risposta(false, null, "Dati per modificare il ristorante non validi");
@@ -298,7 +351,11 @@ public class ClientHandler extends Thread{
         }
     }
 
-    //DA CONTROLLARE
+    /**
+     *
+      * @param contenuto
+     * @return
+     */
     public Risposta gestisciEliminaRistorante(Object contenuto) {
         if(!(contenuto instanceof RistoranteDTO dto)){
             return new Risposta(false, null, "Dati per eliminare il ristorante non validi");
@@ -310,8 +367,11 @@ public class ClientHandler extends Thread{
         }
     }
 
-    //DA CONTROLLARE
-    //bisogna cercare un ristorante specifico o ritorna tutti i ristoranti?
+    /**
+     *
+      * @param contenuto
+     * @return
+     */
     public Risposta gestisciCercaRistorante(Object contenuto) {
         if (!(contenuto instanceof FiltroRicercaDTO filtro)) {
             return new Risposta(false, null, "Dati per ricerca del ristorante non validi");
@@ -321,6 +381,11 @@ public class ClientHandler extends Thread{
         else return new Risposta(false, null, "Nessun ristorante trovato");
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     public Risposta gestisciEsistenzaRistorante(Object contenuto) {
         if (!(contenuto instanceof RistoranteDTO dto)) {
             return new Risposta(false, null, "Dati non validi");
@@ -329,9 +394,11 @@ public class ClientHandler extends Thread{
         return new Risposta(true, esiste, esiste ? "Ristorante esistente" : "Ristorante non esistente");
     }
 
-    //RECENSIONI
-
-    //Recensioni del ristorante per il ristoratore
+    /**
+     *
+      * @param contenuto
+     * @return
+     */
     private Risposta gestisciGetRecensioniRistorante(Object contenuto) {
         if(!(contenuto instanceof Integer idRistorante)){
             return new Risposta(false, null, "Dati ricerca non validi");
@@ -342,7 +409,11 @@ public class ClientHandler extends Thread{
         }
     }
 
-    //Recensioni del ristorante per il cliente
+    /**
+     *
+      * @param contenuto
+     * @return
+     */
     public Risposta gestisciGetRecensioniUtente(Object contenuto) {
         if(!(contenuto instanceof Integer idRistorante)){
             return new Risposta(false, null, "Dati ricerca non validi");
@@ -353,7 +424,11 @@ public class ClientHandler extends Thread{
         }
     }
 
-    //Recensioni del ristorante dall'email per il cliente
+    /**
+     *
+      * @param contenuto
+     * @return
+     */
     public Risposta gestisciGetRecensioniEmail(Object contenuto) {
         if(!(contenuto instanceof String email)){
             return new Risposta(false, null, "Dati ricerca non validi");
@@ -364,6 +439,11 @@ public class ClientHandler extends Thread{
         }
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciScriviRecensione(Object contenuto) {
         if(!(contenuto instanceof RecensioneDTO dto)){
             return new Risposta(false, null, "Dati ricerca non validi");
@@ -395,6 +475,11 @@ public class ClientHandler extends Thread{
         }
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciModificaRecensione(Object contenuto) {
         if (!(contenuto instanceof RecensioneDTO dto)) {
             return new Risposta(false, null, "Dati recensione non validi");
@@ -430,6 +515,11 @@ public class ClientHandler extends Thread{
         }
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciEliminaRecensione(Object contenuto) {
         if(!(contenuto instanceof RecensioneDTO dto)){
             return new Risposta(false, null, "Dati ricerca non validi");
@@ -457,6 +547,11 @@ public class ClientHandler extends Thread{
         }
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciRispondiRecensione(Object contenuto) {
         if(!(contenuto instanceof RecensioneDTO dto)){
             return new Risposta(false, null, "Dati ricerca non validi");
@@ -480,6 +575,11 @@ public class ClientHandler extends Thread{
         }
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     public Risposta gestisciModificaRisposta(Object contenuto) {
         if(!(contenuto instanceof RecensioneDTO dto)){
             return new Risposta(false, null, "Dati ricerca non validi");
@@ -500,6 +600,11 @@ public class ClientHandler extends Thread{
         }
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     public Risposta gestisciRiepilogoRecensioni(Object contenuto) {
         if (!(contenuto instanceof Integer idRistorante)) {
             return new Risposta(false, null, "Id ristorante non valido");
@@ -519,7 +624,11 @@ public class ClientHandler extends Thread{
         }
     }
 
-    //PREFERITI
+    /**
+     *
+      * @param contenuto
+     * @return
+     */
     private Risposta gestisciGetPreferiti(Object contenuto){
         if(!(contenuto instanceof String email)){
             return new Risposta(false, null, "Dati ricerca non validi");
@@ -530,6 +639,11 @@ public class ClientHandler extends Thread{
         }
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciAggiungiPreferito(Object contenuto){
         if(!(contenuto instanceof PreferitiDTO dto)){
             return new Risposta(false, null, "Dati ricerca non validi");
@@ -546,6 +660,11 @@ public class ClientHandler extends Thread{
         }
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciRimuoviPreferito(Object contenuto) {
         if (!(contenuto instanceof PreferitiDTO dto)) {
             return new Risposta(false, null, "Dati del preferito non validi");
@@ -564,6 +683,11 @@ public class ClientHandler extends Thread{
         }
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciEsistenzaPreferiti(Object contenuto) {
         if (!(contenuto instanceof PreferitiDTO dto)) {
             return new Risposta(false, null, "Dati per verifica preferito non validi");
@@ -576,6 +700,11 @@ public class ClientHandler extends Thread{
         }
     }
 
+    /**
+     *
+     * @param contenuto
+     * @return
+     */
     private Risposta gestisciTogglePreferito(Object contenuto) {
         if (!(contenuto instanceof PreferitiDTO dto)) {
             return new Risposta(false, null, "Dati per toggle preferito non validi");
@@ -599,7 +728,10 @@ public class ClientHandler extends Thread{
         }
     }
 
-    //TIPO CUCINA
+    /**
+     *
+      * @return
+     */
     public Risposta gestisciGetTipoCucina() {
         if (tipoCucinaService == null) {
             return new Risposta(false, null, "Errore nel recupero dei tipi di cucina");
@@ -608,7 +740,10 @@ public class ClientHandler extends Thread{
         return new Risposta(true, tipi, "Tipi di cucina recuperati");
     }
 
-
+    /***
+     *
+     * @return
+     */
     private Risposta gestisciShutdown() {
 
         System.out.println("Richiesta di chiusura server ricevuta");

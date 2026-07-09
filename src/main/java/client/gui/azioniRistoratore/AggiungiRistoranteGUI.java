@@ -16,6 +16,9 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.util.List;
 
+/**
+ *
+ */
 public class AggiungiRistoranteGUI extends TemplateGUI {
     private final JTextField campoNomeRistorante;
     private final JTextField campoCitta;
@@ -30,6 +33,12 @@ public class AggiungiRistoranteGUI extends TemplateGUI {
     private final JRadioButton radioPrenotazioneNo;
     private final JButton btnCrea;
 
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     * @param email
+     */
     public AggiungiRistoranteGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
         this.frame = frame;
@@ -192,6 +201,11 @@ public class AggiungiRistoranteGUI extends TemplateGUI {
         btnCrea.addActionListener(e -> eseguiCreazioneRistorante(email, utenteService));
     }
 
+    /**
+     *
+     * @param email
+     * @param utenteService
+     */
     private void eseguiCreazioneRistorante(String email, UtenteService utenteService) {
         //creazione dei dati per il DTO da dare al service per effettuare la query sul DB
         String nomeRistorante = campoNomeRistorante.getText().trim();
@@ -222,6 +236,9 @@ public class AggiungiRistoranteGUI extends TemplateGUI {
         }
     }
 
+    /**
+     *
+     */
     private void caricaTipiCucina() {
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_TIPO_CUCINA, null);
         Risposta risposta = ClientConnection.inviaRichiesta(richiesta);

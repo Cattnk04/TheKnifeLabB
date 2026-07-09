@@ -13,7 +13,6 @@ import java.io.Serializable;
  * un ristorante dalla lista dei preferiti di un utente.
  * </p>
  */
-
 public class PreferitiDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

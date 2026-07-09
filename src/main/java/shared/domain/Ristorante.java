@@ -8,7 +8,6 @@ import java.io.Serializable;
  *
  * Classe per gestione della generazione dell'elemento Ristorante.
  */
-
 public class Ristorante implements Serializable{
 
     private int idRistorante;
@@ -233,7 +232,6 @@ public class Ristorante implements Serializable{
      * con tutti i suoi campi separati da una virgola.
      * @return una stringa che rappresenta il ristorante con tutti i suoi attributi
      */
-    //Metodo to string
     @Override
     public String toString() {
         return idRistorante + "," +
@@ -248,5 +246,4 @@ public class Ristorante implements Serializable{
                 prenotazioneOnline + "," +
                 idTipoCucina;
     }
-
 }

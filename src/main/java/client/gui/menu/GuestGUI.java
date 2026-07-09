@@ -10,8 +10,16 @@ import main.java.server.service.UtenteService;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ *
+ */
 public class GuestGUI extends TemplateGUI {
 
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     */
     public GuestGUI(JFrame frame, UtenteService utenteService) {
         super(frame);
         this.frame = frame;

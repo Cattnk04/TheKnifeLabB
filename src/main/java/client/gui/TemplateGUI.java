@@ -10,16 +10,19 @@ import java.awt.Graphics;
 import java.awt.FlowLayout;
 import java.util.Objects;
 
-
+/**
+ *
+ */
 public class TemplateGUI extends JPanel {
     protected JFrame frame;
-    /*si usa protected per far sì che le sottoclassi che estendono
-    TemplateGUI possano accedere agli elementi senza bisogno di getter
-     */
     protected JPanel pannello;
     protected JButton visualizzaProfilo;
     protected JButton logout;
 
+    /**
+     *
+     * @param frame
+     */
     public TemplateGUI(JFrame frame) {
         this.frame = frame;
         setLayout(new BorderLayout());

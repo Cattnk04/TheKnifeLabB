@@ -6,15 +6,26 @@ import main.java.shared.dto.PreferitiDTO;
 
 import java.util.List;
 
+/**
+ *
+ */
 public class PreferitiService {
 
     private final PreferitiDAO preferitiDAO;
 
+    /**
+     *
+     * @param preferitiDAO
+     */
     public PreferitiService(PreferitiDAO preferitiDAO) {
         this.preferitiDAO = preferitiDAO;
     }
 
-    //Aggiungi preferito con controllo duplicati
+    /**
+     *
+      * @param dto
+     * @return
+     */
     public boolean aggiungiPreferito(PreferitiDTO dto) {
 
         if (dto == null) return false;
@@ -29,7 +40,11 @@ public class PreferitiService {
         return preferitiDAO.salvaPreferiti(email, idRistorante);
     }
 
-    //Rimuovi preferito
+    /**
+     *
+      * @param dto
+     * @return
+     */
     public boolean rimuoviPreferito(PreferitiDTO dto) {
 
         if (dto == null) return false;
@@ -40,7 +55,11 @@ public class PreferitiService {
         );
     }
 
-    //Toggler preferito
+    /**
+     *
+      * @param dto
+     * @return
+     */
     public boolean togglePreferito(PreferitiDTO dto) {
 
         if (dto == null) return false;
@@ -55,12 +74,21 @@ public class PreferitiService {
         }
     }
 
-    //Check esistenza preferito
+    /**
+     *
+      * @param email
+     * @param idRistorante
+     * @return
+     */
     public boolean esistePreferito(String email, int idRistorante) {
         return preferitiDAO.esistePreferito(email, idRistorante);
     }
 
-    //Lista preferiti Utente
+    /**
+     *
+      * @param email
+     * @return
+     */
     public List<Preferito> getPreferitiUtente(String email) {
         return preferitiDAO.getPreferitiByEmail(email);
     }

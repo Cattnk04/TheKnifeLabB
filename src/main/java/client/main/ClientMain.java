@@ -12,7 +12,14 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
+/**
+ *
+ */
 public class ClientMain {
+    /**
+     *
+     * @param args
+     */
     public static void main(String args[]) {
         UtenteDAO utenteDAO = new UtenteDAO();
         PasswordService passwordService = new PasswordService();

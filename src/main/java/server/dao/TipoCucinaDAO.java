@@ -10,8 +10,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class TipoCucinaDAO {
 
+    /**
+     *
+     * @param rs
+     * @return
+     * @throws SQLException
+     */
     private TipoCucinaDTO map(ResultSet rs) throws SQLException {
         return new TipoCucinaDTO(
                 rs.getInt("idtipocucina"),
@@ -19,6 +28,10 @@ public class TipoCucinaDAO {
         );
     }
 
+    /**
+     *
+     * @return
+     */
     public List<TipoCucinaDTO> getTipoCucina() {
         List<TipoCucinaDTO> lista = new ArrayList<>();
 

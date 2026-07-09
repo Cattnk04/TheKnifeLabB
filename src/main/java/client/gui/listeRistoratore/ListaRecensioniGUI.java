@@ -17,6 +17,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ *
+ */
 public class ListaRecensioniGUI extends TemplateGUI {
     JFrame frame;
 
@@ -24,6 +27,13 @@ public class ListaRecensioniGUI extends TemplateGUI {
     private JList<RecensioneDTO> listaRecensioni;
     private final JLabel labelContatore;
 
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     * @param email
+     * @param ristorante
+     */
     public ListaRecensioniGUI(JFrame frame, UtenteService utenteService, String email, RistoranteDTO ristorante){
         super(frame);
         this.frame = frame;
@@ -119,6 +129,10 @@ public class ListaRecensioniGUI extends TemplateGUI {
         add(rispondiRecensione, BorderLayout.SOUTH);
     }
 
+    /**
+     *
+     * @param ristorante
+     */
     @SuppressWarnings("unchecked")
     private void caricaRecensioni(RistoranteDTO ristorante) {
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_RECENSIONI_RISTORANTE, ristorante.getIdRistorante());
@@ -142,12 +156,20 @@ public class ListaRecensioniGUI extends TemplateGUI {
             labelContatore.setText("Recensioni trovate: " + listaRecensioni.size());
         }
     }
+
+    /**
+     *
+     */
     private void mostraNessunaSelezione() {
         JOptionPane.showMessageDialog(this,
                 "Seleziona prima una recensione dalla lista.",
                 "Nessuna selezione",
                 JOptionPane.INFORMATION_MESSAGE);
     }
+
+    /**
+     *
+     */
     private void mostraGiaRisposta() {
         JOptionPane.showMessageDialog(this,
                 "Hai già risposto a questa recensione",
@@ -155,6 +177,11 @@ public class ListaRecensioniGUI extends TemplateGUI {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     *
+     * @param r
+     * @return
+     */
     private RecensioneDTO convertiInDTO(Recensione r) {
         // Adatta i campi ai getter effettivi della tua classe Recensione/RecensioneDTO
         RecensioneDTO dto = new RecensioneDTO();

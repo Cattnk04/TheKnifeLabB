@@ -1,7 +1,15 @@
 package main.java.server.security;
 
+/**
+ *
+ */
 public class PasswordPolicy {
 
+    /**
+     *
+     * @param password
+     * @return
+     */
     public static boolean isStrong(String password) {
 
         if (password == null) return false;

@@ -10,18 +10,29 @@ import main.java.shared.enums.CampoUtente;
 
 import java.util.Optional;
 
+/**
+ *
+ */
 public class UtenteService {
 
     private final UtenteDAO utenteDAO;
     private final PasswordService passwordService;
 
-    // Dependency Injection
+    /**
+     *
+      * @param utenteDAO
+     * @param passwordService
+     */
     public UtenteService(UtenteDAO utenteDAO, PasswordService passwordService) {
         this.utenteDAO = utenteDAO;
         this.passwordService = passwordService;
     }
 
-    // LOGIN
+    /**
+     *
+      * @param dto
+     * @return
+     */
     public boolean login(LoginDTO dto) {
 
         if (dto == null) return false;
@@ -52,7 +63,11 @@ public class UtenteService {
         }).orElse(false);
     }
 
-    // Registrazione
+    /**
+     *
+      * @param dto
+     * @return
+     */
     public boolean registraUtente(RegistrazioneDTO dto) {
 
         if (dto == null) {
@@ -107,7 +122,11 @@ public class UtenteService {
         return utenteDAO.registrazione(utente);
     }
 
-    //metodo per recuperare i dati dell'utente per la visualizzazione del profilo
+    /**
+     *
+      * @param email
+     * @return
+     */
     public RegistrazioneDTO getUtente(String email){
         if(!ValidationUtils.isValidEmail(email)){
             System.out.println("Recupero utente fallito: email non valida");
@@ -131,8 +150,11 @@ public class UtenteService {
         );
     }
 
-    //DA CONTROLLARE
-    // Modifica dati utente (nome, cognome, città, nazione)
+    /**
+     *
+      * @param dto
+     * @return
+     */
     public boolean modificaUtente(RegistrazioneDTO dto) {
         if (dto == null || !ValidationUtils.isValidEmail(dto.getEmail())) {
             System.out.println("Modifica fallita: email non valida");
@@ -160,7 +182,11 @@ public class UtenteService {
         return ok;
     }
 
-    // CANCELLAZIONE
+    /**
+     *
+      * @param email
+     * @return
+     */
     public boolean cancellaUtente(String email) {
         return ValidationUtils.isValidEmail(email)
                 && utenteDAO.cancellaUtente(email);

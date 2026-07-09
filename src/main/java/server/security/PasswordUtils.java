@@ -6,11 +6,21 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ *
+ */
 public class PasswordUtils {
 
+    /**
+     *
+     */
     private PasswordUtils() {}
 
-    // BCrypt
+    /**
+     *
+      * @param password
+     * @return
+     */
     public static String hashBCrypt(String password) {
         if (password == null) {
             throw new IllegalArgumentException("La password non può essere null");
@@ -19,6 +29,12 @@ public class PasswordUtils {
         return BCrypt.hashpw(password, BCrypt.gensalt(12));
     }
 
+    /**
+     *
+     * @param password
+     * @param hash
+     * @return
+     */
     public static boolean verifyBCrypt(String password, String hash) {
         if (password == null || hash == null) {
             return false;
@@ -26,7 +42,11 @@ public class PasswordUtils {
         return BCrypt.checkpw(password, hash);
     }
 
-    // SHA-256 legacy
+    /**
+     *
+      * @param password
+     * @return
+     */
     public static String hashSHA256(String password) {
         if (password == null) {
             throw new IllegalArgumentException("La password non può essere null");
@@ -50,6 +70,12 @@ public class PasswordUtils {
         }
     }
 
+    /**
+     *
+     * @param password
+     * @param storedHash
+     * @return
+     */
     public static boolean verifySHA256(String password, String storedHash) {
         if (password == null || storedHash == null) {
             return false;
@@ -57,6 +83,11 @@ public class PasswordUtils {
         return hashSHA256(password).equals(storedHash);
     }
 
+    /**
+     *
+     * @param hash
+     * @return
+     */
     public static boolean isBCryptHash(String hash) {
         return hash != null &&
                 (hash.startsWith("$2a$")

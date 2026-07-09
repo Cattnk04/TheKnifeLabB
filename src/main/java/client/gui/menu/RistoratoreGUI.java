@@ -15,10 +15,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ *
+ */
 public class RistoratoreGUI extends TemplateGUI {
 
+    /**
+     *
+     */
     private PannelloRistorantiRistoratore pannelloRistoranti;
 
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     * @param email
+     */
     public RistoratoreGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
         this.frame = frame;
@@ -108,15 +120,22 @@ public class RistoratoreGUI extends TemplateGUI {
 
     }
 
-    //metodo dell'azione condivisa tra il bottone "modifica dati" e doppio click sulla lista
+    /**
+     *
+     * @param utenteService
+     * @param ristorante
+     * @param email
+     */
     private void eseguiModificaRistorante(UtenteService utenteService, RistoranteDTO ristorante, String email) {
         frame.setContentPane(new ModificaRistoranteGUI(frame, utenteService, email, ristorante));
         frame.revalidate();
         frame.repaint();
     }
 
-
-    //metodo per caricare i ristoranti
+    /**
+     *
+     * @param email
+     */
     private void caricaRistoranti(String email){
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_RISTORANTI_BYEMAIL, email);
         Risposta risposta = (Risposta) ClientConnection.inviaRichiesta(richiesta);

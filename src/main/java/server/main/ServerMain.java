@@ -5,11 +5,20 @@ import main.java.server.network.ClientHandler;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ *
+ */
 public class ServerMain {
 
-    // Riferimento al server socket
+    /**
+     *
+      */
     private static ServerSocket serverSocket;
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
         try {
@@ -29,7 +38,9 @@ public class ServerMain {
         }
     }
 
-    // Chiude il server.
+    /**
+     *
+      */
     public static void stopServer() {
         try {
             if (serverSocket != null && !serverSocket.isClosed()) {

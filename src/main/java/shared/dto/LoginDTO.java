@@ -13,7 +13,6 @@ import java.io.Serializable;
  * Questo oggetto viene utilizzato nella comunicazione tra client e server.
  * </p>
  */
-
 public class LoginDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

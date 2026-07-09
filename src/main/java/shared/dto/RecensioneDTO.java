@@ -10,7 +10,6 @@ import java.io.Serializable;
  * Viene utilizzato per il trasferimento dati tra client e server.
  * </p>
  */
-
 public class RecensioneDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -21,6 +20,9 @@ public class RecensioneDTO implements Serializable {
     private String recensione;
     private String risposta;
 
+    /**
+     *
+     */
     public RecensioneDTO() {}
 
     /**
@@ -118,12 +120,26 @@ public class RecensioneDTO implements Serializable {
         this.valutazione = valutazione;
     }
 
+    /**
+     *
+     * @param risposta
+     */
     public void setRisposta(String risposta) {
         this.risposta = risposta;
     }
+
+    /**
+     *
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
+
+    /**
+     *
+     * @param recensione
+     */
     public void setRecensione(String recensione) {
         this.recensione = recensione;
     }

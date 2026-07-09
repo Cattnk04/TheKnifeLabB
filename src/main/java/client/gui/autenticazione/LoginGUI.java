@@ -16,14 +16,18 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-
+/**
+ *
+ */
 public class LoginGUI extends TemplateGUI {
     private JTextField campoEmail;
     private JPasswordField campoPassword;
 
-    private static final String SERVER_HOST = "localhost";
-    private static final int SERVER_PORT = 10000;
-
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     */
     public LoginGUI(JFrame frame, UtenteService utenteService) {
         super(frame);
         this.frame = frame;
@@ -63,13 +67,6 @@ public class LoginGUI extends TemplateGUI {
         JLayeredPane pannelloPassword = creaCampoPasswordConOcchio(campoPassword, dimensioneCampo);
         pannelloPassword.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        /*campoPassword = new JPasswordField();
-        campoPassword.setPreferredSize(dimensioneCampo);
-        campoPassword.setMinimumSize(dimensioneCampo);
-        campoPassword.setMaximumSize(dimensioneCampo);
-        campoPassword.setAlignmentX(Component.CENTER_ALIGNMENT);*/
-
-
         JButton effettuaLogin = new JButton("Effettua Login");
         effettuaLogin.setPreferredSize(dimensioneCampo);
         effettuaLogin.setMinimumSize(dimensioneCampo);
@@ -77,7 +74,6 @@ public class LoginGUI extends TemplateGUI {
         effettuaLogin.setAlignmentX(Component.CENTER_ALIGNMENT);
         effettuaLogin.setFocusPainted(false);
         effettuaLogin.setBorder(new LineBorder(Color.WHITE));
-
 
         effettuaLogin.addActionListener(e -> {
             String email = campoEmail.getText().trim();
@@ -127,8 +123,6 @@ public class LoginGUI extends TemplateGUI {
             }
         });
 
-
-
         JButton registrazione = new JButton("Non sei registrato? Registrati qui!");
         registrazione.setPreferredSize(dimensioneCampo);
         registrazione.setMinimumSize(dimensioneCampo);
@@ -146,7 +140,6 @@ public class LoginGUI extends TemplateGUI {
         pannelloCentrale.add(titoloCentrale2);
         pannelloCentrale.add(Box.createVerticalStrut(15));
 
-
         pannelloCentrale.add(emailLabel);
         pannelloCentrale.add(Box.createVerticalStrut(5));
         pannelloCentrale.add(campoEmail);
@@ -162,7 +155,6 @@ public class LoginGUI extends TemplateGUI {
         pannelloCentrale.add(Box.createVerticalStrut(10));
         pannelloCentrale.add(registrazione);
 
-        //centratura del pannelloCentrale
         JPanel centroPannello = new JPanel(new FlowLayout(FlowLayout.CENTER));
         centroPannello.add(pannelloCentrale);
         add(centroPannello, BorderLayout.CENTER);
@@ -182,6 +174,12 @@ public class LoginGUI extends TemplateGUI {
     }
 
     // ---- METODO HELPER PER IL CAMPO PASSWORD CON OCCHIO ----
+
+    /**
+     * @param campoPassword
+     * @param dimensioneCampo
+     * @return
+     */
     private JLayeredPane creaCampoPasswordConOcchio(JPasswordField campoPassword, Dimension dimensioneCampo) {
         char echoCharDefault = campoPassword.getEchoChar();
 

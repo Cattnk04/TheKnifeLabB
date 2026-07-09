@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
  *
  * Classe per gestione della generazione dell'elemento Utente.
  */
-
 public class Utente implements Serializable{
 
     private String email;
@@ -144,7 +143,6 @@ public class Utente implements Serializable{
         this.citta = citta;
     }
 
-
     /**
      * Restituisce una rappresentazione testuale dell'utente, con i campi
      * email, nome, cognome, password, nazione, città e se è ristoratore,
@@ -153,7 +151,6 @@ public class Utente implements Serializable{
      *
      * @return una stringa formattata che rappresenta l'utente
      */
-    //Metodo to String
     @Override
     public String toString(){
         return email.trim().toLowerCase() + ","

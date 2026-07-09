@@ -17,6 +17,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class ListaPreferitiGUI extends TemplateGUI {
     JFrame frame;
     private final UtenteService utenteService;
@@ -26,6 +29,12 @@ public class ListaPreferitiGUI extends TemplateGUI {
     private final JList<RistoranteDTO> listaPreferiti;
     private final JLabel labelContatore;
 
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     * @param email
+     */
     public ListaPreferitiGUI(JFrame frame, UtenteService utenteService, String email) {
         super(frame);
         this.frame = frame;
@@ -124,13 +133,8 @@ public class ListaPreferitiGUI extends TemplateGUI {
         caricaPreferiti();
     }
 
-    /*
-     * Recupera i preferiti (email -> idRistorante) dal server, poi recupera
-     * tutti i ristoranti e filtra client-side quelli il cui id è tra i preferiti.
+    /**
      *
-     * NOTA: Con un endpoint dedicato per singolo id
-     * (es. TipoRichieste.GET_RISTORANTE_BY_ID), questo metodo può essere
-     * semplificato evitando di scaricare tutti i ristoranti ogni volta.
      */
     @SuppressWarnings("unchecked")
     private void caricaPreferiti() {
@@ -171,6 +175,10 @@ public class ListaPreferitiGUI extends TemplateGUI {
         aggiornaRisultati(ristorantiPreferiti);
     }
 
+    /**
+     *
+     * @param risultati
+     */
     private void aggiornaRisultati(List<RistoranteDTO> risultati) {
         modelloLista.clear();
         if (risultati == null || risultati.isEmpty()) {
@@ -183,6 +191,9 @@ public class ListaPreferitiGUI extends TemplateGUI {
         labelContatore.setText(risultati.size() + " ristorant" + (risultati.size() == 1 ? "e preferito" : "i preferiti"));
     }
 
+    /**
+     *
+     */
     private void mostraNessunaSelezione() {
         JOptionPane.showMessageDialog(this,
                 "Seleziona prima un ristorante dalla lista.",
@@ -190,6 +201,10 @@ public class ListaPreferitiGUI extends TemplateGUI {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     *
+     * @param ristorante
+     */
     private void apriDettaglioRistorante(RistoranteDTO ristorante) {
         JOptionPane.showMessageDialog(this,
                 "Apertura dettagli per: " + ristorante.getNomeRistorante(),
@@ -200,11 +215,17 @@ public class ListaPreferitiGUI extends TemplateGUI {
         // frame.repaint();
     }
 
+    /**
+     *
+     */
     private static class RistoranteCellRenderer extends JPanel implements ListCellRenderer<RistoranteDTO> {
 
         private final JLabel labelNome = new JLabel();
         private final JLabel labelInfo = new JLabel();
 
+        /**
+         *
+         */
         public RistoranteCellRenderer() {
             setLayout(new GridLayout(2, 1));
             setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
@@ -215,6 +236,15 @@ public class ListaPreferitiGUI extends TemplateGUI {
             add(labelInfo);
         }
 
+        /**
+         *
+         * @param list The JList we're painting.
+         * @param ristorante The value returned by list.getModel().getElementAt(index).
+         * @param index The cells index.
+         * @param isSelected True if the specified cell was selected.
+         * @param cellHasFocus True if the specified cell has the focus.
+         * @return
+         */
         @Override
         public Component getListCellRendererComponent(JList<? extends RistoranteDTO> list, RistoranteDTO ristorante,
                                                       int index, boolean isSelected, boolean cellHasFocus) {

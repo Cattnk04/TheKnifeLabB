@@ -38,8 +38,13 @@ public class ModificaRistoranteGUI extends TemplateGUI {
     private JRadioButton prenotazioneNo;
     private JComboBox<TipoCucinaDTO> campoTipoCucina;
 
-
-
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     * @param email
+     * @param ristorante
+     */
     public ModificaRistoranteGUI(JFrame frame, UtenteService utenteService, String email, RistoranteDTO ristorante) {
         super(frame);
         this.frame = frame;
@@ -203,6 +208,10 @@ public class ModificaRistoranteGUI extends TemplateGUI {
         pannello.add(home);
 
     }
+
+    /**
+     *
+     */
     private void caricaTipiCucina() {
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_TIPO_CUCINA, null);
         Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
@@ -226,6 +235,9 @@ public class ModificaRistoranteGUI extends TemplateGUI {
         }
     }
 
+    /**
+     *
+     */
     private void salvaModifiche() {
         try{
             String nome = campoNomeRistorante.getText().trim();

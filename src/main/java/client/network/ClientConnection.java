@@ -8,12 +8,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ *
+ */
 public class ClientConnection {
 
     private static final String SERVER_HOST = "localhost";
     private static final int SERVER_PORT = 10000;
 
-    // Invio generico richieste
+    /**
+     *
+     * @param richiesta
+     * @return
+     */
     public static Risposta inviaRichiesta(Richiesta richiesta) {
         try (
                 Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
@@ -31,7 +38,10 @@ public class ClientConnection {
         }
     }
 
-    //Il client chiede al server di spegnersi
+    /**
+     *
+      * @return
+     */
     public static Risposta shutdownServer() {
 
         Richiesta richiesta = new Richiesta(

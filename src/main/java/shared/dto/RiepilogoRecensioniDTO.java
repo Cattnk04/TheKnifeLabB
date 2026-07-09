@@ -14,7 +14,6 @@ import java.io.Serializable;
  * includere il dettaglio delle singole valutazioni.
  * </p>
  */
-
 public class RiepilogoRecensioniDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

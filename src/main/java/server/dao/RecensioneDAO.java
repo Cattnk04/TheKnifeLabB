@@ -8,9 +8,16 @@ import main.java.shared.enums.CampoRecensione;
 import java.sql.*;
 import java.util.*;
 
+/**
+ *
+ */
 public class RecensioneDAO {
 
-    //Salvataggio le recensioni
+    /**
+     *
+      * @param recensione
+     * @return
+     */
     public boolean salvaRecensioni (Recensione recensione){
         String sql = """
                 INSERT INTO recensioni (email, idristorante, valutazione, recensione, risposta)
@@ -33,7 +40,14 @@ public class RecensioneDAO {
         }
     }
 
-    //Aggiornamento
+    /**
+     *
+      * @param idRistorante
+     * @param email
+     * @param campo
+     * @param valore
+     * @return
+     */
     public boolean aggiornaRecensione(int idRistorante, String email, CampoRecensione campo, Object valore) {
 
         String sql = switch (campo) {
@@ -57,7 +71,12 @@ public class RecensioneDAO {
         }
     }
 
-    //Cancellazione
+    /**
+     *
+      * @param idRistorante
+     * @param email
+     * @return
+     */
     public boolean cancellaRecensioni (int idRistorante, String email){
         String sql = """
                 DELETE FROM recensioni
@@ -76,7 +95,11 @@ public class RecensioneDAO {
             return false;
         }
     }
-    //Ricerca di tutte le recensioni
+
+    /**
+     *
+      * @return
+     */
     public List<Recensione> getRecensioni() {
 
         List<Recensione> listaRecensioni = new ArrayList<>();
@@ -108,7 +131,11 @@ public class RecensioneDAO {
         return listaRecensioni;
     }
 
-    //Ricerca per ristorante
+    /**
+     *
+      * @param idRistorante
+     * @return
+     */
     public List<Recensione> getRecensioniByRistorante(int idRistorante) {
 
         List<Recensione> listaByRist = new ArrayList<>();
@@ -145,7 +172,11 @@ public class RecensioneDAO {
         return listaByRist;
     }
 
-    //Ricerca per email
+    /**
+     *
+      * @param email
+     * @return
+     */
     public List<Recensione> getRecensioniByEmail(String email) {
 
         List<Recensione> listaByEmail = new ArrayList<>();
@@ -180,7 +211,11 @@ public class RecensioneDAO {
         return listaByEmail;
     }
 
-    //Riepilogo recensioni per ristoratore
+    /**
+     *
+      * @param idRistorante
+     * @return
+     */
     public RiepilogoRecensioniDTO getRiepilogo(int idRistorante) {
         String sql = """
                 SELECT COUNT(*) AS totRecensioni,
@@ -209,7 +244,13 @@ public class RecensioneDAO {
         return new RiepilogoRecensioniDTO(0, 0.0);
     }
 
-    //Risposta recensioni
+    /**
+     *
+      * @param idRistorante
+     * @param email
+     * @param risposta
+     * @return
+     */
     public boolean rispostaRecensione (int idRistorante, String email, String risposta){
 
         String sql = """

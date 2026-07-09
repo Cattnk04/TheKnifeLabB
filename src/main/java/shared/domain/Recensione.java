@@ -10,7 +10,6 @@ import java.io.Serializable;
  *
  * Classe per gestione della generazione dell'elemento Recensione.
  */
-
 public class Recensione implements Serializable{
 
     private String email;
@@ -111,7 +110,6 @@ public class Recensione implements Serializable{
      *
      * @return la stringa rappresentativa dell'oggetto Recensione
      */
-    //Metodo to String
     @Override
     public String toString(){
         return this.email + '*' + this.idRistorante + '*' + this.valutazione + '*' + this.recensione + '*' + this.risposta;

@@ -14,8 +14,10 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+/**
+ *
+ */
 public class ScriviRecensioneGUI extends TemplateGUI {
-
     private JSpinner spinnerStelle;
     private JTextArea testoRecensione;
     private JButton bottoneInvia;
@@ -27,11 +29,14 @@ public class ScriviRecensioneGUI extends TemplateGUI {
     private final UtenteService utenteService;
     private final RistoranteDTO ristorante;
 
-    public ScriviRecensioneGUI(JFrame frame,
-                               UtenteService utenteService,
-                               String email,
-                               RistoranteDTO ristorante) {
-
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     * @param email
+     * @param ristorante
+     */
+    public ScriviRecensioneGUI(JFrame frame, UtenteService utenteService, String email, RistoranteDTO ristorante) {
         super(frame);
         this.frame = frame;
         this.utenteService = utenteService;
@@ -43,6 +48,9 @@ public class ScriviRecensioneGUI extends TemplateGUI {
         costruisciInterfaccia();
     }
 
+    /**
+     *
+     */
     private void costruisciInterfaccia() {
         JPanel contenuto = new JPanel(new GridBagLayout());
         contenuto.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -123,6 +131,9 @@ public class ScriviRecensioneGUI extends TemplateGUI {
         add(centro, BorderLayout.CENTER);
     }
 
+    /**
+     *
+     */
     private void inviaRecensione() {
         int valutazione = (int) spinnerStelle.getValue();
         String testo = testoRecensione.getText().trim();

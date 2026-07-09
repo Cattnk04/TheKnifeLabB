@@ -15,6 +15,9 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+/**
+ *
+ */
 public class RegistrazioneGUI extends TemplateGUI {
     JFrame frame;
     private final JTextField campoNome;
@@ -27,6 +30,11 @@ public class RegistrazioneGUI extends TemplateGUI {
     private final JTextField campoEmail;
     private final JPasswordField campoPassword;
 
+    /**
+     *
+     * @param frame
+     * @param utenteService
+     */
     public RegistrazioneGUI(JFrame frame, UtenteService utenteService) {
         super(frame);
         this.frame = frame;
@@ -263,6 +271,13 @@ public class RegistrazioneGUI extends TemplateGUI {
     }
 
     //METODO HELPER PER IL CAMPO PASSWORD CON OCCHIO
+
+    /**
+     *
+     * @param campoPassword
+     * @param dimensioneCampo
+     * @return
+     */
     private JLayeredPane creaCampoPasswordConOcchio(JPasswordField campoPassword, Dimension dimensioneCampo) {
         char echoCharDefault = campoPassword.getEchoChar();
 

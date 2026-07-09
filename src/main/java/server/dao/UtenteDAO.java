@@ -8,10 +8,17 @@ import main.java.shared.enums.CampoUtente;
 import java.sql.*;
 import java.util.*;
 
-
+/**
+ *
+ */
 public class UtenteDAO {
 
-    //Mapper Utente
+    /**
+     *
+      * @param rs
+     * @return
+     * @throws SQLException
+     */
     private Utente map(ResultSet rs) throws SQLException {
         return new Utente(
                 rs.getString("email"),
@@ -24,7 +31,11 @@ public class UtenteDAO {
         );
     }
 
-    //Registrazione dell'Utente
+    /**
+     *
+      * @param utente
+     * @return
+     */
     public boolean registrazione(Utente utente) {
 
         if (utente == null) {
@@ -65,7 +76,11 @@ public class UtenteDAO {
         }
     }
 
-    //Ricerca dell'utente
+    /**
+     *
+      * @param email
+     * @return
+     */
     public Optional<Utente> trovaUtente(String email) {
         String sql = """
             SELECT email, nomeutente, cognomeutente, hashpwd, nazione, citta, ristoratore
@@ -90,7 +105,12 @@ public class UtenteDAO {
         return Optional.empty();
     }
 
-    //Aggiornamento hash password
+    /**
+     *
+      * @param email
+     * @param hashpwd
+     * @return
+     */
     public boolean aggiornaPasswordHash(String email, String hashpwd) {
         String sql = """
             UPDATE utente
@@ -111,7 +131,11 @@ public class UtenteDAO {
         }
     }
 
-    //Cancellazione dell'Utente
+    /**
+     *
+      * @param email
+     * @return
+     */
     public boolean cancellaUtente (String email){
         String sql = """
                 DELETE FROM utente
@@ -130,7 +154,11 @@ public class UtenteDAO {
         }
     }
 
-    //Controllo esistenza utente
+    /**
+     *
+      * @param email
+     * @return
+     */
     public boolean esisteUtente(String email) {
         String sql = """
                 SELECT 1
@@ -154,7 +182,10 @@ public class UtenteDAO {
         }
     }
 
-    //Trova tutti gli utenti
+    /**
+     *
+      * @return
+     */
     public List<Utente> trovaTutti() {
 
         List<Utente> lista = new ArrayList<>();
@@ -179,7 +210,13 @@ public class UtenteDAO {
         return lista;
     }
 
-    //Aggiornamento utente
+    /**
+     *
+      * @param email
+     * @param campo
+     * @param valore
+     * @return
+     */
     public boolean aggiornamentoUtente(String email, CampoUtente campo, Object valore){
         String sql = switch (campo){
             case NOMEUTENTE -> "UPDATE utente SET nomeutente = ? WHERE email = ?";

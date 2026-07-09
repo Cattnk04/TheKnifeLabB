@@ -8,7 +8,6 @@ import java.io.Serializable;
  *
  * Classe per gestione della generazione dell'elemento Preferito.
  */
-
 public class Preferito implements Serializable {
 
     String email;
@@ -32,7 +31,6 @@ public class Preferito implements Serializable {
         this.idRistorante = idRistorante;
     }
 
-    //Metodi Get
     /**
      * Restituisce l'email dell'utente associato al preferito.
      *
@@ -50,10 +48,20 @@ public class Preferito implements Serializable {
         return idRistorante;
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     public String setEmail(String email){
         return this.email = email;
     }
 
+    /**
+     *
+     * @param IdRistorante
+     * @return
+     */
     public int setIdRistorante(int IdRistorante){
         return this.idRistorante = IdRistorante;
     }
@@ -66,7 +74,6 @@ public class Preferito implements Serializable {
      *
      * @return la stringa rappresentativa dell'oggetto Preferito
      */
-    //Metodo to string
     @Override
     public String toString(){
         return this.email+ "," + idRistorante;
