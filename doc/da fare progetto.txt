@@ -5,29 +5,13 @@ MenuRistoratoreGUI (Ele):
 - Mettere il bottone per eliminare il ristorante selezionato
 - Mettere un bottone per l'aggiunta di un ristorante
 
-ListaRecensioniGUI (da fare nel package listeRistoratore):
-- Mostrare una lista di recensioni del mio ristorante selezionato in precedenza nel MenuRistoratoreGUI 
-- Mettere un bottone per la risposta alla recensione selezionata
-
-RispostaRecensioneGUI:
-- Aggiungere un campo di testo dove viene visualizzata la recensione alla quale si vuole rispondere (possiamo mettere anche la valutazione se vogliamo) 
-- Aggiungere un campo di testo editabile dove si scrive la risposta alla recensione 
-- Mettere un bottone per l'invio della risposta alla recensione
-
-ModificaRistoranteGUI (Tank): FUNZIONA MA NON L'HO FATTA IO (TANK)
-- Come il modifica utente però per il ristorante
-- Prendendo come modello aggiungi ristoranti
-
-AggiungiRistorantiGUI (Tank): FATTO
-- Da finire
-
 COSA FARE PRE CONSEGNA:
 - Aprire applicazione e provare funzionalità per funzionalità.
     - Segnarsi gli accessi per fare le prove durante l'esame
-    - Fare prima l'accesso utente e usarne le funzionalità
-    - Fare l'accesso risotratore e usarne le funzionalità
-    - Usare funzionalità per il guest
-    - Segnarsi la grafica brutta (ma funzionante) (i bottoni soprattutto)
+    - Fare prima l'accesso utente e usarne le funzionalità: PROVATO
+    - Fare l'accesso risotratore e usarne le funzionalità: PROVATO
+    - Usare funzionalità per il guest: PROVATO
+    - Segnarsi la grafica brutta (ma funzionante) (i bottoni soprattutto): SI POTREBBE ZIPPARE, MANDARE A CHAT E AUTOMATIZZARLO
 - Aprire file per file
     - Creare il file .img del logo e metterlo in src
     - Mettere immagine al posto di logo
@@ -48,3 +32,21 @@ COSA FARE PRE CONSEGNA:
 
 utenteristoratore@gmail.it
 UtenteRistoratore1
+
+PROVE FATTE DA TANK:
+giuseppe.neri@email.com
+GiuseppeNeri1
+ristoratore
+Da Giuseppe monza italia via cadorna 15
+prezzo max 32
+no delivery
+si online
+pesce
+
+mario
+pantani
+italia
+roma
+cliente
+mariopantani@email.it
+MarioPantani1

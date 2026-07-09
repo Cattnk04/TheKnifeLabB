@@ -8,6 +8,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.FlowLayout;
+import java.util.Objects;
 
 
 public class TemplateGUI extends JPanel {
@@ -23,9 +24,16 @@ public class TemplateGUI extends JPanel {
         this.frame = frame;
         setLayout(new BorderLayout());
 
-        //creazione bottone logo --> poi da portare a icon
-        JButton logo = new JButton("Logo");
-        logo.setPreferredSize(new Dimension(150,60 ));
+        //immagine del logo nella navbar in alto
+        ImageIcon icon = new ImageIcon(getClass().getResource("/images/logo.png"));
+        Image immagine = icon.getImage().getScaledInstance(80, 80 , Image.SCALE_SMOOTH);
+        ImageIcon logo1 = new ImageIcon(immagine);
+
+        frame.setIconImage(immagine);
+
+        //creazione label logo --> poi da portare a icon
+        JLabel logo = new JLabel(logo1);
+        logo.setPreferredSize(new Dimension(80,80 ));
         logo.setFocusable(false);
         logo.setBorder(new LineBorder(Color.WHITE));
 
