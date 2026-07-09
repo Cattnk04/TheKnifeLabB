@@ -2,7 +2,10 @@ package main.java.shared.dto;
 
 import java.io.Serializable;
 
-/** *
+/**
+ * @author Catelli Elena, Pellegrini Gaia, Tancredi Giacomo, Rizzi Camilla
+ * @version 1.1
+ *
  * DTO utilizzato per rappresentare una recensione di un utente su un ristorante.
  * <p>
  * Contiene le informazioni relative alla valutazione, al testo della recensione
@@ -21,7 +24,7 @@ public class RecensioneDTO implements Serializable {
     private String risposta;
 
     /**
-     *
+     * Costruttore vuoto per la deserializzazione.
      */
     public RecensioneDTO() {}
 
@@ -121,6 +124,7 @@ public class RecensioneDTO implements Serializable {
     }
 
     /**
+     * Imposta la risposta del ristoratore.
      *
      * @param risposta
      */
@@ -129,6 +133,7 @@ public class RecensioneDTO implements Serializable {
     }
 
     /**
+     * Imposta l'email dell'utente autore della recensione.
      *
      * @param email
      */
@@ -137,6 +142,7 @@ public class RecensioneDTO implements Serializable {
     }
 
     /**
+     * Imposta il testo della recensione.
      *
      * @param recensione
      */
