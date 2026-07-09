@@ -50,6 +50,7 @@ public class TipoCucinaDAO {
 
         } catch (SQLException e) {
             System.out.println("Errore recupero tipi di cucina: " + e.getMessage());
+            throw new IllegalStateException("Impossibile recuperare i tipi di cucina", e);
         }
 
         return lista;
