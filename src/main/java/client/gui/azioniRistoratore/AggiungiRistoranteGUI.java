@@ -47,6 +47,7 @@ public class AggiungiRistoranteGUI extends TemplateGUI {
             frame.revalidate();
             frame.repaint();
         });
+
         pannello.add(home);
 
         JPanel centro = new JPanel(new GridBagLayout());
@@ -192,30 +193,23 @@ public class AggiungiRistoranteGUI extends TemplateGUI {
     }
 
     private void eseguiCreazioneRistorante(String email, UtenteService utenteService) {
+        //creazione dei dati per il DTO da dare al service per effettuare la query sul DB
         String nomeRistorante = campoNomeRistorante.getText().trim();
         String citta = campoCitta.getText().trim();
         String nazione = campoNazione.getText().trim();
         String via = campoVia.getText().trim();
         int numeroCivico = Integer.parseInt(campoNumeroCivico.getText().trim());
         int fasciaPrezzo = Integer.parseInt(campoFasciaPrezzo.getText().trim());
-        boolean delivery = this.radioDeliverySi.isSelected()? true : false;
-        boolean prenotazioneOnline = this.radioPrenotazioneSi.isSelected()? true : false;
+        boolean delivery = this.radioDeliverySi.isSelected();
+        boolean prenotazioneOnline = this.radioPrenotazioneSi.isSelected();
         int indiceSelezionato = campoTipoCucina.getSelectedIndex();
-        Integer tipoCucina;
-            /*if (indiceSelezionato <= 0) {
-                tipoCucina = null; // "Qualsiasi" -> nessun filtro
-            } else {
-                TipoCucinaDTO tipoSelezionato = (TipoCucinaDTO) campoTipoCucina.getSelectedItem();
-                tipoCucina = tipoSelezionato.getId(); // adatta al metodo reale del DTO
-            }*/
-
-        //DA CONTROLLARE
+        int tipoCucina;
         TipoCucinaDTO tipoSelezionato = (TipoCucinaDTO) campoTipoCucina.getSelectedItem();
         tipoCucina = tipoSelezionato.getId(); // adatta al metodo reale del DTO
 
-        RistoranteDTO dtoRisotrante = new RistoranteDTO(nomeRistorante, email, citta, nazione,
+        RistoranteDTO dtoRistorante = new RistoranteDTO(nomeRistorante, email, citta, nazione,
                 via, numeroCivico, fasciaPrezzo, delivery, prenotazioneOnline, tipoCucina);
-        Richiesta richiesta = new Richiesta(TipoRichieste.CREA_RISTORANTE, dtoRisotrante);
+        Richiesta richiesta = new Richiesta(TipoRichieste.CREA_RISTORANTE, dtoRistorante);
         Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
 
         if(risposta != null && risposta.getSuccesso()) {

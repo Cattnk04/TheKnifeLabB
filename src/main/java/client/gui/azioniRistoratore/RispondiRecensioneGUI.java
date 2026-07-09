@@ -4,20 +4,15 @@ import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.azioniLoggato.VisualizzaProfiloGUI;
 import main.java.client.gui.menu.RistoratoreGUI;
 import main.java.server.service.UtenteService;
+import main.java.shared.dto.RecensioneDTO;
 
 import javax.swing.*;
 
 public class RispondiRecensioneGUI extends TemplateGUI {
 
-    public RispondiRecensioneGUI(JFrame frame, UtenteService utenteService, String email) {
+    public RispondiRecensioneGUI(JFrame frame, UtenteService utenteService, String email, String nomeRistorante, RecensioneDTO recensione) {
         super(frame);
         this.frame = frame;
-        String testoRecensione = "aggiungere query per ricevere la recensione del DB";
-        JLabel lblTestoRecensione = new JLabel(testoRecensione);
-        this.add(lblTestoRecensione);
-        JTextArea tfRisposta = new JTextArea();
-        tfRisposta.setEditable(true);
-        tfRisposta.setSize(300, 300);
 
         visualizzaProfilo.addActionListener(e -> {
             frame.setContentPane(new VisualizzaProfiloGUI(frame, utenteService, email));
@@ -33,5 +28,22 @@ public class RispondiRecensioneGUI extends TemplateGUI {
             frame.repaint();
         });
         pannello.add(home);
+
+        JPanel pannelloDatiRecensione = new JPanel();
+        JLabel labelNomeRistorante = new JLabel("Ristorante: " + nomeRistorante);
+        JLabel labelTesto = new JLabel(recensione.getRecensione());
+
+        pannelloDatiRecensione.add(labelNomeRistorante);
+        pannelloDatiRecensione.add(labelTesto);
+
+        JPanel pannelloRisposta = new JPanel();
+        JTextArea textAreaRisposta = new JTextArea();
+        textAreaRisposta.setEditable(true);
+        JTextField rispondiQui = new JTextField("Inserisci qui la risposta alla recensione scritta sopra");
+        pannelloRisposta.add(rispondiQui);
+        pannelloRisposta.add(textAreaRisposta);
+
+        pannello.add(pannelloDatiRecensione);
+        pannello.add(pannelloRisposta);
     }
 }

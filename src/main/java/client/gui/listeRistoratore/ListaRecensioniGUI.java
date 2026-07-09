@@ -2,14 +2,27 @@ package main.java.client.gui.listeRistoratore;
 
 import main.java.client.gui.TemplateGUI;
 import main.java.client.gui.azioniLoggato.VisualizzaProfiloGUI;
+import main.java.client.gui.azioniRistoratore.RispondiRecensioneGUI;
 import main.java.client.gui.menu.RistoratoreGUI;
+import main.java.client.network.ClientConnection;
 import main.java.server.service.UtenteService;
+import main.java.shared.communication.Richiesta;
+import main.java.shared.communication.Risposta;
+import main.java.shared.communication.TipoRichieste;
+import main.java.shared.domain.Recensione;
+import main.java.shared.dto.RecensioneDTO;
 import main.java.shared.dto.RistoranteDTO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class ListaRecensioniGUI extends TemplateGUI {
+    JFrame frame;
+
+    private final DefaultListModel<RecensioneDTO> modelloLista;
+    private final JList<RecensioneDTO> listaRecensioni;
+    private final JLabel labelContatore;
 
     public ListaRecensioniGUI(JFrame frame, UtenteService utenteService, String email, RistoranteDTO ristorante){
         super(frame);
@@ -30,5 +43,67 @@ public class ListaRecensioniGUI extends TemplateGUI {
         });
         pannello.add(home);
 
+        JPanel pannelloCentrale = new JPanel(new BorderLayout(10,10));
+        pannelloCentrale.setBorder(BorderFactory.createTitledBorder("Le recensioni del tuo ristorante"));
+
+        this.modelloLista = new DefaultListModel<>();
+        this.listaRecensioni = new JList<>(modelloLista);
+        this.listaRecensioni.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.listaRecensioni.setFixedCellHeight(70);
+
+        JScrollPane scrollPane = new JScrollPane(listaRecensioni);
+        scrollPane.setPreferredSize(new Dimension(500, 350));
+
+        this.labelContatore = new JLabel("Caricamento recensioni...");
+        this.labelContatore.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+        pannelloCentrale.add(labelContatore, BorderLayout.NORTH);
+        pannelloCentrale.add(scrollPane, BorderLayout.CENTER);
+
+        caricaRecensioni(ristorante);
+
+        JPanel pannelloBottoniSotto = new JPanel(new BorderLayout(10,10));
+        JButton rispondiRecensione = new JButton("Rispondi recensione");
+
+        rispondiRecensione.addActionListener(e -> {
+            RecensioneDTO selezionata = listaRecensioni.getSelectedValue();
+            if(selezionata == null){
+                mostraNessunaSelezione();
+                return;
+            }
+            if(selezionata.getRisposta() == null){
+                mostraNessunaSelezione();
+                return;
+            }
+            frame.setContentPane(new RispondiRecensioneGUI(frame, utenteService, email, ristorante.getNomeRistorante(), selezionata));
+            frame.revalidate();
+            frame.repaint();
+        });
+        pannelloBottoniSotto.add(rispondiRecensione);
+
+        pannelloCentrale.add(rispondiRecensione, BorderLayout.SOUTH);
+    }
+    private void caricaRecensioni(RistoranteDTO ristorante) {
+        Richiesta richiesta = new Richiesta(TipoRichieste.GET_RECENSIONI_RISTORANTE, ristorante.getIdRistorante());
+        Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
+
+        if (risposta == null || !risposta.getSuccesso()) {
+            labelContatore.setText("Impossibile recuperare le recensioni");
+            return;
+        }
+
+        java.util.List<Recensione> listaRecensioni = (List<Recensione>) risposta.getContenuto();
+    }
+    private void mostraNessunaSelezione() {
+        JOptionPane.showMessageDialog(this,
+                "Seleziona prima una recensione dalla lista.",
+                "Nessuna selezione",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+    private void mostraGiaRisposta() {
+        JOptionPane.showMessageDialog(this,
+                "Hai già risposto a questa recensione",
+                "Già risposto",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 }
