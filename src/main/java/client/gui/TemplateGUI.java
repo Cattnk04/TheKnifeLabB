@@ -56,5 +56,40 @@ public class TemplateGUI extends JPanel {
         add(pannello, BorderLayout.NORTH);
 
 
+        //METODO GIUSTO: DA CAMBIARE TUTTI I BOTTONI
+        //Creazione pannello colorato
+        /*pannello = new JPanel(new BorderLayout()){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.setColor(Color.BLUE);
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        pannello.setOpaque(false);
+
+        //pannello centrato contenente solo il logo
+        JPanel pannelloLogo = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
+        pannelloLogo.setOpaque(false);
+        pannelloLogo.add(logo);
+
+        //Pannello a destra contenente i bottoni
+        JPanel pannelloBottoniDX = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 15));
+        pannelloBottoniDX.setOpaque(false);
+        pannelloBottoniDX.add(visualizzaProfilo);
+        pannelloBottoniDX.add(logout);
+
+        //Pannello a sinistra per centrare il pannello centrale e se si vuole si possono aggiungere dei bottoni al suo interno
+        JPanel pannelloBottoniSX = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 15));
+        pannelloBottoniSX.setOpaque(false);
+
+        pannello.add(pannelloBottoniSX, BorderLayout.WEST);
+        pannello.add(pannelloLogo, BorderLayout.CENTER);
+        pannello.add(pannelloBottoniDX, BorderLayout.EAST);
+
+        add(pannello, BorderLayout.NORTH);
+
+         */
+
     }
 }
