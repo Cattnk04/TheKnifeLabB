@@ -24,7 +24,8 @@ public class RecensioneDTO implements Serializable {
     private String risposta;
 
     /**
-     * Costruttore vuoto per la deserializzazione.
+     * Costruttore vuoto di RecensioneDTO, necessario per la serializzazione
+     * e per il funzionamento del DAO.
      */
     public RecensioneDTO() {}
 
@@ -70,36 +71,42 @@ public class RecensioneDTO implements Serializable {
 
     /**
      * Restituisce l'email dell'utente autore della recensione.
+     *
      * @return email utente
      */
     public String getEmail() { return email; }
 
     /**
      * Restituisce l'identificativo del ristorante.
+     *
      * @return id ristorante
      */
     public int getIdRistorante() { return idRistorante; }
 
     /**
      * Restituisce la valutazione assegnata.
+     *
      * @return voto (1-5)
      */
     public int getValutazione() { return valutazione; }
 
     /**
      * Restituisce il testo della recensione.
+     *
      * @return recensione
      */
     public String getRecensione() { return recensione; }
 
     /**
      * Restituisce l'eventuale risposta del ristoratore.
+     *
      * @return risposta oppure null
      */
     public String getRisposta() { return risposta; }
 
     /**
      * Imposta l'identificativo del ristorante.
+     *
      * @param idRistorante id del ristorante recensito
      */
     public void setIdRistorante(int idRistorante) {
@@ -124,9 +131,9 @@ public class RecensioneDTO implements Serializable {
     }
 
     /**
-     * Imposta la risposta del ristoratore.
+     * Imposta o aggiorna la risposta del ristoratore alla recensione.
      *
-     * @param risposta
+     * @param risposta il testo della risposta da impostare
      */
     public void setRisposta(String risposta) {
         this.risposta = risposta;
@@ -135,16 +142,16 @@ public class RecensioneDTO implements Serializable {
     /**
      * Imposta l'email dell'utente autore della recensione.
      *
-     * @param email
+     * @param email l'email da impostare
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
-     * Imposta il testo della recensione.
+     * Imposta o aggiorna il testo della recensione.
      *
-     * @param recensione
+     * @param recensione il nuovo testo della recensione
      */
     public void setRecensione(String recensione) {
         this.recensione = recensione;
