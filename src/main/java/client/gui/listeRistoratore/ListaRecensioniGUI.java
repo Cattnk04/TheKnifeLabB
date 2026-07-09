@@ -51,6 +51,40 @@ public class ListaRecensioniGUI extends TemplateGUI {
         this.listaRecensioni.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.listaRecensioni.setFixedCellHeight(70);
 
+        // Renderer personalizzato per mostrare voto, testo e stato della recensione
+        this.listaRecensioni.setCellRenderer(new ListCellRenderer<RecensioneDTO>() {
+            @Override
+            public Component getListCellRendererComponent(JList<? extends RecensioneDTO> list, RecensioneDTO recensione,
+                                                          int index, boolean isSelected, boolean cellHasFocus) {
+                JPanel pannelloCella = new JPanel(new BorderLayout(5, 2));
+                pannelloCella.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+                JLabel labelVoto = new JLabel("Voto: " + recensione.getValutazione() + "/5");
+                labelVoto.setFont(labelVoto.getFont().deriveFont(Font.BOLD));
+
+                JLabel labelTesto = new JLabel(recensione.getRecensione());
+
+                JLabel labelStato = new JLabel(recensione.getRisposta() != null ? "✔ Già risposta" : "In attesa di risposta");
+                labelStato.setFont(labelStato.getFont().deriveFont(Font.ITALIC, 11f));
+
+                pannelloCella.add(labelVoto, BorderLayout.NORTH);
+                pannelloCella.add(labelTesto, BorderLayout.CENTER);
+                pannelloCella.add(labelStato, BorderLayout.SOUTH);
+
+                if (isSelected) {
+                    pannelloCella.setBackground(list.getSelectionBackground());
+                    labelVoto.setForeground(list.getSelectionForeground());
+                    labelTesto.setForeground(list.getSelectionForeground());
+                    labelStato.setForeground(list.getSelectionForeground());
+                } else {
+                    pannelloCella.setBackground(list.getBackground());
+                }
+
+                return pannelloCella;
+            }
+        });
+
+
         JScrollPane scrollPane = new JScrollPane(listaRecensioni);
         scrollPane.setPreferredSize(new Dimension(500, 350));
 
@@ -130,4 +164,5 @@ public class ListaRecensioniGUI extends TemplateGUI {
         dto.setRisposta(r.getRisposta());
         return dto;
     }
+
 }
