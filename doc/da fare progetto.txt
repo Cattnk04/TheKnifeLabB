@@ -1,4 +1,4 @@
-MenuRistoratoreGUI (ha detto che lo fa Ele (muoviti)):
+MenuRistoratoreGUI (Ele):
 - Visualizzare una la lista dei miei ristoranti
 - Mettere il bottone per la modifica del ristorante selezionato
 - Mettere il bottone per visualizzare le recensioni del ristorante selezionato
@@ -14,11 +14,11 @@ RispostaRecensioneGUI:
 - Aggiungere un campo di testo editabile dove si scrive la risposta alla recensione 
 - Mettere un bottone per l'invio della risposta alla recensione
 
-ModificaRistoranteGUI (Tank):
+ModificaRistoranteGUI (Tank): FUNZIONA MA NON L'HO FATTA IO (TANK)
 - Come il modifica utente però per il ristorante
 - Prendendo come modello aggiungi ristoranti
 
-AggiungiRistorantiGUI (Tank):
+AggiungiRistorantiGUI (Tank): FATTO
 - Da finire
 
 COSA FARE PRE CONSEGNA:
@@ -44,3 +44,7 @@ COSA FARE PRE CONSEGNA:
     - Nel manuale tecnico vedere che siano presenti tutti gli schemi (UML)
 - Eliminare tutti i file della cartella doc
 - Fare una cartella dove mettere una specie di checklist di cosa far vedere al prof all'esame (per farlo in modo efficiente)
+
+
+utenteristoratore@gmail.it
+UtenteRistoratore1
