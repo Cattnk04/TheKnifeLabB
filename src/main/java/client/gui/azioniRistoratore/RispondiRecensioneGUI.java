@@ -117,10 +117,10 @@ public class RispondiRecensioneGUI extends TemplateGUI {
             Richiesta richiesta = new Richiesta(TipoRichieste.RISPONDI_RECENSIONE, recensione);
             Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
             //DA SEMPRE ERRORE
-            /*if(risposta != null){
+            if(risposta != null){
                 System.out.println("Successo: " + risposta.getSuccesso());
                 System.out.println("Messaggio: " + risposta.getMsg());
-            }*/
+            }
 
             if (risposta == null || !risposta.getSuccesso()) {
                 mostraRispostaErrata();

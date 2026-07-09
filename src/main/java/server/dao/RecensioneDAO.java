@@ -213,12 +213,12 @@ public class RecensioneDAO {
     public boolean rispostaRecensione (int idRistorante, String email, String risposta){
 
         String sql = """
-                UPDATE recensioni
-                SET risposta = ?
-                WHERE idristorante = ? 
-                    AND email = ?
-                    AND (risposta IS NULL OR risposta = '')
-                """;
+                    UPDATE recensioni
+                    SET risposta = ?
+                    WHERE idristorante = ? 
+                        AND email = ?
+                        AND (risposta IS NULL OR risposta = '')
+                    """;
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)){
 

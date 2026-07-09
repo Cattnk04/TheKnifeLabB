@@ -158,6 +158,7 @@ public class ListaRecensioniGUI extends TemplateGUI {
     private RecensioneDTO convertiInDTO(Recensione r) {
         // Adatta i campi ai getter effettivi della tua classe Recensione/RecensioneDTO
         RecensioneDTO dto = new RecensioneDTO();
+        dto.setIdRistorante(r.getIdRistorante());
         dto.setEmail(r.getEmail());
         dto.setValutazione(r.getValutazione());
         dto.setRecensione(r.getRecensione());

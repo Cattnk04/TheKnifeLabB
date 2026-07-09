@@ -66,6 +66,10 @@ public class RecensioneService {
     //Risposta recensioni
     public boolean rispostaRecensione(int idRistorante, String email, String risposta) {
 
+        System.out.println("id"+ idRistorante);
+        System.out.println("email"+ email);
+        System.out.println("risposta"+ risposta);
+
         if (risposta == null || risposta.isBlank()) {
             throw new IllegalArgumentException("Risposta vuota");
         }
