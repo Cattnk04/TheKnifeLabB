@@ -2,6 +2,7 @@ package main.java.server.main;
 
 import main.java.server.network.ClientHandler;
 
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -33,8 +34,12 @@ public class ServerMain {
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
                 clientHandler.start();
             }
+        } catch (BindException e) {
+            System.out.println("Porta 10000 gia' in uso. Chiudi il processo che la occupa o cambia porta.");
+            e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("Server terminato");
+            System.out.println("Server terminato per errore:");
+            e.printStackTrace();
         }
     }
 

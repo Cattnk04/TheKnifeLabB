@@ -736,8 +736,12 @@ public class ClientHandler extends Thread{
         if (tipoCucinaService == null) {
             return new Risposta(false, null, "Errore nel recupero dei tipi di cucina");
         }
-        List<TipoCucinaDTO> tipi = tipoCucinaService.getTipoCucina();
-        return new Risposta(true, tipi, "Tipi di cucina recuperati");
+        try {
+            List<TipoCucinaDTO> tipi = tipoCucinaService.getTipoCucina();
+            return new Risposta(true, tipi, "Tipi di cucina recuperati");
+        } catch (Exception e) {
+            return new Risposta(false, null, "Errore nel recupero dei tipi di cucina: " + e.getMessage());
+        }
     }
 
     /***
