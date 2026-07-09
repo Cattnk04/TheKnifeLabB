@@ -72,7 +72,7 @@ public class ListaRecensioniGUI extends TemplateGUI {
                 return;
             }
             if(selezionata.getRisposta() != null){
-                mostraNessunaSelezione();
+                mostraGiaRisposta();
                 return;
             }
             frame.setContentPane(new RispondiRecensioneGUI(frame, utenteService, email, ristorante, selezionata));
@@ -84,6 +84,8 @@ public class ListaRecensioniGUI extends TemplateGUI {
         add(pannelloCentrale, BorderLayout.CENTER);
         add(rispondiRecensione, BorderLayout.SOUTH);
     }
+
+    @SuppressWarnings("unchecked")
     private void caricaRecensioni(RistoranteDTO ristorante) {
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_RECENSIONI_RISTORANTE, ristorante.getIdRistorante());
         Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
@@ -93,7 +95,18 @@ public class ListaRecensioniGUI extends TemplateGUI {
             return;
         }
 
-        listaRecensioni = (JList<RecensioneDTO>) risposta.getContenuto();
+        List<Recensione> listaRecensioni = (List<Recensione>) risposta.getContenuto();
+
+        modelloLista.clear();
+        for(Recensione recensione : listaRecensioni){
+            modelloLista.addElement(convertiInDTO(recensione));
+        }
+
+        if (listaRecensioni.isEmpty()) {
+            labelContatore.setText("Nessuna recensione trovata");
+        } else {
+            labelContatore.setText("Recensioni trovate: " + listaRecensioni.size());
+        }
     }
     private void mostraNessunaSelezione() {
         JOptionPane.showMessageDialog(this,
@@ -106,5 +119,15 @@ public class ListaRecensioniGUI extends TemplateGUI {
                 "Hai già risposto a questa recensione",
                 "Già risposto",
                 JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private RecensioneDTO convertiInDTO(Recensione r) {
+        // Adatta i campi ai getter effettivi della tua classe Recensione/RecensioneDTO
+        RecensioneDTO dto = new RecensioneDTO();
+        dto.setEmail(r.getEmail());
+        dto.setValutazione(r.getValutazione());
+        dto.setRecensione(r.getRecensione());
+        dto.setRisposta(r.getRisposta());
+        return dto;
     }
 }
