@@ -44,11 +44,12 @@ public class RecensioneDTO implements Serializable {
     /**
      * Costruisce una recensione senza risposta del ristoratore.
      *
+     * @param email
      * @param idRistorante identificativo del ristorante recensito
      * @param valutazione  voto assegnato (1-5)
      * @param recensione   testo della recensione
      */
-    public RecensioneDTO(int idRistorante, int valutazione, String recensione) {
+    public RecensioneDTO(String email, int idRistorante, int valutazione, String recensione) {
         this(null, idRistorante, valutazione, recensione, null);
     }
 
@@ -108,5 +109,9 @@ public class RecensioneDTO implements Serializable {
         }
 
         this.valutazione = valutazione;
+    }
+
+    public void setRisposta(String risposta) {
+        this.risposta = risposta;
     }
 }
