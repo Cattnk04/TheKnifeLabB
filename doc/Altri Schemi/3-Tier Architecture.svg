@@ -1,0 +1,51 @@
+<svg viewBox="0 0 420 620" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="420" height="620" fill="#ffffff"/>
+
+  <!-- Layer 1: Presentation / Client -->
+  <rect x="60" y="20" width="300" height="130" rx="8" fill="#ffffff" stroke="#282c33" stroke-width="2"/>
+  <text x="210" y="55" text-anchor="middle" font-size="16" font-weight="bold" fill="#282c33">Presentation Layer</text>
+  <text x="210" y="78" text-anchor="middle" font-size="13" fill="#282c33">Client (Java Swing)</text>
+  <text x="210" y="98" text-anchor="middle" font-size="11" fill="#555">GuestGUI, LoggatoGUI, RistoratoreGUI,</text>
+  <text x="210" y="114" text-anchor="middle" font-size="11" fill="#555">LoginGUI, RegistrazioneGUI, ecc.</text>
+  <text x="210" y="134" text-anchor="middle" font-size="11" fill="#555">ClientConnection (socket TCP)</text>
+
+  <!-- Arrow 1 <-> 2 -->
+  <line x1="210" y1="150" x2="210" y2="230" stroke="#3a414a" stroke-width="2" marker-end="url(#arrowEnd)" marker-start="url(#arrowStart)"/>
+  <text x="220" y="180" font-size="11" fill="#3a414a">Richiesta / Risposta</text>
+  <text x="220" y="195" font-size="11" fill="#3a414a">(ObjectStream su socket TCP,</text>
+  <text x="220" y="210" font-size="11" fill="#3a414a">porta 10000)</text>
+
+  <!-- Layer 2: Business Logic / Server -->
+  <rect x="60" y="230" width="300" height="130" rx="8" fill="#ffffff" stroke="#282c33" stroke-width="2"/>
+  <text x="210" y="265" text-anchor="middle" font-size="16" font-weight="bold" fill="#282c33">Business Logic Layer</text>
+  <text x="210" y="288" text-anchor="middle" font-size="13" fill="#282c33">Server</text>
+  <text x="210" y="308" text-anchor="middle" font-size="11" fill="#555">ServerMain, ClientHandler,</text>
+  <text x="210" y="324" text-anchor="middle" font-size="11" fill="#555">UtenteService, RistoranteService,</text>
+  <text x="210" y="340" text-anchor="middle" font-size="11" fill="#555">RecensioneService, PreferitiService,</text>
+  <text x="210" y="356" text-anchor="middle" font-size="11" fill="#555">TipoCucinaService, ValidationUtils</text>
+
+  <!-- Arrow 2 <-> 3 -->
+  <line x1="210" y1="360" x2="210" y2="440" stroke="#3a414a" stroke-width="2" marker-end="url(#arrowEnd)" marker-start="url(#arrowStart)"/>
+  <text x="220" y="390" font-size="11" fill="#3a414a">JDBC</text>
+  <text x="220" y="405" font-size="11" fill="#3a414a">(PreparedStatement / ResultSet)</text>
+
+  <!-- Layer 3: Data Access -->
+  <rect x="60" y="440" width="300" height="130" rx="8" fill="#ffffff" stroke="#282c33" stroke-width="2"/>
+  <text x="210" y="475" text-anchor="middle" font-size="16" font-weight="bold" fill="#282c33">Data Access Layer</text>
+  <text x="210" y="498" text-anchor="middle" font-size="13" fill="#282c33">DAO + Database</text>
+  <text x="210" y="518" text-anchor="middle" font-size="11" fill="#555">UtenteDAO, RistoranteDAO, RecensioneDAO,</text>
+  <text x="210" y="534" text-anchor="middle" font-size="11" fill="#555">PreferitiDAO, TipoCucinaDAO,</text>
+  <text x="210" y="550" text-anchor="middle" font-size="11" fill="#555">DatabaseConnection</text>
+  <text x="210" y="566" text-anchor="middle" font-size="11" fill="#777" font-style="italic">PostgreSQL</text>
+
+  <defs>
+    <marker id="arrowEnd" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#3a414a"/>
+    </marker>
+    <marker id="arrowStart" markerWidth="10" markerHeight="10" refX="1" refY="5" orient="auto">
+      <path d="M10,0 L0,5 L10,10 Z" fill="#3a414a"/>
+    </marker>
+  </defs>
+
+  <text x="210" y="600" text-anchor="middle" font-size="11" fill="#999">3-Tier Architecture — The Knife</text>
+</svg>

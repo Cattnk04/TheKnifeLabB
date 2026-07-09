@@ -1,0 +1,26 @@
+@startuml Server_Class_Security
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class PasswordService <<control>> {
+  + verify(plain: String, hash: String): boolean
+  + isLegacy(hash: String): boolean
+  + upgradeToBCrypt(plain: String): String
+  + hash(plainPassword: String): String
+}
+
+class PasswordUtils <<utility>> {
+  + {static} hashBCrypt(password: String): String
+  + {static} verifyBCrypt(password: String, hash: String): boolean
+  + {static} hashSHA256(password: String): String
+  + {static} verifySHA256(password: String, storedHash: String): boolean
+  + {static} isBCryptHash(hash: String): boolean
+}
+
+class PasswordPolicy <<utility>> {
+  + {static} isStrong(password: String): boolean
+}
+
+PasswordService ..> PasswordUtils : usa
+
+@enduml

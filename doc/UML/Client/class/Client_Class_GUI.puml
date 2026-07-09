@@ -1,0 +1,121 @@
+@startuml Client_Class_GUI
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class TemplateGUI <<boundary>> {
+  # frame: JFrame
+  # pannello: JPanel
+  # visualizzaProfilo: JButton
+}
+
+package "azioniLoggato" {
+  class ModificaProfiloGUI <<boundary>> {
+    - utenteService: UtenteService
+    - email: String
+    - datiUtente: RegistrazioneDTO
+    - campoNome: JTextField
+    - campoCognome: JTextField
+    - campoCitta: JTextField
+    - campoNazione: JTextField
+    + ModificaProfiloGUI(frame: JFrame, utenteService: UtenteService, email: String, datiUtente: RegistrazioneDTO)
+    - salvaModifiche(): void
+  }
+  class VisualizzaProfiloGUI <<boundary>> {
+    - utenteService: UtenteService
+    - email: String
+    - btnModificaDati: JButton
+    + VisualizzaProfiloGUI(frame: JFrame, utenteService: UtenteService, email: String)
+  }
+  class ScriviRecensioneGUI <<boundary>> {
+    + ScriviRecensioneGUI(frame: JFrame)
+  }
+}
+
+package "azioniRistoratore" {
+  class AggiungiRistoranteGUI <<boundary>> {
+    - campoNomeRistorante: JTextField
+    - campoCitta: JTextField
+    - campoNazione: JTextField
+    - campoVia: JTextField
+    - campoNumeroCivico: JTextField
+    - campoFasciaPrezzo: JTextField
+    - campoTipoCucina: JComboBox
+    - campoDelivery: JRadioButton
+    - campoPrenotazioneOnline: JRadioButton
+    - aggiungiRistorante: JButton
+    + AggiungiRistoranteGUI(frame: JFrame, utenteService: UtenteService, email: String)
+  }
+  class ModificaRistoranteGUI <<boundary>> {
+    + ModificaRistoranteGUI(frame: JFrame, utenteService: UtenteService, email: String)
+  }
+  class RispondiRecensioneGUI <<boundary>> {
+    + RispondiRecensioneGUI(frame: JFrame, utenteService: UtenteService, email: String)
+  }
+}
+
+package "listeRistoratore" {
+  class ListaRistorantiGUI <<boundary>> {
+    + ListaRistorantiGUI(frame: JFrame)
+  }
+  class ListaRecensioniGUI <<boundary>> {
+    + ListaRecensioniGUI(frame: JFrame, utenteService: UtenteService, email: String)
+  }
+}
+
+package "listeUtente" {
+  class ListaPreferitiGUI <<boundary>> {
+    - utenteService: UtenteService
+    - email: String
+    + ListaPreferitiGUI(frame: JFrame, utenteService: UtenteService, email: String)
+  }
+  class ListaRecensioniGUI <<boundary>> {
+    - utenteService: UtenteService
+    - email: String
+    + ListaRecensioniGUI(frame: JFrame, utenteService: UtenteService, email: String)
+  }
+}
+
+package "ricerca" {
+  class PannelloRicercaRistorante {
+    - campoNomeRitstorante: JTextField
+    - campoCitta: JTextField
+    - campoNazione: JTextField
+    - campoFasciaPrezzo: JComboBox
+    - radioDeliverySi: JRadioButton
+    - radioDeliveryNo: JRadioButton
+    - radioDeliveryIndifferente: JRadioButton
+    - radioPrenotazioneSi: JRadioButton
+    - radioPrenotazioneNo: JRadioButton
+    - radioPrenotazioneIndifferente: JRadioButton
+    - campoTipoCucina: JComboBox
+    - btnRicerca: JButton
+    - onRisultatiTrovati: Consumer<List<RistoranteDTO>>
+    + PannelloRicercaRistorante(onRisultatiTrovati: Consumer<List<RistoranteDTO>>)
+    - eseguiRicerca(): void
+    - caricaTipiCucina(): void
+  }
+  class PannelloRisultatiRicerca {
+    - modelloLista: DefaultListModel<RistoranteDTO>
+    - listaRistoranti: JList<RistoranteDTO>
+    - labelContatore: JLabel
+    + PannelloRisultatiRicerca(onRistoranteSelezionato: Consumer<RistoranteDTO>)
+    + aggiornaRisultati(risultati: List<RistoranteDTO>): void
+  }
+}
+
+azioniLoggato.ModificaProfiloGUI --|> TemplateGUI
+azioniLoggato.VisualizzaProfiloGUI --|> TemplateGUI
+azioniLoggato.ScriviRecensioneGUI --|> TemplateGUI
+azioniRistoratore.AggiungiRistoranteGUI --|> TemplateGUI
+azioniRistoratore.ModificaRistoranteGUI --|> TemplateGUI
+azioniRistoratore.RispondiRecensioneGUI --|> TemplateGUI
+listeRistoratore.ListaRistorantiGUI --|> TemplateGUI
+listeRistoratore.ListaRecensioniGUI --|> TemplateGUI
+listeUtente.ListaPreferitiGUI --|> TemplateGUI
+listeUtente.ListaRecensioniGUI --|> TemplateGUI
+
+note "⚠ PannelloRicercaRistorante e PannelloRisultatiRicerca\nestendono JPanel direttamente (NON TemplateGUI)\ne al momento non risultano usate da nessuna GUI:\nGuestGUI/LoggatoGUI duplicano la stessa logica al loro interno." as N1
+ricerca.PannelloRicercaRistorante .. N1
+ricerca.PannelloRisultatiRicerca .. N1
+
+@enduml

@@ -1,0 +1,72 @@
+@startuml Server_Class_DAO
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class UtenteDAO {
+  - map(rs: ResultSet): Utente
+  + registrazione(utente: Utente): boolean
+  + trovaUtente(email: String): Optional<Utente>
+  + aggiornaPasswordHash(email: String, hashpwd: String): boolean
+  + cancellaUtente(email: String): boolean
+  + esisteUtente(email: String): boolean
+  + trovaTutti(): List<Utente>
+  + aggiornamentoUtente(email: String, campo: CampoUtente, valore: Object): boolean
+}
+
+class RistoranteDAO {
+  - map(rs: ResultSet): Ristorante
+  + inserisciRistorante(ristorante: Ristorante): boolean
+  + aggiornaCampo(idRistorante: int, campo: CampoRistorante, valore: Object): boolean
+  + rimuoviRistorante(idRistorante: int): boolean
+  + trovaTutti(): List<Ristorante>
+  + trovaPerRistoratore(email: String): List<Ristorante>
+  + cercaConFiltro(filtro: FiltroRicercaDTO): List<Ristorante>
+  + esisteRistorante(nomeRistorante: String, email: String): boolean
+}
+
+class RecensioneDAO {
+  + salvaRecensioni(recensione: Recensione): boolean
+  + aggiornaRecensione(idRistorante: int, email: String, campo: CampoRecensione, valore: Object): boolean
+  + cancellaRecensioni(idRistorante: int, email: String): boolean
+  + getRecensioni(): List<Recensione>
+  + getRecensioniByRistorante(idRistorante: int): List<Recensione>
+  + getRecensioniByEmail(email: String): List<Recensione>
+  + getRiepilogo(idRistorante: int): RiepilogoRecensioniDTO
+  + rispostaRecensione(idRistorante: int, email: String, risposta: String): boolean
+}
+
+class PreferitiDAO {
+  + salvaPreferiti(email: String, idRistorante: int): boolean
+  + cancellaPreferiti(email: String, idRistorante: int): boolean
+  + esistePreferito(email: String, idRistorante: int): boolean
+  + getPreferitiByEmail(email: String): List<Preferito>
+}
+
+class TipoCucinaDAO {
+  - map(rs: ResultSet): TipoCucinaDTO
+  + getTipoCucina(): List<TipoCucinaDTO>
+}
+
+class DatabaseConnection <<utility>> {
+  - {static} URL: String
+  - {static} USER: String
+  - {static} PASSWORD: String
+  + {static} getConnection(): Connection
+}
+
+class UtenteException {
+  + UtenteException(message: String)
+  + UtenteException(message: String, cause: Throwable)
+}
+
+UtenteException --|> RuntimeException
+
+UtenteDAO ..> DatabaseConnection : usa
+RistoranteDAO ..> DatabaseConnection : usa
+RecensioneDAO ..> DatabaseConnection : usa
+PreferitiDAO ..> DatabaseConnection : usa
+TipoCucinaDAO ..> DatabaseConnection : usa
+
+UtenteDAO ..> UtenteException : lancia
+
+@enduml

@@ -1,0 +1,65 @@
+@startuml Server_Overview
+skinparam linetype ortho
+hide members
+
+package "dao" {
+  class UtenteDAO
+  class RistoranteDAO
+  class RecensioneDAO
+  class PreferitiDAO
+  class TipoCucinaDAO
+}
+package "db" {
+  class DatabaseConnection <<utility>>
+}
+package "service" {
+  class UtenteService <<control>>
+  class RistoranteService <<control>>
+  class RistoratoreService <<control>>
+  class RecensioneService <<control>>
+  class PreferitiService <<control>>
+  class TipoCucinaService <<control>>
+  class ValidationUtils <<utility>>
+}
+package "security" {
+  class PasswordService <<control>>
+  class PasswordUtils <<utility>>
+  class PasswordPolicy <<utility>>
+}
+package "exception" {
+  class UtenteException
+  class RistoranteException
+  class RecensioniException
+  class PreferitiException
+}
+package "network" {
+  class ClientHandler <<control>>
+}
+package "main" {
+  class ServerMain <<boundary>>
+}
+
+UtenteService "1" --> "1" UtenteDAO
+UtenteService "1" --> "1" PasswordService
+UtenteService ..> PasswordPolicy : usa
+RistoranteService "1" --> "1" RistoranteDAO
+RistoratoreService "1" --> "1" RistoranteDAO
+RistoratoreService "1" --> "1" UtenteDAO
+RistoratoreService "1" --> "1" RecensioneDAO
+RecensioneService "1" --> "1" RecensioneDAO
+PreferitiService "1" --> "1" PreferitiDAO
+TipoCucinaService "1" --> "1" TipoCucinaDAO
+
+ClientHandler *-- "1" UtenteService
+ClientHandler *-- "1" TipoCucinaService
+ClientHandler *-- "1" RistoranteService
+ClientHandler *-- "1" RecensioneService
+ClientHandler *-- "1" PreferitiService
+
+
+ServerMain ..> ClientHandler : crea (0..*)
+ClientHandler ..> ServerMain : usa (stopServer)
+
+UtenteDAO ..> UtenteException : lancia
+
+@enduml

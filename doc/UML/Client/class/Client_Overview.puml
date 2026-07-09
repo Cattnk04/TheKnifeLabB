@@ -1,0 +1,83 @@
+@startuml Client_Overview
+skinparam linetype ortho
+hide members
+
+package "main" {
+  class ClientMain <<boundary>>
+}
+
+package "network" {
+  class ClientConnection <<utility>>
+}
+
+package "autenticazione" {
+  class LoginGUI <<boundary>>
+  class RegistrazioneGUI <<boundary>>
+}
+
+package "menu" {
+  class GuestGUI <<boundary>>
+  class LoggatoGUI <<boundary>>
+  class RistoratoreGUI <<boundary>>
+}
+
+package "azioniLoggato" {
+  class VisualizzaProfiloGUI <<boundary>>
+  class ModificaProfiloGUI <<boundary>>
+  class ScriviRecensioneGUI <<boundary>>
+}
+
+package "azioniRistoratore" {
+  class AggiungiRistoranteGUI <<boundary>>
+  class ModificaRistoranteGUI <<boundary>>
+  class RispondiRecensioneGUI <<boundary>>
+}
+
+package "listeRistoratore" {
+  class ListaRistorantiGUI <<boundary>>
+  class ListaRecensioniGUI <<boundary>>
+}
+
+package "listeUtente" {
+  class ListaPreferitiGUI <<boundary>>
+  class ListaRecensioniGUI <<boundary>>
+}
+
+package "ricerca" {
+  class PannelloRicercaRistorante
+  class PannelloRisultatiRicerca
+}
+
+class TemplateGUI <<boundary>>
+class UtenteService <<control>>
+
+autenticazione.LoginGUI --|> TemplateGUI
+autenticazione.RegistrazioneGUI --|> TemplateGUI
+menu.GuestGUI --|> TemplateGUI
+menu.LoggatoGUI --|> TemplateGUI
+menu.RistoratoreGUI --|> TemplateGUI
+azioniLoggato.VisualizzaProfiloGUI --|> TemplateGUI
+azioniLoggato.ModificaProfiloGUI --|> TemplateGUI
+azioniLoggato.ScriviRecensioneGUI --|> TemplateGUI
+azioniRistoratore.AggiungiRistoranteGUI --|> TemplateGUI
+azioniRistoratore.ModificaRistoranteGUI --|> TemplateGUI
+azioniRistoratore.RispondiRecensioneGUI --|> TemplateGUI
+listeRistoratore.ListaRistorantiGUI --|> TemplateGUI
+listeRistoratore.ListaRecensioniGUI --|> TemplateGUI
+listeUtente.ListaPreferitiGUI --|> TemplateGUI
+listeUtente.ListaRecensioniGUI --|> TemplateGUI
+
+note "ricerca.* estendono JPanel,\nnon TemplateGUI (non sono boundary a sé stanti)" as N1
+ricerca.PannelloRicercaRistorante .. N1
+ricerca.PannelloRisultatiRicerca .. N1
+
+ClientMain ..> menu.GuestGUI : crea
+ClientMain ..> ClientConnection : usa
+ClientMain ..> UtenteService : crea ⚠ (in realtà server.service.UtenteService)
+autenticazione.LoginGUI "1" --> "1" UtenteService
+autenticazione.RegistrazioneGUI "1" --> "1" UtenteService
+menu.GuestGUI "1" --> "1" UtenteService
+menu.LoggatoGUI "1" --> "1" UtenteService
+menu.RistoratoreGUI "1" --> "1" UtenteService
+
+@enduml

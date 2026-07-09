@@ -1,0 +1,100 @@
+@startuml Server_Class_Service
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class UtenteService <<control>> {
+  - utenteDAO: UtenteDAO
+  - passwordService: PasswordService
+  + login(dto: LoginDTO): boolean
+  + registraUtente(dto: RegistrazioneDTO): boolean
+  + getUtente(email: String): RegistrazioneDTO
+  + modificaUtente(dto: RegistrazioneDTO): boolean
+  + cancellaUtente(email: String): boolean
+}
+
+class RistoranteService <<control>> {
+  - ristoranteDAO: RistoranteDAO
+  - toEntity(dto: RistoranteDTO): Ristorante
+  - toDTO(r: Ristorante): RistoranteDTO
+  + creaRistorante(dto: RistoranteDTO): boolean
+  + aggiornaCampo(idRistorante: int, campo: CampoRistorante, valore: Object): boolean
+  + cancellaRistorante(idRistorante: int): boolean
+  + getTuttiRistoranti(): List<RistoranteDTO>
+  + getRistorantiDiRistoratore(email: String): List<RistoranteDTO>
+  + cercaRistoranti(filtro: FiltroRicercaDTO): List<RistoranteDTO>
+  + esiste(nomeRistorante: String, email: String): boolean
+}
+
+class RistoratoreService <<control>> {
+  - utenteDAO: UtenteDAO
+  - ristoranteDAO: RistoranteDAO
+  - recensioneDAO: RecensioneDAO
+  + getAccountRistoratore(email: String): Optional<Utente>
+  + aggiornaProfilo(email: String, campo: CampoUtente, valore: Object): boolean
+  + eliminaAccount(email: String): boolean
+  + esisteUtente(email: String): boolean
+  + getTuttiRistoranti(): List<Ristorante>
+  + inserisciRistorante(ristorante: Ristorante): boolean
+  + aggiornaCampoRistorante(idRistorante: int, campo: CampoRistorante, valore: Object): boolean
+  + eliminaRistorante(idRistorante: int): boolean
+  + getRecensioniRistorante(idRistorante: int): List
+  + mediaVotoRistorante(idRistorante: int): double
+  + numeroRecensioni(idRistorante: int): int
+}
+
+class RecensioneService <<control>> {
+  - dao: RecensioneDAO
+  + creaRecensione(r: Recensione): boolean
+  + modificaRecensione(idRistorante: int, email: String, testo: String): boolean
+  + modificaValutazione(idRistorante: int, email: String, valutazione: int): boolean
+  + cancellaRecensione(idRistorante: int, email: String): boolean
+  + getRecensioniUtente(email: String): List<Recensione>
+  + getRecensioniRistorante(idRistorante: int): List<Recensione>
+  + getRecensioni(idRistorante: int): List<Recensione>
+  + rispostaRecensione(idRistorante: int, email: String, risposta: String): boolean
+  + aggiornaRisposta(idRistorante: int, email: String, risposta: String): boolean
+  + getRiepilogo(idRistorante: int): RiepilogoRecensioniDTO
+}
+
+class PreferitiService <<control>> {
+  - preferitiDAO: PreferitiDAO
+  + aggiungiPreferito(dto: PreferitiDTO): boolean
+  + rimuoviPreferito(dto: PreferitiDTO): boolean
+  + togglePreferito(dto: PreferitiDTO): boolean
+  + esistePreferito(email: String, idRistorante: int): boolean
+  + getPreferitiUtente(email: String): List<Preferito>
+}
+
+class TipoCucinaService <<control>> {
+  - tipoCucinaDAO: TipoCucinaDAO
+  + getTipoCucina(): List<TipoCucinaDTO>
+}
+
+class ValidationUtils <<utility>> {
+  + {static} isValidEmail(email: String): boolean
+  + {static} isValidPassword(password: String): boolean
+  + {static} isNotBlank(value: String): boolean
+  + {static} isValidStringLength(value: String, min: int, max: int): boolean
+  + {static} isValidName(nome: String): boolean
+  + {static} isValidCitta(citta: String): boolean
+  + {static} isValidNazione(nazione: String): boolean
+  + {static} isValidVia(via: String): boolean
+  + {static} isValidNumeroCivico(numero: int): boolean
+  + {static} isValidBoolean(value: Boolean): boolean
+}
+
+UtenteService "1" --> "1" UtenteDAO
+UtenteService "1" --> "1" PasswordService
+RistoranteService "1" --> "1" RistoranteDAO
+RistoratoreService "1" --> "1" UtenteDAO
+RistoratoreService "1" --> "1" RistoranteDAO
+RistoratoreService "1" --> "1" RecensioneDAO
+RecensioneService "1" --> "1" RecensioneDAO
+PreferitiService "1" --> "1" PreferitiDAO
+TipoCucinaService "1" --> "1" TipoCucinaDAO
+
+UtenteService ..> ValidationUtils : usa
+UtenteService ..> PasswordPolicy : usa
+RistoranteService ..> ValidationUtils : usa
+
+@enduml

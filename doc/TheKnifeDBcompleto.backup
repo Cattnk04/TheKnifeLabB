@@ -1,0 +1,589 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict U5u44TEGMnpPnduoPKeKTfQbSVa4HHTYEckSeTl6GStuJvAgCmNCVsIV5S6MTmP
+
+-- Dumped from database version 18.3
+-- Dumped by pg_dump version 18.3
+
+-- Started on 2026-07-08 18:15:07
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 224 (class 1259 OID 16439)
+-- Name: preferiti; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.preferiti (
+    idristorante integer NOT NULL,
+    email character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.preferiti OWNER TO postgres;
+
+--
+-- TOC entry 225 (class 1259 OID 16456)
+-- Name: recensioni; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.recensioni (
+    email character varying(50) NOT NULL,
+    idristorante integer NOT NULL,
+    valutazione integer NOT NULL,
+    recensione character varying(750),
+    risposta character varying(750),
+    CONSTRAINT chk_valutazione_0_5 CHECK (((valutazione >= 1) AND (valutazione <= 5)))
+);
+
+
+ALTER TABLE public.recensioni OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 16412)
+-- Name: ristorante; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.ristorante (
+    idristorante integer NOT NULL,
+    nomeristorante character varying(50) NOT NULL,
+    email character varying(50) NOT NULL,
+    citta character varying(50) NOT NULL,
+    nazione character varying(50) NOT NULL,
+    via character varying(50) NOT NULL,
+    numerocivico integer NOT NULL,
+    fasciaprezzo integer NOT NULL,
+    delivery boolean NOT NULL,
+    prenotazioneonline boolean NOT NULL,
+    idtipocucina integer,
+    CONSTRAINT limite_fascia CHECK ((fasciaprezzo >= 5))
+);
+
+
+ALTER TABLE public.ristorante OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1259 OID 16411)
+-- Name: ristorante_idristorante_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.ristorante_idristorante_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.ristorante_idristorante_seq OWNER TO postgres;
+
+--
+-- TOC entry 5059 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: ristorante_idristorante_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.ristorante_idristorante_seq OWNED BY public.ristorante.idristorante;
+
+
+--
+-- TOC entry 221 (class 1259 OID 16401)
+-- Name: tipicucina; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tipicucina (
+    idtipocucina integer NOT NULL,
+    tipocucina character varying(30) NOT NULL
+);
+
+
+ALTER TABLE public.tipicucina OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 16400)
+-- Name: tipicucina_idtipocucina_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.tipicucina_idtipocucina_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.tipicucina_idtipocucina_seq OWNER TO postgres;
+
+--
+-- TOC entry 5060 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: tipicucina_idtipocucina_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.tipicucina_idtipocucina_seq OWNED BY public.tipicucina.idtipocucina;
+
+
+--
+-- TOC entry 219 (class 1259 OID 16388)
+-- Name: utente; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.utente (
+    email character varying(50) NOT NULL,
+    nomeutente character varying(50) NOT NULL,
+    cognomeutente character varying(50) NOT NULL,
+    hashpwd character varying(100) NOT NULL,
+    citta character varying(30) NOT NULL,
+    nazione character varying(30) NOT NULL,
+    ristoratore boolean NOT NULL
+);
+
+
+ALTER TABLE public.utente OWNER TO postgres;
+
+--
+-- TOC entry 4874 (class 2604 OID 16531)
+-- Name: ristorante idristorante; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ristorante ALTER COLUMN idristorante SET DEFAULT nextval('public.ristorante_idristorante_seq'::regclass);
+
+
+--
+-- TOC entry 4873 (class 2604 OID 16532)
+-- Name: tipicucina idtipocucina; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tipicucina ALTER COLUMN idtipocucina SET DEFAULT nextval('public.tipicucina_idtipocucina_seq'::regclass);
+
+
+--
+-- TOC entry 5052 (class 0 OID 16439)
+-- Dependencies: 224
+-- Data for Name: preferiti; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.preferiti (idristorante, email) FROM stdin;
+824	mario.rossi@email.com
+839	mario.rossi@email.com
+825	laura.bianchi@email.com
+822	laura.bianchi@email.com
+826	marco.verdi@email.com
+823	marco.verdi@email.com
+827	giulia.ferrari@email.com
+828	andrea.romano@email.com
+829	sofia.colombo@email.com
+830	luca.ricci@email.com
+831	chiara.marino@email.com
+836	elena.martini@email.com
+833	john.smith@email.com
+827	john.smith@email.com
+831	marie.dubois@email.com
+838	hans.mueller@email.com
+828	ana.garcia@email.com
+835	ana.garcia@email.com
+829	erik.johansson@email.com
+827	yuki.tanaka@email.com
+835	pedro.martinez@email.com
+828	pedro.martinez@email.com
+830	gpellegrini@gmail.com
+\.
+
+
+--
+-- TOC entry 5053 (class 0 OID 16456)
+-- Dependencies: 225
+-- Data for Name: recensioni; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.recensioni (email, idristorante, valutazione, recensione, risposta) FROM stdin;
+alessandro.greco@email.com	832	3	Buon cibo ma tempi di attesa troppo lunghi.	\N
+ana.garcia@email.com	820	5	Experiencia gastronomica inolvidable en la Toscana.	\N
+andrea.romano@email.com	828	4	Tapas autentiche e sangria eccellente. Ambiente vivace e allegro.	\N
+beatrice.villa@email.com	826	4	Cocktail creativi e fusion ben riuscito. Atmosfera molto cool.	\N
+beatrice.villa@email.com	833	2	Servizio arrogante e cibo mediocre. Fish and chips troppo unto.	we're sorry!
+chiara.marino@email.com	831	5	Croissant come a Parigi! Colazione da sogno sulla Promenade.	\N
+claudia.moretti@email.com	840	5	Esperienza gastronomica indimenticabile. Vale ogni euro.	\N
+claudia.moretti@email.com	835	1	Cibo piccante oltre ogni limite e servizio caotico. Pessima esperienza.	\N
+davide.leone@email.com	835	4	Tacos autentici e margarita ben fatti. Ambiente allegro.	¡Muchas gracias!
+elena.martini@email.com	836	5	Pizza napoletana verace, impasto perfetto.	\N
+elena.martini@email.com	840	1	Servizio snob e tempi di attesa infiniti. Non vale minimamente il prezzo.	\N
+erik.johansson@email.com	821	4	Amazing seafood with a stunning view of Capri.	\N
+giulia.ferrari@email.com	827	5	Il miglior sushi mai provato fuori dal Giappone. Servizio impeccabile.	Thank you for your wonderful review!
+hans.mueller@email.com	819	4	Ausgezeichnete Weinauswahl und hervorragendes Essen.	\N
+john.smith@email.com	817	5	Extraordinary Italian cuisine in a beautiful setting.	\N
+laura.bianchi@email.com	825	5	Atmosfera autentica nei Sassi di Matera. Orecchiette fatte in casa divine!	Siamo felici che abbiate apprezzato la nostra tradizione.
+laura.bianchi@email.com	822	5	Cucina veneziana autentica in location da sogno.	\N
+luca.ricci@email.com	832	1	Cibo poco fresco e condizioni igieniche discutibili. Mai più.	We deeply apologize for your experience. We are addressing these issues immediately.
+luca.ricci@email.com	830	4	Carbonara eccezionale e servizio cordiale. Prezzi nella media.	\N
+marco.verdi@email.com	823	5	Atmosfera magica tra gli ulivi. Cucina pugliese doc.	Grazie per aver apprezzato la nostra terra!
+marco.verdi@email.com	826	3	Interessante mix di sapori ma porzioni un po' piccole per il prezzo.	\N
+mario.rossi@email.com	824	4	Pesce freschissimo e vista mare splendida. Prezzi un po' alti ma vale la pena.	\N
+michele.costa@email.com	828	1	Paella immangiabile e sangria annacquata. Servizio lentissimo.	Lo sentimos mucho, tomaremos medidas para mejorar.
+michele.costa@email.com	839	3	Location elegante ma prezzi troppo elevati.	\N
+paolo.galli@email.com	837	4	Hamburger succulenti e milkshake come nei film.	Thank you, come back soon!
+paolo.galli@email.com	824	1	Pesce non fresco, prezzi assurdi e servizio scadente. Da evitare.	\N
+marie.dubois@email.com	818	5	Vue magnifique et cuisine méditerranéenne parfaite.	Grazie del feedback!
+\.
+
+
+--
+-- TOC entry 5051 (class 0 OID 16412)
+-- Dependencies: 223
+-- Data for Name: ristorante; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.ristorante (idristorante, nomeristorante, email, citta, nazione, via, numerocivico, fasciaprezzo, delivery, prenotazioneonline, idtipocucina) FROM stdin;
+791	Il Cantuccio	taverna.siciliana@rest.com	catania	italia	Via Etnea	123	28	t	f	1
+787	Antica Osteria del Centro	osteria.antica@rest.com	roma	italia	Via del Corso	234	35	f	t	1
+800	La Mesa Bonita	madrid.tapas@rest.com	madrid	spagna	Calle Mayor	25	35	t	t	21
+795	Porto Antico	cucina.ligure@rest.com	genova	italia	Via al Porto Antico	12	38	t	f	1
+797	The Crown & Lion	london.cuisine@rest.com	londra	inghilterra	Baker Street	221	55	t	t	32
+789	Mare Blu	locanda.mare@rest.com	napoli	italia	Via Caracciolo	45	30	t	f	11
+799	Berliner Küche	berlin.haus@rest.com	berlino	germania	Unter den Linden	78	48	f	t	23
+796	Masseria Pugliese	osteria.pugliese@rest.com	bari	italia	Corso Vittorio Emanuele	89	25	t	t	1
+793	Canal Grande	ristorante.venezia@rest.com	venezia	italia	Fondamenta Nuove	456	60	f	t	1
+798	Le Petit Bistrot	paris.bistro@rest.com	parigi	francia	Rue de Rivoli	156	65	t	t	8
+788	Bella Vista	ristorante.bella@rest.com	firenze	italia	Piazza della Signoria	8	55	f	t	1
+786	Sapori d'Elite	trattoria.sapori@rest.com	milano	italia	Via Monte Napoleone	15	45	t	t	1
+794	Bottega del Gusto	trattoria.emilia@rest.com	bologna	italia	Via dell'Indipendenza	78	32	t	t	1
+790	Pizza & Delizie	pizzeria.napoli@rest.com	palermo	italia	Via Maqueda	67	20	t	t	13
+792	La Terrazza	osteria.toscana@rest.com	siena	italia	Piazza del Campo	9	40	f	t	1
+817	Villa Gourmet	trattoria.sapori@rest.com	verona	italia	Piazza Erbe	45	110	f	t	1
+818	La Pergola Sul Mare	locanda.mare@rest.com	positano	italia	Via Cristoforo Colombo	78	125	t	t	11
+822	Locanda dei Dogi	ristorante.venezia@rest.com	burano	italia	Piazza Galuppi	56	115	f	t	1
+820	Palazzo del Gusto	osteria.antica@rest.com	san gimignano	italia	Via del Castello	23	98	t	t	1
+831	Bistrot Parisien	paris.bistro@rest.com	nizza	francia	Promenade des Anglais	156	110	f	t	8
+826	Fusion Garden	ristorante.bella@rest.com	como	italia	Via Borgo Vico	168	120	t	t	7
+837	American Diner	nyc.kitchen@rest.com	miami	usa	Ocean Drive	789	95	t	t	17
+832	Dragon Palace	shanghai.dragon@rest.com	guangzhou	cina	Pearl River Road	78	85	t	f	3
+840	Le Gourmet	paris.bistro@rest.com	bordeaux	francia	Rue Sainte-Catherine	90	160	f	t	8
+827	Imperial Sushi	tokyo.sushi@rest.com	kyoto	giappone	Gion District	23	140	f	t	14
+824	Sapori di Mare	trattoria.sapori@rest.com	rimini	italia	Lungomare Tintori	7	85	t	t	11
+836	Pizza Express	pizzeria.napoli@rest.com	bologna	italia	Via dell'Indipendenza	156	45	t	t	13
+833	The Wellington	london.cuisine@rest.com	liverpool	inghilterra	Albert Dock	45	88	t	t	32
+828	El Patio	madrid.tapas@rest.com	valencia	spagna	Calle de las Barcas	12	75	t	t	21
+823	Masseria del Sud	osteria.pugliese@rest.com	alberobello	italia	Via dei Trulli	34	95	t	t	1
+821	Grotta Azzurra	pizzeria.napoli@rest.com	capri	italia	Via Krupp	12	135	t	t	11
+835	Mexican Fiesta	mexico.cantina@rest.com	guadalajara	messico	Avenida Chapultepec	89	65	t	t	5
+825	La Vecchia Cantina	osteria.antica@rest.com	matera	italia	Via Fiorentini	45	95	f	t	1
+830	Little Italy	trattoria.emilia@rest.com	parma	italia	Strada Repubblica	89	65	t	t	1
+811	Arctic Light	stockholm.nordic@rest.com	malmö	svezia	Stortorget	34	120	f	t	29
+810	El Toro Bravo	madrid.tapas@rest.com	barcellona	spagna	Las Ramblas	89	68	t	t	20
+806	Cantina Mexicana	mexico.cantina@rest.com	città del messico	messico	Av. Insurgentes	123	30	t	f	5
+807	Royal Garden	london.cuisine@rest.com	manchester	inghilterra	King Street	45	95	t	t	20
+809	Biergarten Haus	berlin.haus@rest.com	monaco	germania	Karlsplatz	12	75	t	t	20
+802	Sakura House	tokyo.sushi@rest.com	tokyo	giappone	Shibuya	15	80	t	t	4
+808	Bistrot Eiffel	paris.bistro@rest.com	lione	francia	Place Bellecour	78	85	f	t	20
+813	Broadway Kitchen	nyc.kitchen@rest.com	los angeles	usa	Rodeo Drive	456	140	t	t	29
+805	Casa do Porto	lisboa.porto@rest.com	lisbona	portogallo	Rua Augusta	67	38	t	t	31
+803	Manhattan Grill	nyc.kitchen@rest.com	new york	usa	5th Avenue	789	65	t	t	2
+801	Nordic Haven	stockholm.nordic@rest.com	stoccolma	svezia	Drottninggatan	45	70	f	t	22
+804	Golden Dragon	shanghai.dragon@rest.com	shanghai	cina	Nanjing Road	234	40	t	f	3
+812	Zen Garden	tokyo.sushi@rest.com	osaka	giappone	Dotonbori	51	110	t	t	29
+829	Nordic Flavors	stockholm.nordic@rest.com	göteborg	svezia	Kungsportsavenyen	25	95	t	t	22
+815	Fado House	lisboa.porto@rest.com	porto	portogallo	Ribeira	123	70	t	f	31
+816	Hacienda Grande	mexico.cantina@rest.com	cancun	messico	Zona Hotelera	567	85	t	t	5
+841	Mare Nostrum	locanda.mare@rest.com	catania	italia	Via Etnea	234	92	t	t	1
+842	London Eye	london.cuisine@rest.com	londra	Inghilterra	Leicester Square	48	30	t	f	32
+814	Imperial Palace	shanghai.dragon@rest.com	pechino	cina	Wangfujing Street	78	90	t	t	3
+819	Enoteca Stellata	ristorante.bella@rest.com	alba	italia	Via Vittorio Emanuele	90	145	f	t	1
+838	Deutsches Haus	berlin.haus@rest.com	amburgo	germania	Reeperbahn	56	82	t	t	20
+839	International Club	ristorante.venezia@rest.com	milano	italia	Corso Buenos Aires	78	145	f	t	29
+834	Casa Portuguesa	lisboa.porto@rest.com	coimbra	portogallo	Rua Ferreira Borges	34	70	t	t	20
+\.
+
+
+--
+-- TOC entry 5049 (class 0 OID 16401)
+-- Dependencies: 221
+-- Data for Name: tipicucina; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tipicucina (idtipocucina, tipocucina) FROM stdin;
+1	italiana
+2	americana
+3	cinese
+4	giapponese
+5	messicana
+6	indiana
+7	fusione
+8	francese
+9	vegana
+10	vegetariana
+11	pesce
+12	carne
+13	pizza
+14	sushi
+15	burger
+16	poke
+17	hamburgher
+18	kebab
+19	ramen
+20	gourmet
+21	spagnola
+22	nordica
+23	tedesca
+24	indiano
+25	thailandese
+26	coreana
+27	vietnamita
+28	indonesiana
+29	haute cuisine
+30	internazionale
+31	portoghese
+32	inglese
+\.
+
+
+--
+-- TOC entry 5047 (class 0 OID 16388)
+-- Dependencies: 219
+-- Data for Name: utente; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.utente (email, nomeutente, cognomeutente, hashpwd, citta, nazione, ristoratore) FROM stdin;
+marie.dubois@email.com	marie	dubois	$2a$12$U10JiQPrqe7C2X42yitxl.Ykdf0MthBEYNAuGT87o44C1fz33kmwS	nizza	francia	f
+giaco@gmail.com	giaco@gmail.com	tancredi	7a74504f71374be5e8a29f5d1779f8b352a3b07c46aaf0b256999debb3fac60f	como	italia	f
+gpellegrini@gmail.com	gaia	pellegrini	a39e430a2a81307fac559689729204bbae570c2af17d7e0354fcc26e4c1cac13	como	italia	f
+mario.rossi@email.com	mario	rossi	8e0e5bc49abf8f71f32907b67a3bea2628d6bd6d4f74c92c0979f0a4a6750a36	roma	italia	f
+laura.bianchi@email.com	laura	bianchi	73878c78b57cd999087f7eedd52fb6818caa09df64a0aa6f00ab25f1999e2532	venezia	italia	f
+marco.verdi@email.com	marco	verdi	f845532f7e4543e6145a04d95bdc43ec8e447c58faca0606c0c29d4041ae2047	como	italia	f
+giulia.ferrari@email.com	giulia	ferrari	ef49fcdc8684e2efdcf1196f4044e19dafc59af6368c12799d9ec9172011f53f	napoli	italia	f
+andrea.romano@email.com	andrea	romano	eecf864cdda529d733cfb3af0519b6633ad4c0c07ecb0a728fd30bd165337047	ancona	italia	f
+sofia.colombo@email.com	sofia	colombo	20cc1efd00c9bfc6bd8ce68192077cf34e22ea5312e26d9f6463fcc9c2d4a0fb	milano	italia	f
+luca.ricci@email.com	luca	ricci	1c7910276afa461bb75be5adb1a69a3892462455e508ab872c42b9a6df920f93	parma	italia	f
+chiara.marino@email.com	chiara	marino	95c823f96869aefe66cdb34fbbe56d4cbfd68bde81600264eda32530b7a92c8c	roma	italia	f
+alessandro.greco@email.com	alessandro	greco	faf8a9c3ac9191a6be7c00aa296cff46f00e09ac19fcea2fff7a76c56647093a	torino	italia	f
+valentina.conti@email.com	valentina	conti	c6cf6fc37cf1ed71fbaca4c108b9a97ebb3e88a9c8621c3229761572a6aeb54c	roma	italia	f
+roberto.mancini@email.com	roberto	mancini	b86076b00f339a6245c302a9835f1fda0c61fbc2fee7a9e504f8f27b4fda951e	capri	italia	f
+francesca.serra@gmail.com	francesca	serra	1c7c92d74d38b64bb5079e4868367daef0adef8cbb8c1836ba4bacd76ec8cdc6	portofino	italia	f
+davide.leone@email.com	davide	leone	6a5f55cd7b3d6ede9baa8bd1d6ed4a850712ae0320c8b543477071a203bff97a	milano	italia	f
+elena.martini@email.com	elena	martini	e471e5d511ada1a07660c5e83869378d97d0bbc983f91ea6c98ba6c72c9a5790	bologna	italia	f
+paolo.galli@email.com	paolo	galli	f848082513d78e59417bfa4cf189da99d00e381cf8acf9a20ba25f9bcb5be907	rimini	italia	f
+silvia.rizzi@email.com	silvia	rizzi	8784461643776d5310764573aa9c13af417f980498ca0c4df35ee3663b260a2c	milano	italia	f
+michele.costa@email.com	michele	costa	d593b9c17dd1d516db705cb861176a59c7fd9c918626af1da43dc43e5394fe7b	milano	italia	f
+claudia.moretti@email.com	claudia	moretti	6da215b714c70706a0df6bccf79b17254db65c233199c356bc493920cc1a387d	capri	italia	f
+stefano.barbieri@email.com	stefano	barbieri	c75e91981cc6da262ce7a306d9fa5d872c8d14ca46cdfdad5d5633e32f4214d6	catania	italia	f
+beatrice.villa@email.com	beatrice	villa	13fa879dbc7693b2b4c2133fb12e43254b1cf4c94ecff95dc633c7563550b753	firenze	italia	f
+john.smith@email.com	john	smith	45358dd8587f2de278ec7411a560bae78720c13aaa369d0cd95b67715adb445c	liverpool	inghilerra	f
+hans.mueller@email.com	hans	mueller	9f72d918618fbab8207dd188484a3ef5f4979ede149933d76366a0ee84dc5841	amburgo	germania	f
+ana.garcia@email.com	ana	garcia	a804022d694c5a5533010e28c99b0d183b5c0bd8e5af8c8013cc23cba779f3ba	valencia	spagna	f
+erik.johansson@email.com	erik	johansson	c41fa391357b0a6a708dea7a16f9eb0aaf0990c994482f95c5d320a5464a5294	goteborg	svezia	f
+yuki.tanaka@email.com	yuki	tanaka	51e46a1382df46f4953663c5e042347d0ba280d6b42e59acff20d2ec4524f9cf	tokyo	giappone	f
+carlos.santos@email.com	carlos	santons	9653a05b490ef60f282b8b4c8fe881ec13bc3af6868274bc57d6aaaf63136b04	comporta	portogallo	f
+sophie.andeson@email.com	sophie	anderon	41439fd9f0618c7166eab4e9049e51cb0d0487d92318b5a9724634cdfd68ae67	miami	usa	f
+wang.lei@email.com	wang	lei	3c3d91ee7f4abd87b38cab9597f85823269eb3466fb4887de5ca345e0e615ba5	guangzhou	cina	f
+pedro.martinez@email.com	pedro	martinez	b1400341aa1108687c203bd1ca61da8020abe61f65ddba196b51be3bfc0fcff0	città del messico	messico	f
+trattoria.sapori@rest.com	mario	sapori	f1cdaaae6fe544f1917601c047020bf1abda3a874e892f0ab3528bb72e60bdac	milano	italia	t
+osteria.antica@rest.com	giuseppe	antichi	7fbf30a50152015f3c6b0252168b4d3f649753589ca15b37d7d1065a52a3bd89	roma	italia	t
+ristorante.bella@rest.com	bella	vista	bd96339a19c5abe7e3ed05d128d37333ca3f9f7efb6e107b2527d17a4cff5fc9	firenze	italia	t
+locanda.mare@rest.com	marco	marino	6b8d7d0d87f1b1b5d198b47b414772ab1316e9ce1f728163676a87c000f10322	napoli	italia	t
+pizzeria.napoli@rest.com	luigi	napoletano	f55bc2b809bf0b72d43326cc2738aa1291e44848a26873f2e8ab9cbf17bf71c3	palermo	italia	t
+taverna.siciliana@rest.com	salvatore	siciliano	a4261b5ad612c39ec15f2dc0cb55420780371741f8ecfdb386ee33cb2849dd4b	catania	italia	t
+osteria.toscana@rest.com	franco	tossano	376528e21b91bacae72cf1bf9755f11471ea3dc7a7078951b4d866ea01c88211	siena	italia	t
+ristorante.venezia@rest.com	antonio	rossi	8f36d71dcbb3aee97f687a1499c004f17386dba8c79557cf835f8539fa0ee4b6	venezia	italia	t
+trattoria.emilia@rest.com	emilia	emiliano	e32e94db4aef17d4365cbbf3fe4511d548ab8ae83fc0716b9bf8e235e093ae51	bologna	italia	t
+cucina.ligure@rest.com	giovanni	menna	74f92b63ebf8cdf256721d991294594186f58477ec1f639bfd2068e07dcc2f0e	genova	italia	t
+osteria.pugliese@rest.com	michele	pugliese	c343491c1e8a723fd0adb8e1d6cbf0a250ee98146bbf38a1a2c14957e2ea6684	bari	italia	t
+london.cuisine@rest.com	james	smith	ae6d3abe5a3b8d0f7e8ce665dd4be7fb9b24e1ac4880a61a64fae819dd84b01a	londra	inghilterra	t
+paris.bistro@rest.com	pierre	gasly	f858c98269a5daf694365ae99cd6b287a44ad79b85350fbfc0e0b0a62c3bef9c	parigi	francia	t
+berlin.haus@rest.com	max	schmidt	c7ac43e103846c5c5b456f25d8b1de8f84e0bd414cef182608ed3627c204147f	berlino	germania	t
+madrid.tapas@rest.com	thomas	garcia	c2c5f5ce3afd19d45ea06de1cfb226c4d4cda5485d2863a5799091cd9626d2a7	madrid	spagna	t
+stockholm.nordic@rest.com	Karl	Lars	afaba4d393acefa6f4c449bd6016a7dad95fafbf1b7c574a48756ac04c7e303f	stoccolma	svezia	t
+tokyo.sushi@rest.com	hiroshi	tanaka	41d30a58b09747de2e4ecb309c6135b04b8358c36540e0cfeb5ea13e4cc3b952	tokyo	giappone	t
+nyc.kitchen@rest.com	michael	jones	ee49ea5348ad1f3a013f8d889255c5e1da0dbae309fb1f1c29546ce6f3c7b75d	new york	usa	t
+shanghai.dragon@rest.com	yuki	tsunoda	df96a634bb665eab3f58fe7904d58e5a2590737a8c927673dc7a435c52323caa	shanghai	cina	t
+lisboa.porto@rest.com	joao	silva	41e95cacd6a78bfeb87c0c82400b6125c606fbdec055e43b97e8bc1706d3e71c	lisbona	portogallo	t
+mexico.cantina@rest.com	Pato	oward	982fab8a158ab82dd684ef25a90105721fee638d17040fe4bbd38a7900e13e32	città del messico	messico	t
+landonorris4@gmail.com	Lando	Norris	d84baace6c655cb2e1f02cb032e5a4e5e1a77a4bd55edb4a981db1d224d86133	monaco	monaco	f
+utenteristoratore@gmail.it	utente	ristoratore	$2a$12$WdMAj0/qwfuFvQbTSyiyX.goT.uTXmp0jTNE1X0xTtZyYHX2Iq/kS	milano	italia	t
+utentecliente@email.it	Utente	Cliente	$2a$12$MJZQhmybGY6ncFdmgYzv7.n8ZhLc4rX8zaVvXNJsfjwNQBKWXzjce	como	italia	f
+\.
+
+
+--
+-- TOC entry 5061 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: ristorante_idristorante_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.ristorante_idristorante_seq', 842, true);
+
+
+--
+-- TOC entry 5062 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: tipicucina_idtipocucina_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tipicucina_idtipocucina_seq', 33, true);
+
+
+--
+-- TOC entry 4888 (class 2606 OID 16523)
+-- Name: preferiti preferiti_email_idristorante_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.preferiti
+    ADD CONSTRAINT preferiti_email_idristorante_key UNIQUE (email, idristorante);
+
+
+--
+-- TOC entry 4890 (class 2606 OID 16445)
+-- Name: preferiti preferiti_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.preferiti
+    ADD CONSTRAINT preferiti_pkey PRIMARY KEY (idristorante, email);
+
+
+--
+-- TOC entry 4893 (class 2606 OID 16465)
+-- Name: recensioni recensioni_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recensioni
+    ADD CONSTRAINT recensioni_pkey PRIMARY KEY (email, idristorante);
+
+
+--
+-- TOC entry 4886 (class 2606 OID 16428)
+-- Name: ristorante ristorante_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ristorante
+    ADD CONSTRAINT ristorante_pkey PRIMARY KEY (idristorante);
+
+
+--
+-- TOC entry 4880 (class 2606 OID 16408)
+-- Name: tipicucina tipicucina_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tipicucina
+    ADD CONSTRAINT tipicucina_pkey PRIMARY KEY (idtipocucina);
+
+
+--
+-- TOC entry 4882 (class 2606 OID 16410)
+-- Name: tipicucina tipicucina_tipocucina_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tipicucina
+    ADD CONSTRAINT tipicucina_tipocucina_key UNIQUE (tipocucina);
+
+
+--
+-- TOC entry 4878 (class 2606 OID 16399)
+-- Name: utente utente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.utente
+    ADD CONSTRAINT utente_pkey PRIMARY KEY (email);
+
+
+--
+-- TOC entry 4891 (class 1259 OID 16526)
+-- Name: idx_recensioni_ristorante; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_recensioni_ristorante ON public.recensioni USING btree (idristorante);
+
+
+--
+-- TOC entry 4883 (class 1259 OID 16524)
+-- Name: idx_ristorante_citta; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_ristorante_citta ON public.ristorante USING btree (citta);
+
+
+--
+-- TOC entry 4884 (class 1259 OID 16525)
+-- Name: idx_ristorante_tipocucina; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX idx_ristorante_tipocucina ON public.ristorante USING btree (idtipocucina);
+
+
+--
+-- TOC entry 4896 (class 2606 OID 16506)
+-- Name: preferiti preferiti_email_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.preferiti
+    ADD CONSTRAINT preferiti_email_fkey FOREIGN KEY (email) REFERENCES public.utente(email) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 4897 (class 2606 OID 16501)
+-- Name: preferiti preferiti_idristorante_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.preferiti
+    ADD CONSTRAINT preferiti_idristorante_fkey FOREIGN KEY (idristorante) REFERENCES public.ristorante(idristorante) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 4898 (class 2606 OID 16491)
+-- Name: recensioni recensioni_email_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recensioni
+    ADD CONSTRAINT recensioni_email_fkey FOREIGN KEY (email) REFERENCES public.utente(email) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 4899 (class 2606 OID 16496)
+-- Name: recensioni recensioni_idristorante_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recensioni
+    ADD CONSTRAINT recensioni_idristorante_fkey FOREIGN KEY (idristorante) REFERENCES public.ristorante(idristorante) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 4894 (class 2606 OID 16511)
+-- Name: ristorante ristorante_email_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ristorante
+    ADD CONSTRAINT ristorante_email_fkey FOREIGN KEY (email) REFERENCES public.utente(email) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 4895 (class 2606 OID 16516)
+-- Name: ristorante ristorante_idtipocucina_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ristorante
+    ADD CONSTRAINT ristorante_idtipocucina_fkey FOREIGN KEY (idtipocucina) REFERENCES public.tipicucina(idtipocucina) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+-- Completed on 2026-07-08 18:15:08
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict U5u44TEGMnpPnduoPKeKTfQbSVa4HHTYEckSeTl6GStuJvAgCmNCVsIV5S6MTmP
+

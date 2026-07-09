@@ -1,0 +1,70 @@
+@startuml Client_Sequence_Login
+actor Utente
+
+participant "loginGUI: LoginGUI" as LoginGUI
+participant "dto: LoginDTO" as LoginDTO
+participant "richiesta: Richiesta" as Richiesta
+participant "ClientConnection" as ClientConnection
+participant "Server" as Server
+participant "frame: JFrame" as Frame
+
+Utente -> LoginGUI : click "Effettua Login"
+activate LoginGUI
+
+LoginGUI -> LoginDTO : new LoginDTO(email, password)
+activate LoginDTO
+LoginDTO --> LoginGUI
+deactivate LoginDTO
+
+LoginGUI -> Richiesta : new Richiesta(LOGIN, dto)
+activate Richiesta
+Richiesta --> LoginGUI
+deactivate Richiesta
+
+LoginGUI -> ClientConnection : inviaRichiesta(richiesta)
+activate ClientConnection
+
+ClientConnection -> Server : invio Richiesta (socket)
+activate Server
+Server --> ClientConnection : Risposta
+deactivate Server
+
+ClientConnection --> LoginGUI : risposta
+deactivate ClientConnection
+
+alt risposta.successo == true
+
+    LoginGUI -> ClientConnection : inviaRichiesta(GET_UTENTE, email)
+    activate ClientConnection
+
+    ClientConnection -> Server : invio Richiesta (socket)
+    activate Server
+    Server --> ClientConnection : Risposta (RegistrazioneDTO)
+    deactivate Server
+
+    ClientConnection --> LoginGUI : rispostaUtente
+    deactivate ClientConnection
+
+    alt rispostaUtente.successo == true
+
+        LoginGUI -> LoginGUI : datiUtente = (RegistrazioneDTO) rispostaUtente.getContenuto()
+
+        alt datiUtente.isRistoratore() == true
+            LoginGUI -> Frame : setContentPane(new RistoratoreGUI(frame, utenteService, email))
+        else datiUtente.isRistoratore() == false
+            LoginGUI -> Frame : setContentPane(new LoggatoGUI(frame, utenteService, email))
+        end
+
+        Frame -> Frame : revalidate() / repaint()
+        LoginGUI --> Utente : mostra schermata utente loggato
+
+    else rispostaUtente.successo == false
+        LoginGUI -> Utente : JOptionPane\n"Login riuscito ma impossibile recuperare i dati utente"
+    end
+
+else risposta.successo == false
+    LoginGUI -> Utente : JOptionPane errore di login\n(risposta.getMsg() oppure "Impossibile contattare il server")
+end
+
+deactivate LoginGUI
+@enduml

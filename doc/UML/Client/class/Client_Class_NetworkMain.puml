@@ -1,0 +1,40 @@
+@startuml Client_Class_NetworkMain
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class ClientMain <<boundary>> {
+  + main(args: String[]): void
+}
+
+class ClientConnection <<utility>> {
+  - {static} SERVER_HOST: String
+  - {static} SERVER_PORT: int
+  + {static} inviaRichiesta(richiesta: Richiesta): Risposta
+  + {static} shutdownServer(): Risposta
+}
+
+class Richiesta {
+}
+
+class Risposta {
+}
+
+class GuestGUI <<boundary>> {
+}
+
+class UtenteDAO <<entity>> {
+}
+class PasswordService <<control>> {
+}
+class UtenteService <<control>> {
+}
+
+ClientMain ..> GuestGUI : crea
+ClientMain ..> ClientConnection : usa
+ClientMain ..> UtenteDAO : crea
+ClientMain ..> PasswordService : crea
+ClientMain ..> UtenteService : crea
+ClientConnection ..> Richiesta : usa
+ClientConnection ..> Risposta : restituisce
+
+@enduml

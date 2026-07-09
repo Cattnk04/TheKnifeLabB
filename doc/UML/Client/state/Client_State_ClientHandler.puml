@@ -1,0 +1,16 @@
+@startuml StateDiagram_ClientHandler
+skinparam linetype ortho
+
+[*] --> Connesso : new ClientHandler(clientSocket)\n+ start()
+
+state Connesso {
+  [*] --> InAttesaRichiesta
+  InAttesaRichiesta --> ElaborazioneRichiesta : in.readObject()
+  ElaborazioneRichiesta --> InAttesaRichiesta : out.writeObject(risposta)
+}
+
+Connesso --> Chiuso : EOFException\n(client disconnesso)
+Connesso --> Chiuso : Exception\n(errore comunicazione)
+Chiuso --> [*] : chiudiConnessione()
+
+@enduml

@@ -1,0 +1,91 @@
+@startuml UseCaseDiagram
+left to right direction
+skinparam packageStyle rectangle
+skinparam nodesep 20
+skinparam ranksep 45
+
+actor Guest
+actor "Utente Registrato" as UtenteRegistrato
+actor Utente
+actor Ristoratore
+
+Guest <|-- UtenteRegistrato
+UtenteRegistrato <|-- Utente
+UtenteRegistrato <|-- Ristoratore
+
+package "Autenticazione" {
+  usecase "Login" as UC_Login
+  usecase "Registrazione" as UC_Register
+  usecase "Logout" as UC_Logout
+}
+
+package "Ricerca e Consultazione" {
+  usecase "Cerca ristoranti" as UC_Cerca
+  usecase "Recupera tipi di cucina" as UC_TipoCucina
+  usecase "Visualizza dettaglio ristorante" as UC_GetRistorante
+  usecase "Visualizza recensioni ristorante" as UC_GetRecRist
+  usecase "Visualizza riepilogo valutazioni" as UC_Riepilogo
+}
+
+package "Gestione Profilo" {
+  usecase "Visualizza profilo" as UC_GetUtente
+  usecase "Modifica profilo" as UC_ModUtente
+}
+
+package "Recensioni e Preferiti (Utente)" {
+  usecase "Scrivi recensione" as UC_ScriviRec
+  usecase "Modifica recensione" as UC_ModRec
+  usecase "Elimina recensione" as UC_ElimRec
+  usecase "Visualizza proprie recensioni" as UC_GetRecUtente
+  usecase "Aggiungi preferito" as UC_AggPref
+  usecase "Rimuovi preferito" as UC_RimPref
+  usecase "Visualizza preferiti" as UC_GetPref
+}
+
+package "Gestione Ristorante (Ristoratore)" {
+  usecase "Aggiungi ristorante" as UC_CreaRist
+  usecase "Modifica dati ristorante" as UC_AggRist
+  usecase "Elimina ristorante" as UC_ElimRist
+  usecase "Rispondi a recensione" as UC_RispRec
+  usecase "Modifica risposta" as UC_ModRisp
+}
+
+' --- Collegamenti invisibili per avvicinare ogni package al suo attore principale ---
+Guest -[hidden]-> "Autenticazione"
+Guest -[hidden]-> "Ricerca e Consultazione"
+UtenteRegistrato -[hidden]-> "Gestione Profilo"
+Utente -[hidden]-> "Recensioni e Preferiti (Utente)"
+Ristoratore -[hidden]-> "Gestione Ristorante (Ristoratore)"
+
+' --- Guest: azioni pubbliche, senza login ---
+Guest -- UC_Login
+Guest -- UC_Register
+Guest -- UC_Cerca
+Guest -- UC_GetRistorante
+Guest -- UC_GetRecRist
+Guest -- UC_Riepilogo
+
+' --- UtenteRegistrato: azioni comuni a chi è loggato ---
+UtenteRegistrato -- UC_Logout
+UtenteRegistrato -- UC_GetUtente
+UtenteRegistrato -- UC_ModUtente
+
+' --- Utente: azioni specifiche del cliente ---
+Utente -- UC_ScriviRec
+Utente -- UC_ModRec
+Utente -- UC_ElimRec
+Utente -- UC_GetRecUtente
+Utente -- UC_AggPref
+Utente -- UC_RimPref
+Utente -- UC_GetPref
+
+' --- Ristoratore: azioni specifiche del ristoratore ---
+Ristoratore -- UC_CreaRist
+Ristoratore -- UC_AggRist
+Ristoratore -- UC_ElimRist
+Ristoratore -- UC_RispRec
+Ristoratore -- UC_ModRisp
+
+UC_Cerca ..> UC_TipoCucina : <<include>>
+
+@enduml

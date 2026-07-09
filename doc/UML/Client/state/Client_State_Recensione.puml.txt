@@ -1,0 +1,13 @@
+@startuml Client_State_Recensione
+skinparam linetype ortho
+
+[*] --> SenzaRisposta : creaRecensione()\n(SCRIVI_RECENSIONE)
+
+SenzaRisposta --> ConRisposta : rispostaRecensione()\n(RISPONDI_RECENSIONE)
+SenzaRisposta --> SenzaRisposta : modificaRecensione()\n(MODIFICA_RECENSIONE)
+SenzaRisposta --> [*] : cancellaRecensione()\n(ELIMINA_RECENSIONE)
+
+ConRisposta --> ConRisposta : modificaRecensione()\n(MODIFICA_RECENSIONE)\naggiornaRisposta()\n(MODIFICA_RISPOSTA)
+ConRisposta --> [*] : cancellaRecensione()\n(ELIMINA_RECENSIONE)
+
+@enduml

@@ -1,0 +1,27 @@
+@startwbs
+* client
+
+** Gui
+
+*** autenticazione
+**** LoginGUI
+**** RegistrazioneGUI
+
+*** azioniLoggato
+**** ModificaProfiloGUI
+**** ScriviRecensioneGUI
+**** VisualizzaProfiloGUI
+
+*** azioniRistoratore
+**** AggiungiRistoranteGUI
+**** ModificaRistoranteGUI
+**** RispondiRecensioneGUI
+
+*** listeRistoratore
+**** ListaRistorantiGUI
+**** ListaRecensioniGUI
+
+*** listeUtente
+**** ListaPreferitiGUI
+**** ListaRecensioniGUI
+@endwbs

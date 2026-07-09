@@ -1,0 +1,45 @@
+@startuml Client_Sequence_Registrazione
+actor Utente
+
+participant "registrazioneGUI: RegistrazioneGUI" as RegistrazioneGUI
+participant "ClientConnection" as ClientConnection
+participant "Server" as Server
+participant "frame: JFrame" as Frame
+
+Utente -> RegistrazioneGUI : click "Registrati"
+activate RegistrazioneGUI
+
+alt radioSi e radioNo non selezionati
+    RegistrazioneGUI -> Utente : JOptionPane\n"Devi specificare se sei un ristoratore oppure no!"
+else almeno uno selezionato
+
+    create "dto: RegistrazioneDTO" as RegistrazioneDTO
+    RegistrazioneGUI -> RegistrazioneDTO : new(nome, cognome, email, password, citta, nazione, isRistoratore)
+
+    create "richiesta: Richiesta" as Richiesta
+    RegistrazioneGUI -> Richiesta : new(REGISTER, dto)
+
+    RegistrazioneGUI -> ClientConnection : inviaRichiesta(richiesta)
+    activate ClientConnection
+
+    ClientConnection -> Server : invio Richiesta (socket)
+    activate Server
+    Server --> ClientConnection : Risposta
+    deactivate Server
+
+    ClientConnection --> RegistrazioneGUI : risposta
+    deactivate ClientConnection
+
+    alt risposta.successo == true
+        ref over RegistrazioneGUI, ClientConnection, Server, Frame
+            Frammento: Recupera ruolo utente e naviga
+            (vedi Client_Sequence_RecuperaRuoloENaviga.puml)
+        end ref
+    else risposta.successo == false
+        RegistrazioneGUI -> Utente : JOptionPane errore\n(risposta.getMsg() oppure "Impossibile contattare il server")
+    end
+
+end
+
+deactivate RegistrazioneGUI
+@enduml

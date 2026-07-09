@@ -1,0 +1,50 @@
+@startuml Client_Class_Autenticazione
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class TemplateGUI <<boundary>> {
+  # frame: JFrame
+  # pannello: JPanel
+  # visualizzaProfilo: JButton
+  + TemplateGUI(frame: JFrame)
+}
+
+class LoginGUI <<boundary>> {
+  - campoEmail: JTextField
+  - campoPassword: JPasswordField
+  - {static} SERVER_HOST: String
+  - {static} SERVER_PORT: int
+  + LoginGUI(frame: JFrame, utenteService: UtenteService)
+}
+
+class RegistrazioneGUI <<boundary>> {
+  - campoNome: JTextField
+  - campoCognome: JTextField
+  - campoCitta: JTextField
+  - campoNazione: JTextField
+  - ristoratore: JLabel
+  - radioSi: JRadioButton
+  - radioNo: JRadioButton
+  - campoEmail: JTextField
+  - campoPassword: JPasswordField
+  + RegistrazioneGUI(frame: JFrame, utenteService: UtenteService)
+}
+
+class UtenteService <<control>> {
+}
+
+LoginGUI --|> TemplateGUI
+RegistrazioneGUI --|> TemplateGUI
+
+LoginGUI "1" --> "1" UtenteService
+RegistrazioneGUI "1" --> "1" UtenteService
+
+LoginGUI ..> RegistrazioneGUI : naviga verso
+LoginGUI ..> "menu.GuestGUI" : naviga verso (home)
+LoginGUI ..> "menu.LoggatoGUI" : naviga verso (post-login)
+LoginGUI ..> "menu.RistoratoreGUI" : naviga verso (post-login)
+RegistrazioneGUI ..> "menu.GuestGUI" : naviga verso (home)
+RegistrazioneGUI ..> "menu.LoggatoGUI" : naviga verso (post-registrazione)
+RegistrazioneGUI ..> "menu.RistoratoreGUI" : naviga verso (post-registrazione)
+
+@enduml
