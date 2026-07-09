@@ -36,40 +36,102 @@ public class RispondiRecensioneGUI extends TemplateGUI {
         });
         pannello.add(home);
 
-        JPanel pannelloDatiRecensione = new JPanel();
+        JPanel centro = new JPanel(new GridBagLayout());
+        centro.setBorder(BorderFactory.createEmptyBorder(40, 60, 40, 60));
+        add(centro, BorderLayout.CENTER);
+
+        GridBagConstraints vincoloGriglia = new GridBagConstraints();
+        vincoloGriglia.insets = new Insets(10, 10, 10, 10);
+        vincoloGriglia.fill = GridBagConstraints.HORIZONTAL;
+
         JLabel labelNomeRistorante = new JLabel("Ristorante: " + ristorante.getNomeRistorante());
-        JLabel labelTesto = new JLabel(recensione.getRecensione());
 
-        pannelloDatiRecensione.add(labelNomeRistorante);
-        pannelloDatiRecensione.add(labelTesto);
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.gridy = 0;
+        vincoloGriglia.gridwidth = 2;
+        vincoloGriglia.anchor = GridBagConstraints.CENTER;
+        centro.add(labelNomeRistorante, vincoloGriglia);
 
-        JPanel pannelloRisposta = new JPanel();
-        JTextArea textAreaRisposta = new JTextArea();
-        textAreaRisposta.setEditable(true);
-        JTextField rispondiQui = new JTextField("Inserisci qui la risposta alla recensione scritta sopra");
-        pannelloRisposta.add(rispondiQui);
-        pannelloRisposta.add(textAreaRisposta);
+        JLabel labelRecensione = new JLabel("Recensione:");
 
-        JPanel pannelloBottoni = new JPanel();
+        vincoloGriglia.gridy = 1;
+        vincoloGriglia.gridwidth = 1;
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.anchor = GridBagConstraints.NORTHWEST;
+        centro.add(labelRecensione, vincoloGriglia);
+
+        JTextArea areaRecensione = new JTextArea(recensione.getRecensione(), 5, 35);
+        areaRecensione.setLineWrap(true);
+        areaRecensione.setWrapStyleWord(true);
+        areaRecensione.setEditable(false);
+
+        JScrollPane scrollRecensione = new JScrollPane(areaRecensione);
+
+        vincoloGriglia.gridx = 1;
+        vincoloGriglia.fill = GridBagConstraints.BOTH;
+        vincoloGriglia.weightx = 1;
+        vincoloGriglia.weighty = 0;
+        centro.add(scrollRecensione, vincoloGriglia);
+
+        JLabel labelRisposta = new JLabel("Risposta:");
+
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.gridy = 2;
+        vincoloGriglia.weightx = 0;
+        vincoloGriglia.weighty = 0;
+        vincoloGriglia.fill = GridBagConstraints.HORIZONTAL;
+        centro.add(labelRisposta, vincoloGriglia);
+
+        JTextArea textAreaRisposta = new JTextArea(5, 35);
+        textAreaRisposta.setLineWrap(true);
+        textAreaRisposta.setWrapStyleWord(true);
+
+        JScrollPane scrollRisposta = new JScrollPane(textAreaRisposta);
+
+        vincoloGriglia.gridx = 1;
+        vincoloGriglia.fill = GridBagConstraints.BOTH;
+        vincoloGriglia.weightx = 1;
+        vincoloGriglia.weighty = 1;
+        centro.add(scrollRisposta, vincoloGriglia);
+
         JButton bottoneRisposta = new JButton("Invia risposta");
+
+        vincoloGriglia.gridx = 0;
+        vincoloGriglia.gridy = 3;
+        vincoloGriglia.gridwidth = 2;
+        vincoloGriglia.weightx = 0;
+        vincoloGriglia.weighty = 0;
+        vincoloGriglia.fill = GridBagConstraints.NONE;
+        vincoloGriglia.anchor = GridBagConstraints.CENTER;
+
+        centro.add(bottoneRisposta, vincoloGriglia);
+
         bottoneRisposta.addActionListener(e -> {
-            if(textAreaRisposta.getText().length() < 0){
+            if (textAreaRisposta.getText().trim().isEmpty()) {
                 mostraTestoNonValido();
                 return;
-            } else {
-                recensione.setRisposta(textAreaRisposta.getText());
-                Richiesta richiesta = new Richiesta(TipoRichieste.RISPONDI_RECENSIONE, recensione);
-                Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
-                if(!risposta.getSuccesso()){
-                    mostraTestoNonValido();
-                    return;
-                } else {
-                    frame.setContentPane(new ListaRecensioniGUI(frame, utenteService, email, ristorante));
-                }
             }
+
+            recensione.setRisposta(textAreaRisposta.getText());
+
+            Richiesta richiesta = new Richiesta(TipoRichieste.RISPONDI_RECENSIONE, recensione);
+            Risposta risposta = ClientConnection.inviaRichiesta(richiesta);
+            //DA SEMPRE ERRORE
+            /*if(risposta != null){
+                System.out.println("Successo: " + risposta.getSuccesso());
+                System.out.println("Messaggio: " + risposta.getMsg());
+            }*/
+
+            if (risposta == null || !risposta.getSuccesso()) {
+                mostraRispostaErrata();
+                return;
+            }
+
+            frame.setContentPane(new ListaRecensioniGUI(frame, utenteService, email, ristorante));
+            frame.revalidate();
+            frame.repaint();
         });
-        pannello.add(pannelloDatiRecensione, BorderLayout.CENTER);
-        pannello.add(pannelloRisposta, BorderLayout.CENTER);
+
     }
     private void mostraTestoNonValido() {
         JOptionPane.showMessageDialog(this,
