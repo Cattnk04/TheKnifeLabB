@@ -21,7 +21,7 @@ public class ListaRecensioniGUI extends TemplateGUI {
     JFrame frame;
 
     private final DefaultListModel<RecensioneDTO> modelloLista;
-    private final JList<RecensioneDTO> listaRecensioni;
+    private JList<RecensioneDTO> listaRecensioni;
     private final JLabel labelContatore;
 
     public ListaRecensioniGUI(JFrame frame, UtenteService utenteService, String email, RistoranteDTO ristorante){
@@ -71,17 +71,18 @@ public class ListaRecensioniGUI extends TemplateGUI {
                 mostraNessunaSelezione();
                 return;
             }
-            if(selezionata.getRisposta() == null){
+            if(selezionata.getRisposta() != null){
                 mostraNessunaSelezione();
                 return;
             }
-            frame.setContentPane(new RispondiRecensioneGUI(frame, utenteService, email, ristorante.getNomeRistorante(), selezionata));
+            frame.setContentPane(new RispondiRecensioneGUI(frame, utenteService, email, ristorante, selezionata));
             frame.revalidate();
             frame.repaint();
         });
         pannelloBottoniSotto.add(rispondiRecensione);
 
-        pannelloCentrale.add(rispondiRecensione, BorderLayout.SOUTH);
+        add(pannelloCentrale, BorderLayout.CENTER);
+        add(rispondiRecensione, BorderLayout.SOUTH);
     }
     private void caricaRecensioni(RistoranteDTO ristorante) {
         Richiesta richiesta = new Richiesta(TipoRichieste.GET_RECENSIONI_RISTORANTE, ristorante.getIdRistorante());
@@ -92,7 +93,7 @@ public class ListaRecensioniGUI extends TemplateGUI {
             return;
         }
 
-        java.util.List<Recensione> listaRecensioni = (List<Recensione>) risposta.getContenuto();
+        listaRecensioni = (JList<RecensioneDTO>) risposta.getContenuto();
     }
     private void mostraNessunaSelezione() {
         JOptionPane.showMessageDialog(this,
